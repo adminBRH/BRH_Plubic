@@ -1,0 +1,1275 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="BRH_Plubic.SiteMaster" %>
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <script>
+        function ChangeDomain() {
+            var domain = window.location.host;
+            if (domain != 'brh.apply-apps.com') {
+                var http = window.location.protocol;
+                domain = 'brh.apply-apps.com';
+                var pathname = window.location.pathname;
+                var search = window.location.search;
+                var newURL = http + '//' + domain + pathname + search;
+                //alert(newURL);
+                window.location.href = newURL;
+            }
+        }
+        //ChangeDomain();
+    </script>
+
+    <link rel="shortcut icon" href="../images/icon/BRHfavicon.ico" />
+    <title>Bangkok Hospital Rayong</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+
+    <!-- Font -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500" rel="stylesheet">
+    <!-- 'Prompt', sans-serif -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@200&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <!-- Themify Icons -->
+    <link rel="stylesheet" href="../css/themify-icons.css">
+    <!-- Owl carousel -->
+    <link rel="stylesheet" href="../css/owl.carousel.min.css">
+    <!-- Main css -->
+    <link href="../css/style.css" rel="stylesheet">
+
+    <!-- MyStyle css -->
+    <link href="../css/custom/MyStyle.css" rel="stylesheet">
+
+    <!-- Dashboard -->
+    <script src="../js/Chart.min.js"></script>
+    <script src="../js/chartjs-plugin-datalabels.js"></script>
+
+    <!-- Print JS -->
+    <script src="../js/print.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/print.css">
+
+    <!-- Switch CSS -->
+    <link rel="stylesheet" href="../css/custom/Switch.css">
+
+    <!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="../vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+	    <link rel="stylesheet" type="text/css" href="../fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+	    <link rel="stylesheet" type="text/css" href="../vendor/animate/animate.css">
+    <!--===============================================================================================-->	
+	    <link rel="stylesheet" type="text/css" href="../vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+	    <link rel="stylesheet" type="text/css" href="../vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+	    <link rel="stylesheet" type="text/css" href="../css/util.css">
+	    <link rel="stylesheet" type="text/css" href="../css/main.css">
+    <!--===============================================================================================-->
+
+
+    <style>
+        .full-screen {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+        }
+
+        .fontGoogle {
+            font-family: 'Prompt', sans-serif;
+        }
+
+        .modal-xl {
+            max-width: 80%;
+            /*top: 10%;*/
+            border-radius: 20px;
+        }
+
+        .modal-center {
+            position: relative;
+            top: 80%;
+            transform: translateY(-50%);
+        }
+
+        .modal.left .modal-dialog,
+	    .modal.right .modal-dialog {
+		    position: fixed;
+		    margin: auto;
+		    width: 60%;
+		    height: 100%;
+		    -webkit-transform: translate3d(0%, 0, 0);
+		        -ms-transform: translate3d(0%, 0, 0);
+		         -o-transform: translate3d(0%, 0, 0);
+		            transform: translate3d(0%, 0, 0);
+	    }
+
+	    .modal.left .modal-content,
+	    .modal.right .modal-content {
+		    height: 100%;
+		    overflow-y: auto;
+	    }
+	
+	    .modal.left .modal-body,
+	    .modal.right .modal-body {
+		    padding: 15px 15px 80px;
+	    }
+
+    /*Left*/
+	    .modal.left.fade .modal-dialog {
+		    left: -60%;
+		    -webkit-transition: opacity 0.3s linear, left 0.3s ease-out;
+		       -moz-transition: opacity 0.3s linear, left 0.3s ease-out;
+		         -o-transition: opacity 0.3s linear, left 0.3s ease-out;
+		            transition: opacity 0.3s linear, left 0.3s ease-out;
+	    }
+	
+	    .modal.left.fade.in .modal-dialog {
+		    left: 0;
+	    }
+        
+    /*Right*/
+	    .modal.right.fade .modal-dialog {
+		    right: -60%;
+		    -webkit-transition: opacity 0.3s linear, right 0.3s ease-out;
+		       -moz-transition: opacity 0.3s linear, right 0.3s ease-out;
+		         -o-transition: opacity 0.3s linear, right 0.3s ease-out;
+		            transition: opacity 0.3s linear, right 0.3s ease-out;
+	    }
+	
+	    .modal.right.fade.in .modal-dialog {
+		    right: 0;
+	    }
+
+
+        .center {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .Menu-Popup {
+            margin-top: 10px;
+    	    margin-right: 50px;
+            text-align: right;
+        }
+
+        .img-icon {
+          width: 45px;
+        }
+        .img-icon:hover {
+          width: 50px;
+        }
+
+        .scrollBar{
+            overflow-y: scroll;
+            height:500px;
+        }
+
+        input.largerSize{
+            transform:scale(2);
+        }
+
+        .btnShadow {
+            box-shadow: 5px 5px 5px grey;
+        }
+        .btnShadow:hover {
+            box-shadow: 0px 0px 0px white;
+            background-color: gray;
+            color:white;
+        }
+
+        .textShadow {
+            text-shadow: 2px 2px 2px rgb(2,0,36);
+        }
+
+        .rcorners1 {
+          border-radius: 15px 50px 30px 5px;
+          padding: 20px;
+          width: 200px;
+          height: 150px;
+        }
+
+        .rcorners2 {
+          border-radius: 15px 50px 30px;
+          padding: 20px;
+          width: 200px;
+          height: 150px;
+        }
+
+        .icon-box{
+            color: #fff;		
+	        width: 95px;
+	        height: 95px;
+	        display: inline-block;
+	        border-radius: 50%;
+	        /*z-index: 9;*/
+	        border: 5px solid #fff;
+	        /*padding: 15px;*/
+	        text-align: center;
+        }
+
+        /* -------------------- Loading page ----------------------*/
+        #overlay {
+            position: fixed;
+            z-index: 99;
+            top: 100px;
+            left: 0px;
+            background-color: #f8f8f8;
+            width: 100%;
+            height: 100%;
+            filter: Alpha(Opacity=90);
+            opacity: 0.9;
+        }    
+        /* -------------------- Loading page ----------------------*/
+
+        .bg-gradient-blue{
+            background: rgb(2,0,36);
+            background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,51,121,1) 15%, rgba(0,212,255,1) 100%);
+            color: white;
+        }
+        .bg-gradient-RedBlue{
+            background: red;
+            background: linear-gradient(90deg, rgb(2,0,36) 0%, rgba(9,51,121,1) 15%, red 100%);
+            color: white;
+        }
+        .bg-gradient-mix{
+            background: rgb(2,0,36);
+            background: linear-gradient(90deg, rgb(86, 9, 121) 0%, rgb(245, 51, 229) 15%, #FFC300 100%);
+            color: white;
+        }
+
+
+        /*------------------------ Star ------------------------------*/
+        .star {
+            font-size: 50px;
+            width: 50px;
+            display: inline-block;
+            color: gray;
+        }
+        .star:last-child {
+            margin-right: 0;
+        }
+        .star:before {
+            content:'\2605';
+        }
+        .star.on {
+            color: gold;
+        }
+        .star.half:after {
+            content:'\2605';
+            color: gold;
+            position: absolute;
+            margin-left: -43px;
+            width: 22px;
+            overflow: hidden;
+        }
+        /*------------------------ Star ------------------------------*/
+
+        @-webkit-keyframes blinker {
+          from {opacity: 1.0;}
+          to {opacity: 0.0;}
+        }
+        .blink{
+	        text-decoration: blink;
+	        -webkit-animation-name: blinker;
+	        -webkit-animation-duration: 0.6s;
+	        -webkit-animation-iteration-count:infinite;
+	        -webkit-animation-timing-function:ease-in-out;
+	        -webkit-animation-direction: alternate;
+        }
+    </style>
+
+    <script>
+        function LoopStar(max, score, size) {
+            var html = '';
+            if (parseFloat(score) <= max) {
+                var half = 'no';
+                if ((score % 1) > 0) {
+                    half = 'yes';
+                }
+                size = "ti-" + size + "x";
+                for (var i = 0; i < parseInt(max); i++) {
+                    if (i < parseInt(score)) {
+                        html = html + '<span class="ti-star star on ' + size + '"></span> ';
+                    }
+                    else {
+                        if (half == 'yes') {
+                            html = html + '<span class="ti-star star half ' + size + '"></span> ';
+                            half = 'no';
+                        }
+                        else {
+                            html = html + '<span class="ti-star star ' + size + '"></span> ';
+                        }
+                    }
+                }
+            }
+            //html = html + "<br />" + score;
+            document.write(html);
+        }
+
+        function Today(intervalDay) {
+            var today = new Date();
+            var dd = String(today.getDate() + parseInt(intervalDay)).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+            var yyyy = today.getFullYear();
+            today = yyyy + '-' + mm + '-' + dd;
+            return today;
+        }
+
+        function DayOfWeek() {
+            var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            var d = new Date();
+            var dayName = days[d.getDay()];
+            document.write(dayName);
+        }
+
+        function DayColor() {
+            var colors = ['darkred', 'yellow', 'deeppink', 'green', 'orange', 'deepskyblue', 'purple'];
+            var d = new Date();
+            var color = colors[d.getDay()];
+            document.write('<style> .DayColor { background-color: ' + color + '; } </style>');
+        }
+        //DayColor();
+
+        function fn_dateThai(D) {
+            if (D != '') {
+                var arD = D.split(' ');
+                var newD;
+                if (arD.length > 1) {
+                    newD = arD[0].split('/');
+                }
+                else {
+                    newD = D.split('/');
+                }
+                var dateTH = newD[1] + '/' + newD[0] + '/' + newD[2];
+                document.write(dateTH);
+            }
+        }
+
+        function blockKeyCode(event) {
+            var key = event.keyCode;
+            //alert(key);
+            var iChars = "@_!$%^*+=[]\\\';{}|\":<>?";
+            var n = iChars.indexOf(String.fromCharCode(key));
+            if (n >= 0) {
+                event.preventDefault();
+                //alert('ห้ามใช้ตัวอักษรพิเศษเหล่านี้ !@#$%^&*()+=[]\\\';,/{}|\":<>? ');
+                fn_AlertModal('Warning','ห้ามใช้ตัวอักษรพิเศษเหล่านี้ @_!$%^*+=[]\\\';{}|\":<>?','',0);
+            }
+        }
+    </script>
+    <script src="../js/ajax/jquery-2.1.3.min.js"></script>
+    <script>
+        function alertModalWarning(modalID, Text) {
+            var lbl = document.getElementById('<%= lbl_ModalWarning_Text.ClientID %>');
+            lbl.innerText = Text;
+            modalID = '#Modal_Warning';
+            alertModal(modalID);
+        }
+        function alertModalInfo(modalID, Text) {
+            var lbl = document.getElementById('<%= lbl_ModalInfo_Text.ClientID %>');
+            lbl.innerText = Text;
+            modalID = '#Modal_Info';
+            alertModal(modalID);
+        }
+        function alertModal(modalID) {
+            $(window).load(function () {
+                $(modalID).modal('show');
+            });
+        }
+    </script>
+
+</head>
+
+<body data-spy="scroll" data-target="#navbar" data-offset="30">
+<form id="form1" runat="server">
+    <!-- Nav Menu -->
+    <div class="fixed-top">
+        <div class="row col-12 mx-auto">
+            <div class="col-3 mx-auto text-left">
+                <a class="navbar-brand" href="Default.aspx">
+                    <img src="../images/logo-BRH_200x80px.png" class="" style="width:200px;height:80px;margin-bottom: 3px;" alt="logo BRH">
+                </a>
+            </div>
+            <div class="col-6 mx-auto">
+                &nbsp;
+            </div>
+            <div class="col-3 mx-auto">
+                <div class="text-right" style="margin-right:50px; margin-top:10px;">
+                    <a id="a_menu" href="#" data-toggle="modal" data-target="#Modal_Menu"> <%--onclick="ShowHideAlert()"--%>
+                        <span class="ti-4x ti-menu"></span>
+                        <%--<span id="span_notify" class="badge badge-danger" runat="server">
+                            <asp:Label ID="lbl_notify" Text="&nbsp;1&nbsp;" Font-Size="x-Large" runat="server"></asp:Label>
+                        </span>--%>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+<!-- Modal -------------------------Menu-------------------------------- -->
+<div class="modal right fade" id="Modal_Menu" tabindex="-1" role="dialog" aria-labelledby="Modal_Menu_Label" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="max-width: 100%; top: 0; left: auto; right: 0;">
+    <div class="modal-content" style="background-color:white; opacity: 0.7;">
+        <div class="modal-header">
+            
+            <div class="col-12 mx-auto">
+            <!-- ---------------------------- Notification ---------------------------- -->
+                <div id="div_notify_1" class="text-left" runat="server" visible="false">
+                    <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert" style="font-size:x-large">
+                        <strong>ประกาศ!</strong> ระบบมีการ Update ใหม่ สำหรับพนักงานให้ใช้ User:รหัสพนักงาน Password:1234 ในการ 
+                            <a href="#" data-toggle="modal" data-target=".bd-example-modal-lg" style="font-size:x-large">Login</a>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+                <div id="div_notify_2" class="text-left" runat="server" visible="false">
+                    <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert" style="font-size:x-large">
+                        <strong>แจ้งเตือนความปลอดภัย!</strong> หาก Login เข้าระบบแล้ว กรุณาเปลี่ยนรหัสผ่านของท่าน เพื่อความปลอดภัยของข้อมูลส่วนตัวของท่านเอง 
+                        <a href="../ChangePassword.aspx" style="font-size:x-large">CLICK</a>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            <!-- ---------------------------- Notification ---------------------------- -->
+            </div>
+
+        </div>
+
+        <div class="modal-body" style="text-shadow: 2px 2px 2px rgb(2,0,36);">
+            <div class="col-12 mx-auto my-auto">
+                <div class="alert alert-dark alert-dismissible fade show mt-2" role="alert" style="font-size:x-large">
+                    <asp:Label ID="lbl_loginname" Text="" Font-Size="x-large" ForeColor="White" runat="server"></asp:Label>
+                </div>
+            </div>
+            <div class="col-12 mx-auto my-2">
+            <!-- ---------------------------- Menu ---------------------------- -->
+            <div class="col-12 rounded btn-outline-primary border-0 text-right" onclick="fn_goto('Home')">
+                <strong style="font-size:xx-large;">HOME </strong><span class="ti-2x ti-home"></span>
+            </div>
+            <br />
+            <div id="div_shoping" class="col-12 rounded btn-outline-primary border-0 text-right" onclick="fn_goto('Marketing')" runat="server">
+                <strong style="font-size:xx-large;">Shoping </strong><span class="ti-2x ti-shopping-cart"></span>
+            </div>
+            <div id="div_Menu_shoping" class="col-12 mx-auto mt-3" hidden="hidden" runat="server">
+                <div class="btn-outline-info border-0 text-right" onclick="fn_goto('Marketing')" style="font-size:x-large;">
+                    Products <span class="ti-layout-grid3"></span>
+                </div>
+                <br />
+                <div class="btn-outline-info border-0 text-right" onclick="fn_goto('Marketing_Report')" style="font-size:x-large;">
+                    Report <span class="ti-bookmark-alt"></span>
+                </div>
+            </div>
+            <br />
+            <div class="col-12 rounded btn-outline-primary border-0 text-right" onclick="fn_goto('NovelCovid')">
+                <strong style="font-size:xx-large;">Novel Corona</strong><span class="ti-2x ti-receipt"></span>
+            </div>
+            <br />
+            <div class="col-12 rounded btn-outline-primary border-0 text-right" onclick="fn_goto('TimelineCovid')">
+                <strong style="font-size:xx-large;">Timeline Covid</strong><span class="ti-2x ti-receipt"></span>
+            </div>
+            <br />
+            <div class="col-12 rounded btn-outline-primary border-0 text-right" onclick="fn_goto('MorChanaReport')">
+                <strong style="font-size:xx-large;">Mor Chana Report</strong><span class="ti-2x ti-book"></span>
+            </div>
+                <br />
+            <div class="col-12 rounded btn-outline-primary border-0 text-right" onclick="fn_goto('SelfScreeningReport')">
+                <strong style="font-size:xx-large;">Self Screening Report</strong><span class="ti-2x ti-book"></span>
+            </div>
+            <br />
+            <div class="col-12 rounded btn-outline-primary border-0 text-right" onclick="SubMenu('div_Menu_Checkin')">
+                <strong style="font-size:xx-large;">Checkin </strong><span class="ti-2x ti-location-pin"></span>
+            </div>
+            <div id="div_Menu_Checkin" class="col-12 mx-auto mt-3" hidden="hidden">
+                <div class="btn-outline-info border-0 text-right" onclick="fn_goto('Checkinout')" style="font-size:x-large;">
+                    Check in-out <span class="ti-ink-pen"></span>
+                </div>
+                <br />
+                <div class="btn-outline-info border-0 text-right" onclick="fn_goto('InoutMyList')" style="font-size:x-large;">
+                    My List <span class="ti-list-ol"></span>
+                </div>
+                <br />
+                <div class="btn-outline-info border-0 text-right" onclick="fn_goto('InoutEvaluate')" style="font-size:x-large;">
+                    Evaluate <span class="ti-star"></span>
+                </div>
+                <br />
+                <div class="btn-outline-info border-0 text-right" onclick="fn_goto('InoutManual')" style="font-size:x-large;">
+                    Manual คู่มือ <span class="ti-book"></span>
+                </div>
+            </div>
+            <br />
+            <div class="col-12 rounded btn-outline-primary border-0 text-right" onclick="SubMenu('div_Menu_ari')">
+                <strong style="font-size:xx-large;">ARI Queue </strong><span class="ti-2x ti-stamp"></span>
+            </div>
+            <div id="div_Menu_ari" class="col-12 mx-auto mt-3" hidden="hidden">
+                <div class="btn-outline-info border-0 text-right" onclick="fn_goto('ARI_regQueue')" style="font-size:x-large;">
+                    Register Queue <span class="ti-pencil"></span>
+                </div>
+                <br />
+                <div class="btn-outline-info border-0 text-right" onclick="fn_goto('ARI_regDoctor')" style="font-size:x-large;">
+                    Register Doctor <span class="ti-user"></span>
+                </div>
+                <br />
+                <div class="btn-outline-info border-0 text-right" onclick="fn_goto('ARI_manageQueue')" style="font-size:x-large;">
+                    Manage Queue <span class="ti-settings"></span>
+                </div>
+                <br />
+                <div id="link_ShowQ" class="btn-outline-info border-0 text-right" onclick="fn_goto('ARI_showQueue')" runat="server" visible="false" style="font-size:x-large;">
+                    Show Queue <span class="ti-panel"></span>
+                </div>
+            </div>
+            <br />
+            <div class="col-12 rounded btn-outline-primary border-0 text-right" onclick="SubMenu('div_Menu_er')">
+                <strong style="font-size:xx-large;">ER Queue </strong><span class="ti-2x ti-stamp"></span>
+            </div>
+            <div id="div_Menu_er" class="col-12 mx-auto mt-3" hidden="hidden">
+                <div class="btn-outline-info border-0 text-right" onclick="fn_goto('ER_regQueue')" style="font-size:x-large;">
+                    Register Queue <span class="ti-pencil"></span>
+                </div>
+                <br />
+                <div class="btn-outline-info border-0 text-right" onclick="fn_goto('ER_manageQueue')" style="font-size:x-large;">
+                    Manage Queue <span class="ti-user"></span>
+                </div>
+            </div>
+            <br />
+            <div class="col-12 rounded btn-outline-primary border-0 text-right" onclick="fn_goto('GoodDoctor')">
+                <strong style="font-size:xx-large;">Good Doctor</strong><span class="ti-2x ti-receipt"></span>
+            </div>
+            <br />
+            <div class="col-12 rounded btn-outline-primary border-0 text-right" onclick="SubMenu('div_Menu_DoctorRating')">
+                <strong style="font-size:xx-large;">Doctor Rating </strong><span class="ti-2x ti-star"></span>
+            </div>
+            <div id="div_Menu_DoctorRating" class="col-12 mx-auto mt-3" hidden="hidden">
+                <div class="btn-outline-info border-0 text-right" onclick="fn_goto('dashboard_dental')" style="font-size:x-large;">
+                    Dental <span class="ti-layout-grid3"></span>
+                </div>
+                <br />
+                <div class="btn-outline-info border-0 text-right" onclick="fn_goto('dashboard_med')" style="font-size:x-large;">
+                    MED <span class="ti-layout-grid3"></span>
+                </div>
+            </div>
+            <br />
+            <div class="col-12 rounded btn-outline-primary border-0 text-right" onclick="SubMenu('div_Menu_rehab')">
+                <strong style="font-size:xx-large;">Rehab</strong><span class="ti-2x ti-stamp"></span>
+            </div>
+            <div id="div_Menu_rehab" class="col-12 mx-auto mt-3" hidden="hidden">
+                <div class="btn-outline-info border-0 text-right" onclick="fn_goto('rehab_book')" style="font-size:x-large;">
+                    Booking <span class="ti-agenda"></span>
+                </div>
+                <br />
+                <div class="btn-outline-info border-0 text-right" onclick="fn_goto('rehab_schedule')" style="font-size:x-large;">
+                    Schedule <span class="ti-panel"></span>
+                </div>
+                <br />
+                <div class="btn-outline-info border-0 text-right" onclick="fn_goto('rehab_tool')" style="font-size:x-large;">
+                    Tool <span class="ti-support"></span>
+                </div>
+            </div>
+            <br />
+            <div class="col-12 rounded btn-outline-primary border-0 text-right" onclick="fn_goto('Happymoney')">
+                <strong style="font-size:xx-large;">Happy Money </strong><span class="ti-2x ti-receipt"></span>
+            </div>
+            <br />
+            <div class="col-12 rounded btn-outline-primary border-0 text-right" onclick="SubMenu('div_Menu_MsTeam')">
+                <strong style="font-size:xx-large;">MS Team Agree </strong><span class="ti-2x ti-headphone-alt"></span>
+            </div>
+            <div id="div_Menu_MsTeam" class="col-12 mx-auto mt-3" hidden="hidden">
+                <div class="btn-outline-info border-0 text-right" onclick="fn_goto('MsTeam_reg')" style="font-size:x-large;">
+                    Input Data <span class="ti-pencil"></span>
+                </div>
+                <br />
+                <div class="btn-outline-info border-0 text-right" onclick="fn_goto('MsTeam_report')" style="font-size:x-large;">
+                    Report <span class="ti-layout-tab"></span>
+                </div>
+            </div>
+            <br />
+            <div class="col-12 rounded btn-outline-primary border-0 text-right" onclick="fn_goto('MeetingRoom')">
+                <strong style="font-size:xx-large;">Meeting Room </strong><span class="ti-2x ti-calendar"></span>
+            </div>
+            <br />
+            <div class="col-12 rounded btn-outline-primary border-0 text-right" onclick="fn_goto('BookingSlot')">
+                <strong style="font-size:xx-large;">Booking Slot </strong><span class="ti-2x ti-bookmark-alt"></span>
+            </div>
+            <br />
+            <div class="col-12 rounded btn-outline-primary border-0 text-right" onclick="SubMenu('div_Menu_ControlAsset')">
+                <strong style="font-size:xx-large;">Control Asset </strong><span class="ti-2x ti-target"></span>
+            </div>
+            <div id="div_Menu_ControlAsset" class="col-12 mx-auto mt-3" hidden="hidden">
+                <div class="btn-outline-info border-0 text-right" onclick="fn_goto('ControlAsset_Check')" style="font-size:x-large;">
+                    Check Asset <span class="ti-search"></span>
+                </div>
+                <br />
+                <div class="btn-outline-info border-0 text-right" onclick="fn_goto('ControlAsset_Report')" style="font-size:x-large;">
+                    Report <span class="ti-book"></span>
+                </div>
+            </div>
+            <br />
+            <div class="col-12 rounded btn-outline-primary border-0 text-right" onclick="fn_goto('Live')">
+                <strong style="font-size:xx-large;">Live </strong><span class="ti-2x ti-video-camera"></span>
+            </div>
+            <br />
+            <div id="div_changepass" class="col-12 rounded btn-outline-primary border-0 text-right" onclick="fn_goto('ChangePassword')" runat="server">
+                <strong style="font-size:xx-large;">ChangePassword </strong><img src="../images/update_cogwheel.gif" style="width: 40px;"/>
+            </div>
+            <br />
+            <div id="div_logout" class="col-12 rounded btn-outline-primary border-0 text-right" data-dismiss="modal" data-toggle="modal" data-target="#ModalLogout" runat="server">
+                <strong style="font-size:xx-large;">Logout </strong><span class="ti-2x ti-lock"></span>
+            </div>
+            <!-- ---------------------------- Menu ---------------------------- -->
+        </div>
+
+        </div>
+        <div class="modal-footer">
+        </div>
+    </div>
+    </div>
+</div>
+<!-- Modal -------------------------Menu-------------------------------- -->
+
+<script>
+    var PopupMenu = document.getElementById("MenuPopup");
+    PopupMenu.hidden = "hidden";
+
+    function ShowHideAlert() {
+        if (PopupMenu.hidden) {
+            PopupMenu.removeAttribute("hidden");
+        } else {
+            PopupMenu.hidden = "hidden"
+        }
+    }
+
+    function SubMenu(divID) {
+        var MenuSub = document.getElementById(divID);
+        if (MenuSub.hidden) {
+            MenuSub.removeAttribute("hidden");
+        } else {
+            MenuSub.hidden = "hidden"
+        }
+    }
+
+    function fn_goto(link) {
+        switch (link) {
+            case 'Home':
+                location.href = "../Default.aspx";
+                break;
+            case 'Marketing':
+                location.href = "../Marketing/Default.aspx";
+                break;
+            case 'NovelCovid':
+                location.href = "../NovelCorona/CheckDocument.aspx";
+                break;
+            case 'TimelineCovid':
+                location.href = "../Covid19/Timelinelist.aspx";
+                break;
+            case 'SelfScreeningReport':
+                location.href = "../SelfScreeningReport.aspx";
+                break;
+            case 'MorChanaReport':
+                location.href = "../MorChana/Dashboard.aspx";
+                break;
+            case 'Marketing_Report':
+                location.href = "../Marketing/Report.aspx";
+                break;
+            case 'Checkinout':
+                location.href = "../CounterCheckin/Default.aspx";
+                break;
+            case 'InoutMyList':
+                location.href = "../CounterCheckin/Self.aspx";
+                break;
+            case 'InoutEvaluate':
+                location.href = "../CounterCheckin/List.aspx";
+                break;
+            case 'InoutManual':
+                location.href = "../CounterCheckin/Manual.aspx";
+                break;
+            case 'Happymoney':
+                location.href = "../Happymoney/Default.aspx";
+                break;
+            case 'GoodDoctor':
+                location.href = "../GoodDoctor/Manage.aspx";
+                break;
+            case 'dashboard_dental':
+                location.href = "../GoodDoctor/DashBoard?location=42";
+                break;
+            case 'dashboard_med':
+                location.href = "../GoodDoctor/DashBoard?location=67";
+                break;
+            case 'rehab_book':
+                location.href = "../Rehab/Default.aspx";
+                break;
+            case 'rehab_schedule':
+                location.href = "../Rehab/Schedule.aspx";
+                break;
+            case 'rehab_tool':
+                location.href = "../Rehab/Tool.aspx";
+                break;
+            case 'ARI_regQueue':
+                location.href = "../ARIQ/Register.aspx";
+                break;
+            case 'ARI_regDoctor':
+                location.href = "../ARIQ/Doctor.aspx";
+                break;
+            case 'ARI_manageQueue':
+                location.href = "../ARIQ/InOut.aspx";
+                break;
+            case 'ARI_showQueue':
+                window.open('../ARIQ/ShowQ.aspx', '_blank');
+                break;
+            case 'ER_regQueue':
+                location.href = "../QER/RegisterQ.aspx";
+                break;
+            case 'ER_manageQueue':
+                location.href = "../QER/Default.aspx";
+                break;
+            case 'MeetingRoom':
+                location.href = "../MeetingRoom.aspx";
+                break;
+            case 'BookingSlot':
+                location.href = "../CHK/Default.aspx";
+                break;
+            case 'ControlAsset_Check':
+                location.href = "../ControlAsset/Default.aspx";
+                break;
+            case 'ControlAsset_Report':
+                location.href = "../ControlAsset/Report.aspx";
+                break;
+            case 'MsTeam_reg':
+                location.href = "../MsTeamAgree.aspx";
+                break;
+            case 'MsTeam_report':
+                location.href = "../MsTeamAgreeReport.aspx";
+                break;
+            case 'Live':
+                location.href = "../Live.aspx";
+                break;
+            case 'ChangePassword':
+                location.href = "../ChangePassword.aspx";
+                break;
+            default:
+                location.href = "../Default.aspx";
+                break;
+        }
+    }
+</script>
+
+    <!-- -------------------------------------- Slide Show -------------------------------------------- -->
+    <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators mx-auto">
+          <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
+          <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
+          <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
+          <li data-target="#carouselExampleCaptions" data-slide-to="3"></li>
+        </ol>
+        <div class="carousel-inner">
+          <%--<div class="carousel-item active">
+            <div class="col-11 text-center mx-auto">
+                <img src="../images/LOGO-BRH-Horizontal-ENG-Transparent.png" width="700" height="200" alt="img1">
+                <div class="carousel-caption d-none d-m">
+                  <h5>.</h5>
+                  <p>1st</p>
+                </div>
+            </div>
+          </div>--%>
+          <div class="carousel-item active">
+            <div class="col-11 text-center mx-auto">
+                <a href="../Default.aspx">
+                <img src="../images/slide/COVID-Test.jpg" width="700" height="200" alt="img1" style="border-radius: 20px;">
+                </a>
+                <div class="carousel-caption d-none d-m">
+                  <h5>.</h5>
+                  <p>1st</p>
+                </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="col-11 text-center mx-auto">
+                <img src="../images/slide/BRH_COVID19_1.jpg" width="700" height="200" alt="img2" style="border-radius: 20px;">
+                <div class="carousel-caption d-none d-m">
+                  <h5>.</h5>
+                  <p>2nd</p>
+                </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="col-11 text-center mx-auto">
+                <img src="../images/slide/BRH_COVID19_2.jpg" width="700" height="200" alt="img3" style="border-radius: 20px;">
+                <div class="carousel-caption d-none d-m">
+                  <h5>.</h5>
+                  <p>3rd</p>
+                </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="col-11 text-center mx-auto">
+                <img src="../images/slide/BRH_COVID19_3.jpg" width="700" height="200" alt="img4" style="border-radius: 20px;">
+                <div class="carousel-caption d-none d-m">
+                  <h5>.</h5>
+                  <p>4th</p>
+                </div>
+            </div>
+          </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+    </div>
+    <!-- -------------------------------------- Slide Show -------------------------------------------- -->
+
+<div hidden="hidden">
+    <a id="btn_Modal_Success" class="btn btn-outline-info" data-toggle="modal" data-target="#Modal_Success" runat="server"></a>
+    <a id="btn_Modal_Info" class="btn btn-outline-info" data-toggle="modal" data-target="#Modal_Info" runat="server"></a>
+    <a id="btn_Modal_Warning" class="btn btn-outline-info" data-toggle="modal" data-target="#Modal_Warning" runat="server"></a>
+</div>
+
+<!-- Modal Loading ----------------------------------------------------------------------------- -->
+<div class="modal fade" id="Modal_WaitLoad" tabindex="-1" role="dialog" aria-hidden="true" style="position: absolute; top: 30%;">
+<div class="col-12 mx-auto text-center">
+        <asp:Image ID="imgWaitIcon" runat="server" ImageAlign="AbsMiddle" ImageUrl="~/images/BRHrayongLoading.gif" />
+    </div>
+</div>
+<!-- Modal Alert Success ----------------------------------------------------------------------------- -->
+<div class="modal fade" id="Modal_Success" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+        <div class="modal-header" style="background: #47c9a2; color:white; border-top-right-radius: 80px;">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="position: absolute; top: 0; right: 10px;">
+              <span aria-hidden="true" style="color:red">&times;</span>
+            </button>
+            <div class="row col-12 mx-auto">
+                <div class="col-12 mx-auto my-auto text-center">
+                    <div class="icon-box">
+                        <i class="ti-5x ti-check"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+      <div class="modal-body">
+          <div class="row col-12 mx-auto">
+              <div class="col-12 mx-auto my-auto text-center h1" style="padding-top: 1em; padding-bottom: 1em;">
+                  <asp:Label ID="lbl_ModalSuccess_Text" Text="Success !!" runat="server"></asp:Label>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal Alert Info ----------------------------------------------------------------------------- -->
+<div class="modal fade" id="Modal_Info" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+        <div class="modal-header" style="background: rgba(0,212,255,1); color:white; border-top-right-radius: 80px;">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="position: absolute; top: 0; right: 10px;">
+              <span aria-hidden="true" style="color:red">&times;</span>
+            </button>
+            <div class="row col-12 mx-auto">
+                <div class="col-12 mx-auto my-auto text-center">
+                    <div class="icon-box">
+                        <i class="ti-5x ti-info"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+      <div class="modal-body">
+          <div class="row col-12 mx-auto">
+              <div class="col-12 mx-auto my-auto text-center h1" style="padding-top: 1em; padding-bottom: 1em;">
+                  <asp:Label ID="lbl_ModalInfo_Text" Text="" runat="server"></asp:Label>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal Alert Warning ----------------------------------------------------------------------------- -->
+<div class="modal fade" id="Modal_Warning" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+        <div class="modal-header" style="background: #FFC300; color:white; border-top-right-radius: 80px;">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="position: absolute; top: 0; right: 10px;">
+              <span aria-hidden="true" style="color:red">&times;</span>
+            </button>
+            <div class="row col-12 mx-auto">
+                <div class="col-12 mx-auto my-auto text-center">
+                    <img src="../images/Warning.png" style="width: 15%" />
+                </div>
+            </div>
+        </div>
+      <div class="modal-body">
+          <div class="row col-12 mx-auto">
+              <div class="col-12 mx-auto my-auto text-center h3" style="padding-top: 1em; padding-bottom: 1em;">
+                  <asp:Label ID="lbl_ModalWarning_Text" Text="" runat="server"></asp:Label>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+    function fn_AlertModal(status, txt, link, delay) {
+        if (status == 'Success') {
+            $('#Modal_Success').modal('show');
+            if (txt == '') { txt = 'Success !!'; }
+            document.getElementById('<%= lbl_ModalSuccess_Text.ClientID %>').innerText = txt;
+        } else if (status == 'Info') {
+            document.getElementById('<%= lbl_ModalInfo_Text.ClientID %>').innerText = txt;
+            $('#Modal_Info').modal('show');
+        } else if (status == 'Warning') {
+            document.getElementById('<%= lbl_ModalWarning_Text.ClientID %>').innerText = txt;
+            $('#Modal_Warning').modal('show');
+        }
+        else if (status == "Login")
+        {
+            $('#modal_login').modal('show');
+        }
+        else { }
+
+        if (link != '') {
+            setTimeout(function () { window.location.href=link; }, delay);
+        }
+    }
+    function fn_WaitLoadModal() {
+        $('#Modal_WaitLoad').modal('show');
+    }
+</script>
+
+<p>&nbsp;</p>
+<!-- =========================================================== MainContent ========================== -->
+    <asp:ContentPlaceHolder ID="MainContentDesktop" runat="server">
+    </asp:ContentPlaceHolder>
+    <asp:ContentPlaceHolder ID="MainContent" runat="server">
+    </asp:ContentPlaceHolder>
+<!-- =========================================================== MainContent ========================== -->
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+
+    <div class="row col-12 mx-auto fixed-bottom DayColor" style="opacity: 0.8;">
+        <div id="div_acceptCookie" runat="server" class="alert alert-dark fade show row col-12 mx-auto alert-dismissible" role="alert" style="background-color: rgba(0,0,0,0.5); ">
+            <div class="alert-heading col-9 mx-auto my-auto" style="color: white; font-size: large;">
+                เว็บไซต์นี้มีการใช้งานคุกกี้เพื่อให้ท่านสามารถใช้บริการได้อย่างต่อเนื่องและอำนวยความสะดวกในการใช้งานเว็บไซต์ รวมถึงช่วยให้เราปรับปรุงการนำเสนอเนื้อหาตรงตามความต้องการของท่าน โดยสามารถศึกษารายละเอียดเพิ่มเติมได้ใน 
+                <a href="../privacy/cookie-notice.aspx" style="color:sandybrown; font-size: large;">ประกาศการใช้คุกกี้</a>
+            </div>
+            <div class="col-2 mx-auto my-auto">
+                <button id="btn_cookie" class="btn" onserverclick="btn_cookie_ServerClick" runat="server" style="background-color: darkblue; color: white;">ACCEPT</button>
+            </div>
+            <button type="button" class="close col-1" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="row col-10 mx-auto my-auto text-right">
+            <img src="../images/logo_network.png" alt="Network logos" class="img-fluid">
+        </div>
+        <div class="row col-2 mx-auto">
+            <div id="div_login" class="col-12 mx-auto my-auto text-right" runat="server">
+                <%--<a href="#" class="textShadow" data-toggle="modal" data-target=".bd-example-modal-lg" style="font-size:x-large; color: white;"><img src="../images/Lock2.gif" width="42"/>Login</a>--%>
+                <a href="#" class="textShadow" data-toggle="modal" data-target="#modal_login" style="font-size:large; color: white;"><img src="../images/Lock2.gif" width="42"/>Login</a>
+            </div>
+            <div id="div_userlogin" class="row col-12" runat="server">
+                <div class="col-12 mx-auto my-auto text-right">
+                    <i class="ti-2x ti-user"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 mx-auto text-center" style="background-color:white; border-top-left-radius: 20px; border-top-right-radius: 20px;">
+            <!-- Copyright removal is not prohibited! -->
+            <small><b>COPYRIGHT © 2020. ALL RIGHTS RESERVED. Power by : BRH Informatics And Development Product</b></small>
+        </div>
+    </div>
+
+
+    <!-- Modal Login ----------------------------------------------------------------------------- -->
+    <div class="modal fade bd-example-modal-lg" id="modal_login" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+		<div class="modal-dialog" style="max-width: 80%;">
+			<div class="modal-content">
+				<!-- Login Template -->
+				<div class="limiter">
+					<div class="container-login100">
+						<div class="wrap-login100">
+							<div class="login100-pic js-tilt mx-auto text-center">
+								<img src="../images/img-01.png" alt="IMG">
+							</div>
+
+								<span class="login100-form-title">
+									Authentication
+								</span>
+
+                                <div class="wrap-input100">
+                                    <div class="row col-12 mx-auto">
+                                        <div class="col-lg-3 col-sm-6 mx-auto my-sm-3 text-center">
+                                            <label class="switch">
+                                                <input type="checkbox" id="CB_Doc" name="CB_Logintype" value="Doctor" checked onclick="CheckLoginType('Doctor')" runat="server" />
+                                                <span class="slider round"></span>
+                                            </label><br />Doctor
+                                        </div>
+                                        <div class="col-lg-3 col-sm-6 mx-auto my-sm-3 text-center">
+                                            <label class="switch">
+                                                <input type="checkbox" id="CB_OS" name="CB_Logintype" value="outsource" onclick="CheckLoginType('OutSource')" runat="server" />
+                                                <span class="slider round"></span>
+                                            </label><br />OutSource
+                                        </div>
+                                        <div class="col-lg-3 col-sm-6 mx-auto my-sm-3 text-center">
+                                            <label class="switch">
+                                                <input type="checkbox" id="CB_Emp" name="CB_Logintype" value="Employee" onclick="CheckLoginType('Employee')" runat="server" />
+                                                <span class="slider round"></span>
+                                            </label><br />Employee
+                                        </div>
+                                        <div class="col-lg-3 col-sm-6 mx-auto my-sm-3 text-center">
+                                            <label class="switch">
+                                                <input type="checkbox" id="CB_Adm" name="CB_Logintype" value="Admin" onclick="CheckLoginType('Admin')" runat="server" />
+                                                <span class="slider round"></span>
+                                            </label><br />Administrator
+                                        </div>
+                                        <div hidden="hidden">
+                                            <input type="text" id="txtH_LoginType" value="Doctor" runat="server" />
+                                        </div>
+                                        <script>
+                                            function CheckLoginType(S) {
+                                                var C = document.getElementById('<%= CB_Doc.ClientID %>');
+                                                var E = document.getElementById('<%= CB_Emp.ClientID %>');
+                                                var O = document.getElementById('<%= CB_OS.ClientID %>');
+                                                var A = document.getElementById('<%= CB_Adm.ClientID %>');
+                                                var txtHLoginType = document.getElementById('<%= txtH_LoginType.ClientID %>');
+
+                                                if (S == 'Employee') {
+                                                    C.checked = false;
+                                                    E.checked = true;
+                                                    O.checked = false;
+                                                    A.checked = false;
+                                                }
+                                                else if (S == 'Admin') {
+                                                    C.checked = false;
+                                                    E.checked = false;
+                                                    O.checked = false;
+                                                    A.checked = true;
+                                                }
+                                                else if (S == 'OutSource') {
+                                                    C.checked = false;
+                                                    E.checked = false;
+                                                    O.checked = true;
+                                                    A.checked = false;
+                                                }
+                                                else {
+                                                    C.checked = true;
+                                                    E.checked = false;
+                                                    O.checked = false;
+                                                    A.checked = false;
+                                                }
+
+                                                txtHLoginType.value = S;
+                                            }
+                                        </script>
+                                    </div>
+                                </div>
+								<div class="col-6 mx-auto wrap-input100 validate-input" data-validate="Valid user is required">
+									<input class="input100" type="text" name="user" id="txt_userLogin" placeholder="User" runat="server">
+									<span class="focus-input100"></span>
+									<span class="symbol-input100">
+										<i class="fa fa-envelope" aria-hidden="true"></i>
+									</span>
+								</div>
+
+								<div class="col-6 mx-auto wrap-input100 validate-input" data-validate="Password is required">
+									<input class="input100" type="password" name="pass" id="txt_passLogin" placeholder="Password" runat="server">
+									<span class="focus-input100"></span>
+									<span class="symbol-input100">
+										<i class="fa fa-lock" aria-hidden="true"></i>
+									</span>
+								</div>
+
+                                <div class="col-12 mx-auto text-left">
+                                    <input type="checkbox" id="cb_remember" class="largerSize" value="remember" runat="server"/> 
+                                    &nbsp;&nbsp;&nbsp;Remember
+                                </div>
+
+								<div class="container-login100-form-btn">
+									<button id="btn_login" class="login100-form-btn" onserverclick="btn_login_ServerClick" runat="server">
+										Login
+									</button>
+								</div>
+
+								<div class="text-center p-t-12">
+									<span class="txt1">
+										Forgot
+									</span>
+									<a class="txt2" data-dismiss="modal" data-toggle="modal" data-target="#ModalforgotPass">
+										Username / Password?
+									</a>
+								</div>
+
+								<div class="text-center p-t-136">
+									<a class="txt2" href="#">
+										Create your Account
+										<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+									</a>
+								</div>
+
+						</div>
+					</div>
+				</div>
+				<!-- Login Template -->
+			</div>
+		</div>
+	</div>
+    <!-- Modal Login ----------------------------------------------------------------------------- -->
+
+    <!-- Modal Logout ----------------------------------------------------------------------------- -->
+        <div class="modal fade" id="ModalLogout" tabindex="-1" role="dialog" aria-labelledby="ModalLogoutTitle" aria-hidden="true">
+          <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="ModalLogoutTitle">You want to log out.</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body mx-auto text-center">
+                <button type="button" class="btn btn-danger mx-5" data-dismiss="modal">No</button>
+                <button type="button" id="btn_logout" class="btn btn-success mx-5" onserverclick="btn_logout_ServerClick" runat="server">Yes</button>
+              </div>
+              <div class="modal-footer">
+                
+              </div>
+            </div>
+          </div>
+        </div>
+    <!-- Modal Logout ----------------------------------------------------------------------------- -->
+
+    <!-- Modal forgot password ----------------------------------------------------------------------------- -->
+        <div class="modal fade" id="ModalforgotPass" tabindex="-1" role="dialog" aria-labelledby="ModalforgotPassTitle" aria-hidden="true">
+          <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="ModalforgotPassTitle">Forgot password.</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body mx-auto text-center">
+                  <div class="row col-12 mx-auto">
+                      <div class="col-4 mx-auto text-center">
+                        <label class="switch">
+                            <input type="checkbox" id="CB_DC" name="CB_FG_Logintype" value="Doctor" checked onclick="CheckUserType('Doctor')" runat="server" />
+                            <span class="slider round"></span>
+                        </label><br />Doctor
+                    </div>
+                    <div class="col-4 mx-auto text-center">
+                        <label class="switch">
+                            <input type="checkbox" id="DB_OS" name="CB_FG_Logintype" value="outsource" onclick="CheckUserType('OutSource')" runat="server" />
+                            <span class="slider round"></span>
+                        </label><br />OutSource
+                    </div>
+                    <div class="col-4 mx-auto text-center">
+                        <label class="switch">
+                            <input type="checkbox" id="CB_EM" name="CB_FG_Logintype" value="Employee" onclick="CheckUserType('Employee')" runat="server" />
+                            <span class="slider round"></span>
+                        </label><br />Employee
+                    </div>
+                  </div>
+                  <input type="text" id="txt_forgotpass" class="form-control" value="" placeholder="ระบุ User ID" runat="server" style="font-size: x-large;" />
+                  ระบบจะทำการส่งรหัสยืนยันการ reset password ให้ท่านผ่านทาง email<br />
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger mx-5" data-dismiss="modal">Close</button>
+                <button type="button" id="btn_forgotpass" class="btn btn-success mx-5" onserverclick="btn_forgotpass_ServerClick" runat="server">Send</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    <!-- Modal forgot password ----------------------------------------------------------------------------- -->
+<script>
+    function CheckUserType(S) {
+        var C = document.getElementById('<%= CB_DC.ClientID %>');
+        var E = document.getElementById('<%= CB_EM.ClientID %>');
+        var O = document.getElementById('<%= DB_OS.ClientID %>');
+        var txtHLoginType = document.getElementById('<%= txtH_LoginType.ClientID %>');
+
+        if (S == 'Employee') {
+            C.checked = false;
+            E.checked = true;
+            O.checked = false;
+        }
+        else if (S == 'OutSource') {
+            C.checked = false;
+            E.checked = false;
+            O.checked = true;
+        }
+        else {
+            C.checked = true;
+            E.checked = false;
+            O.checked = false;
+        }
+
+        txtHLoginType.value = S;
+    }
+</script>
+
+
+    <!-- jQuery and bootstrap bundle -->
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <!-- Plugins JS -->
+    <script src="../js/owl.carousel.min.js"></script>
+    <!-- Custom JS -->
+    <script src="../js/script.js"></script>
+
+    <!--===============================================================================================-->
+	<script src="../vendor/jquery/jquery-3.2.1.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="../vendor/bootstrap/js/popper.js"></script>
+	<script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="../vendor/select2/select2.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="../vendor/tilt/tilt.jquery.min.js"></script>
+	<script>
+        $('.js-tilt').tilt({
+            scale: 1.1
+        })
+
+        function windowPopup(myURL, title, myWidth, myHeight) {
+            var left = (screen.width - myWidth) / 2;
+            var top = (screen.height - myHeight) / 3;
+            var myWindow = window.open(myURL, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=' + myWidth + ', height=' + myHeight + ', top=' + top + ', left=' + left);
+        }
+
+        // for page AssetControl/Asset
+        $('#modalPerformance').on('hidden.bs.modal', function (e) {
+            location.reload();
+        })
+
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+        $(function () {
+            $('[data-toggle="popover"]').popover()
+        })
+    </script>
+	<!--===============================================================================================-->
+	<script src="../js/main.js"></script>
+    <asp:Label ID="lbl_ScriptModalAlert" Text="" runat="server"></asp:Label>
+
+</form>
+
+</body>
+
+</html>

@@ -1,0 +1,162 @@
+CREATE TABLE `mentalhealt_dass21` (
+  `d_id` int(11) NOT NULL AUTO_INCREMENT,
+  `m_id` varchar(100) NOT NULL,
+  `question_type` varchar(100) NOT NULL,
+  `dass_1` varchar(100) DEFAULT NULL,
+  `dass_2` varchar(100) DEFAULT NULL,
+  `dass_3` varchar(100) DEFAULT NULL,
+  `dass_4` varchar(100) DEFAULT NULL,
+  `dass_5` varchar(100) DEFAULT NULL,
+  `dass_6` varchar(100) DEFAULT NULL,
+  `dass_7` varchar(100) DEFAULT NULL,
+  `dass_8` varchar(100) DEFAULT NULL,
+  `dass_9` varchar(100) DEFAULT NULL,
+  `dass_10` varchar(100) DEFAULT NULL,
+  `dass_11` varchar(100) DEFAULT NULL,
+  `dass_12` varchar(100) DEFAULT NULL,
+  `dass_13` varchar(100) DEFAULT NULL,
+  `dass_14` varchar(100) DEFAULT NULL,
+  `dass_15` varchar(100) DEFAULT NULL,
+  `dass_16` varchar(100) DEFAULT NULL,
+  `dass_17` varchar(100) DEFAULT NULL,
+  `dass_18` varchar(100) DEFAULT NULL,
+  `dass_19` varchar(100) DEFAULT NULL,
+  `dass_20` varchar(100) DEFAULT NULL,
+  `dass_21` varchar(100) DEFAULT NULL,
+  `phq9` varchar(100) DEFAULT NULL,
+  `gad7` varchar(100) DEFAULT NULL,
+  `spst20` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`d_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
+
+
+CREATE TABLE `mentalhealt_gad7` (
+  `g_id` int(11) NOT NULL AUTO_INCREMENT,
+  `m_id` varchar(100) NOT NULL,
+  `gad_1` varchar(100) DEFAULT NULL,
+  `gad_2` varchar(100) DEFAULT NULL,
+  `gad_3` varchar(100) DEFAULT NULL,
+  `gad_4` varchar(100) DEFAULT NULL,
+  `gad_5` varchar(100) DEFAULT NULL,
+  `gad_6` varchar(100) DEFAULT NULL,
+  `gad_7` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`g_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `mentalhealt_phq8` (
+  `p8_id` int(11) NOT NULL AUTO_INCREMENT,
+  `m_id` varchar(100) NOT NULL,
+  `phq8_1` varchar(100) DEFAULT NULL,
+  `phq8_2` varchar(100) DEFAULT NULL,
+  `phq8_3` varchar(100) DEFAULT NULL,
+  `phq8_4` varchar(100) DEFAULT NULL,
+  `phq8_5` varchar(100) DEFAULT NULL,
+  `phq8_6` varchar(100) DEFAULT NULL,
+  `phq8_7` varchar(100) DEFAULT NULL,
+  `phq8_8` varchar(100) DEFAULT NULL,
+  `phq8_9` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`p8_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8
+
+
+CREATE TABLE `mentalhealt_phq9` (
+  `p_id` int(11) NOT NULL AUTO_INCREMENT,
+  `m_id` varchar(100) NOT NULL,
+  `phq_1` varchar(100) DEFAULT NULL,
+  `phq_2` varchar(100) DEFAULT NULL,
+  `phq_3` varchar(100) DEFAULT NULL,
+  `phq_4` varchar(100) DEFAULT NULL,
+  `phq_5` varchar(100) DEFAULT NULL,
+  `phq_6` varchar(100) DEFAULT NULL,
+  `phq_7` varchar(100) DEFAULT NULL,
+  `phq_8` varchar(100) DEFAULT NULL,
+  `phq_9` varchar(100) DEFAULT NULL,
+  `mentalhealt_phq8` varchar(100) DEFAULT 'yes',
+  `type_status` varchar(100) DEFAULT NULL,
+  `phq_10` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`p_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8
+
+
+CREATE TABLE `mentalhealt_spst20` (
+  `s_id` int(11) NOT NULL AUTO_INCREMENT,
+  `m_id` varchar(100) NOT NULL,
+  `spst_1` varchar(100) DEFAULT NULL,
+  `spst_2` varchar(100) DEFAULT NULL,
+  `spst_3` varchar(100) DEFAULT NULL,
+  `spst_4` varchar(100) DEFAULT NULL,
+  `spst_5` varchar(100) DEFAULT NULL,
+  `spst_6` varchar(100) DEFAULT NULL,
+  `spst_7` varchar(100) DEFAULT NULL,
+  `spst_8` varchar(100) DEFAULT NULL,
+  `spst_9` varchar(100) DEFAULT NULL,
+  `spst_10` varchar(100) DEFAULT NULL,
+  `spst_11` varchar(100) DEFAULT NULL,
+  `spst_12` varchar(100) DEFAULT NULL,
+  `spst_13` varchar(100) DEFAULT NULL,
+  `spst_14` varchar(100) DEFAULT NULL,
+  `spst_15` varchar(100) DEFAULT NULL,
+  `spst_16` varchar(100) DEFAULT NULL,
+  `spst_17` varchar(100) DEFAULT NULL,
+  `spst_18` varchar(100) DEFAULT NULL,
+  `spst_19` varchar(100) DEFAULT NULL,
+  `spst_20` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`s_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8
+
+
+CREATE TABLE `mentalhealt_temp_yellow` (
+  `y_id` int(11) NOT NULL AUTO_INCREMENT,
+  `m_id` varchar(100) NOT NULL,
+  `yel_1` varchar(100) DEFAULT NULL,
+  `yel_2` varchar(100) DEFAULT NULL,
+  `yel_3` varchar(100) DEFAULT NULL,
+  `yel_4` varchar(100) DEFAULT NULL,
+  `yel_5` varchar(100) DEFAULT NULL,
+  `yel_6` varchar(100) DEFAULT NULL,
+  `yel_7` varchar(100) DEFAULT NULL,
+  `yel_8` varchar(100) DEFAULT NULL,
+  `yel_9` varchar(100) DEFAULT NULL,
+  `yel_10` varchar(100) DEFAULT NULL,
+  `yel_11` varchar(100) DEFAULT NULL,
+  `yel_12` varchar(100) DEFAULT NULL,
+  `yel_13` varchar(100) DEFAULT NULL,
+  `yel_14` varchar(100) DEFAULT NULL,
+  `yel_15` varchar(100) DEFAULT NULL,
+  `yel_16` varchar(100) DEFAULT NULL,
+  `yel_17` varchar(100) DEFAULT NULL,
+  `yel_18` varchar(100) DEFAULT NULL,
+  `yel_19` varchar(100) DEFAULT NULL,
+  `yel_20` varchar(100) DEFAULT NULL,
+  `yel_21` varchar(100) DEFAULT NULL,
+  `yel_22` varchar(100) DEFAULT NULL,
+  `yel_23` varchar(100) DEFAULT NULL,
+  `yel_24` varchar(100) DEFAULT NULL,
+  `yel_25` varchar(100) DEFAULT NULL,
+  `yel_26` varchar(100) DEFAULT NULL,
+  `yel_27` varchar(100) DEFAULT NULL,
+  `yel_28` varchar(100) DEFAULT NULL,
+  `yel_29` varchar(100) DEFAULT NULL,
+  `yel_30` varchar(100) DEFAULT NULL,
+  `yel_31` varchar(100) DEFAULT NULL,
+  `yel_32` varchar(100) DEFAULT NULL,
+  `yel_33` varchar(100) DEFAULT NULL,
+  `yel_34` varchar(100) DEFAULT NULL,
+  `yel_35` varchar(100) DEFAULT NULL,
+  `yel_36` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`y_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8
+
+
+CREATE TABLE `mentalhealthrecord` (
+  `m_id` int(11) NOT NULL AUTO_INCREMENT,
+  `fname` varchar(100) DEFAULT NULL,
+  `lname` varchar(100) DEFAULT NULL,
+  `color_temp` varchar(100) DEFAULT NULL,
+  `color_id` varchar(100) DEFAULT NULL,
+  `p_number` varchar(100) DEFAULT NULL,
+  `line_id` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`m_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8

@@ -1,0 +1,7 @@
+TRUNCATE TABLE mentalhealthrecord ;
+TRUNCATE TABLE mentalhealt_temp_yellow ;
+TRUNCATE TABLE mentalhealt_spst20 ;
+TRUNCATE TABLE mentalhealt_phq9 ;
+TRUNCATE TABLE mentalhealt_phq8 ;
+TRUNCATE TABLE mentalhealt_gad7 ;
+TRUNCATE TABLE mentalhealt_dass21 ;

@@ -1,0 +1,165 @@
+﻿.fontBadge {
+    font-size: x-large;
+    font-weight: bold;
+}
+
+.PostCard {
+    padding: 10px;
+    border: none;
+    border: solid;
+    border-left-color: #808080;
+    border-top-color: #808080;
+    border-radius: 20px;
+    box-shadow: 4px 4px #808080;
+    height: 300px;
+    background-color: ghostwhite;
+    font-family: 'Prompt', sans-serif;
+}
+
+.PostCard:hover {
+    border-bottom: solid;
+    border-bottom-color: cornflowerblue;
+    border-right-color: cornflowerblue;
+}
+
+.PostCard-time {
+    position: absolute;
+    padding: 5px;
+    margin-top: -25px;
+    margin-left: 10px;
+    color: gray;
+    font-size: small;
+    background-color: white;
+    border-radius: 20px;
+}
+
+.PostCard-logo {
+    position: absolute;
+    padding: 5px;
+    margin-top: 0px;
+    right: 10px;
+    border-bottom-left-radius: 80%;
+    border-bottom-right-radius: 80%;
+    width: 20%;
+    background-color: mediumpurple;
+    box-shadow: 2px 2px #808080;
+}
+
+.PostCard-name {
+    position: absolute;
+    margin-top: 0px;
+    left: 5%;
+    width: 90%;
+    font-size: x-large;
+    font-weight: bold;
+    color: blue;
+    text-shadow: 1px 1px 1px #000000;
+}
+
+.PostCard-logo-img {
+    width: 100%;
+    margin-top: -30px;
+}
+
+.PostCard-body {
+    position: absolute;
+    padding: 10px;
+    margin-top: 25px;
+    margin-left: 2%;
+}
+
+.PostCard-body p {
+    font-weight: bold;
+    font-size: large;
+}
+
+.PostCard-desc {
+    position: absolute;
+    top: 180px;
+}
+
+.PostCard-button {
+    position: absolute;
+    padding-right: 10px;
+    top: 40px;
+    left: 5px;
+    width: 30px;
+    border-radius: 20px;
+    background-color: white;
+}
+
+.PostCard-button i {
+    color: mediumpurple;
+    font-size: xx-large;
+    text-shadow: 2px 2px 2px #000000;
+}
+
+.iButton {
+    font-size: xx-large;
+    text-shadow: 2px 2px 2px #000000;
+}
+
+i:hover {
+    text-shadow: none;
+}
+
+.PostCard-footer {
+    position: absolute;
+    bottom: 15px;
+    left: 40px;
+    background-color: mediumpurple;
+    border-radius: 20px;
+}
+
+.PostCard-footer i {
+    color: mediumpurple;
+    cursor: pointer;
+}
+
+.PostCard-footer img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    margin-top: -20px;
+    box-shadow: 2px 2px 2px 2px #808080;
+}
+
+.PostCard-footer img:hover {
+    width: 60px;
+    height: 60px;
+    border-radius: unset;
+    box-shadow: none;
+}
+
+.PostCard-edit {
+    position: absolute;
+    bottom: 20px;
+    right: 5px;
+    padding: 5px;
+    color: mediumpurple;
+    font-size: xx-large;
+    text-shadow: 2px 2px 2px #000000;
+    background-color: white;
+    border-top-left-radius: 110px;
+    border-bottom-left-radius: 110px;
+}
+
+.input-edit {
+    border-color: darkcyan;
+    border: none;
+    border-bottom: solid;
+}
+
+.PostCard-Accessories {
+    position: absolute;
+    top: 100px;
+    right: 5px;
+    padding: 5px;
+    color: mediumpurple;
+    font-size: xx-large;
+    text-shadow: 2px 2px 2px #000000;
+    background-color: white;
+    border-top-left-radius: 110px;
+    border-bottom-left-radius: 110px;
+    cursor: pointer;
+}

@@ -1,0 +1,140 @@
+﻿
+.iconSize100 {
+    width: 100%
+}
+
+.iconSize80 {
+    width: 80%
+}
+
+.PointLeft {
+    clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 25% 100%, 0% 50%);
+    background-color: blue;
+    width: 100px;
+    height: 100px;
+    color: white;
+    text-align: right;
+}
+
+/* ------------------------------------ */
+input[type="text"] {
+    border: 2px solid #aaa;
+    border-radius: 4px;
+    margin: 8px 0;
+    outline: none;
+    padding: 8px;
+    box-sizing: border-box;
+    transition: 0.3s;
+}
+
+input[type="text"]:focus {
+    border-color: dodgerBlue;
+    box-shadow: 0 0 8px 0 dodgerBlue;
+}
+
+.inputWithIcon input[type="text"] {
+    padding-left: 40px;
+}
+
+.inputWithIcon {
+    position: relative;
+}
+
+.inputWithIcon i {
+    position: absolute;
+    left: 10px;
+    top: 12px;
+    padding: 9px 8px;
+    color: #aaa;
+    transition: 0.3s;
+}
+
+.inputWithIcon input[type="text"]:focus + i {
+    color: dodgerBlue;
+    font-size: xx-large;
+}
+
+.inputWithIcon.inputIconBg i {
+    background-color: #aaa;
+    color: #fff;
+    padding: 9px 4px;
+    border-radius: 4px 0 0 4px;
+}
+
+.inputWithIcon.inputIconBg input[type="text"]:focus + i {
+    color: #fff;
+    background-color: dodgerBlue;
+}
+/* ------------------------------------ */
+
+/* ------------------------------------ */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.cta {
+    position: relative;
+    margin: auto;
+    padding: 19px 22px;
+    transition: all 0.2s ease;
+}
+
+    .cta:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        border-radius: 28px;
+        /*background: rgba(255, 171, 157, 0.5);*/
+        background: dodgerBlue;
+        width: 56px;
+        height: 56px;
+        transition: all 0.3s ease;
+    }
+
+    .cta span {
+        position: relative;
+        font-size: 16px;
+        line-height: 18px;
+        font-weight: 900;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        vertical-align: middle;
+    }
+
+    .cta svg {
+        position: relative;
+        top: 0;
+        margin-left: 10px;
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke: #111;
+        stroke-width: 2;
+        transform: translateX(-5px);
+        transition: all 0.3s ease;
+    }
+
+    .cta:hover:before {
+        width: 100%;
+        background: #ffab9d;
+    }
+
+    .cta:hover svg {
+        transform: translateX(0);
+    }
+
+    .cta:active {
+        transform: scale(0.96);
+    }
+/* ------------------------------------ */
+
+.search {
+    width: 20%;
+}
+
+.search:focus {
+    width: 80%;
+}
