@@ -5,6 +5,8 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContentDesktop" runat="server">
 
+	<!-- Test git control version -->
+
 <style>
 
 	.sliderCube {
