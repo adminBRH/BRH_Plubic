@@ -22,15 +22,29 @@ public class ConnectDB
 {
     public SqlConnection SqlStrCon()
     {
-        return new SqlConnection("Data Source=localhost;Initial Catalog=BRH_Bconnect_RPT" +
-            ";Persist Security Info=True;User ID=xxxxx;Password=xxxxx");
+        //return new SqlConnection("Data Source=BRH-DBS01.BDMS.CO.TH;Initial Catalog=BRH_IT_REQUEST" +
+        //    ";Persist Security Info=True;User ID=sa;Password=P@ssw0rd");
+        //return new SqlConnection("Data Source=203.154.41.76;Initial Catalog=RunDB" +
+        //    ";Persist Security Info=True;User ID=sa;Password=P@ssw0rd@brh");
+        return new SqlConnection("Data Source=10.121.13.41;Initial Catalog=BRH_Bconnect_RPT" +
+            ";Persist Security Info=True;User ID=reports;Password=reports");
     }
 }
 
 public class SQLclass
 {
     // Localhost
-    string connection = "Server=localhost;User Id=root; Password=P@ssw0rd; Database=BRH_Informatics; charset=utf8;Pooling=false; Port=3306;";
+    //string connection = "Server=localhost;User Id=root; Password=P@ssw0rd; Database=BRH_Informatics; charset=utf8;Pooling=false; Port=3306;";
+
+    // FTP: 103.245.164.57 Id=brh-admin; Password=P@ssw0rd1168;
+    // Database: db1.telecorp.co.th/phpMyAdmin Id=telecorp; Password=@Telecorp$12345;
+    string connection = "Server=db1.telecorp.co.th;User Id=telecorp; Password=@Telecorp$12345; Database=brh_hospitaldb; charset=utf8;Pooling=false";
+
+    // Server in BRH
+    //string connection = "Server=10.3.10.103;User Id=clusteruser; Password=clusterp@$$; Database=brh_informatics; charset=utf8;Pooling=false";
+
+    // 27.254.59.12/phpMyAdmin/db_structure.php?server=1&db=brh_hospitaldb  
+    //string connection = "Server=localhost;User Id=brh_admin; Password=11681168; Database=brh_hospitaldb; charset=utf8;Pooling=false";
 
     //SQL Server Class
     public DataTable select(string sql)

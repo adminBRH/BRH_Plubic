@@ -208,7 +208,7 @@
                             <div class="row my-1">
                                 <div class="col-7 mx-auto">
                                     ลำดับการจองเลขที่ <span class="badge badge-info badgeFont"><%# Eval("cm_payid") %></span>
-                                    <span class="badge badge-secondary" style="font-size: medium;"><i class="fa fa-vcard-o"></i> <%# Eval("cm_cardid") %></span>
+                                    <span class="badge badge-secondary" style="font-size: medium;"><i class="fa fa-vcard-o"></i> <%# Eval("cm_cardid") %> <%# Eval("cm_name") %></span>
                                 </div>
                                 <div class="col-5 mx-auto text-right">จำนวน <span class="badge badge-success badgeFont"><%# Eval("cm_qty") %></span> เข็ม</div>
                             </div>

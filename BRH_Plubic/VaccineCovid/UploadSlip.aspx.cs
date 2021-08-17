@@ -22,10 +22,10 @@ namespace BRH_Plubic.VaccineCovid
         {
             //Response.Redirect("Default");
 
-            //if (Request.QueryString["key"] != null)
-            //{
-            //    Thank(Request.QueryString["key"].ToString());
-            //}
+            if (Request.QueryString["key"] != null)
+            {
+                Thank(Request.QueryString["key"].ToString());
+            }
         }
 
         protected void Thank(string key)
@@ -39,7 +39,7 @@ namespace BRH_Plubic.VaccineCovid
             dt = CL_Sql.select(sql);
             if (dt.Rows.Count > 0)
             {
-                alert = "Success. ยืนยันการโอนเงินเรียบร้อยแล้ว";
+                alert = "Success. ยืนยันการโอนเงิน ทางเราได้รับสลิปเรียบร้อยแล้ว <br /><img src='image/slip/" + key + ".jpg' style='width:50%;'>";
                 alertMsg.Attributes.Add("class", "alert alert-success");
             }
             else
@@ -82,7 +82,7 @@ namespace BRH_Plubic.VaccineCovid
                 if (dt.Rows.Count > 0)
                 {
                     phone = dt.Rows[0]["cm_phone"].ToString();
-                    sql = "select * from confirmslip_moderna where cm_active='yes' and (cm_cardid = '" + cardID + "' or cm_phone = '" + phone + "') " +
+                    sql = "select * from confirmslip_moderna where cm_active='yes' and cm_phone = '" + phone + "' " +
                     "\norder by cm_payid ";
                     dt = new DataTable();
                     dt = CL_Sql.select(sql);
