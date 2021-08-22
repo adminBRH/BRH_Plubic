@@ -32,7 +32,7 @@ namespace BRH_Plubic
 
         protected void Topic()
         {
-            sql = "select distinct cms_sj from checkinmeetingslot where cms_status='CONFIRM'; ";
+            sql = "select distinct cms_sj from checkinmeetingslot where cms_status='CONFIRM' order by cms_sj; ";
             dt = new DataTable();
             dt = CL_Sql.select(sql);
             if (dt.Rows.Count > 0)

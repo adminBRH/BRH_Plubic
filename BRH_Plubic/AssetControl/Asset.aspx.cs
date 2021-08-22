@@ -357,6 +357,7 @@ namespace BRH_Plubic.AssetControl
             if (dt.Rows.Count > 0)
             {
                 lbl_asr_alert.ForeColor = Color.Blue;
+                txt_asr_clone.Value = txt_asr.Value.ToString();
 
                 int rc = dt.Rows.Count;
                 if (rc <= 10)
@@ -368,7 +369,7 @@ namespace BRH_Plubic.AssetControl
                         {
                             html = html + "<br />";
                         }
-                        html = html + i.ToString() + ". S/N: " + dr["nasd_sn"].ToString() + " - " + dr["asd_displayname"].ToString();
+                        html = html + "<span class=\"badge badge-primary\"><i class=\"fa fa-link\"></i></span> " + dr["asd_displayname"].ToString();
                         html = html + " <a class=\"btn btn-outline-info\" onmouseover=\"fn_ti('" +i.ToString()+ "'," + rc.ToString() + ")\" onclick=\"fn_select_asr('" + i.ToString() + "')\"><i id=\"ti_" + i.ToString() + "\" calss=\"ti-control-stop\"></i></a>";
                         i++;
                     }
@@ -376,7 +377,8 @@ namespace BRH_Plubic.AssetControl
             }
             if (html == "")
             {
-                html = "ไม่พบ S/N นี้ในแผนก !!";
+                txt_asr_clone.Value = "";
+                html = "ไม่พบ S/N นี้ในแผนก " + DD_department.SelectedItem.Text + " !!";
                 lbl_asr_alert.ForeColor = Color.Red;
             }
             lbl_asr_alert.Text = html;
@@ -402,11 +404,7 @@ namespace BRH_Plubic.AssetControl
             string camera = DD_camera.SelectedValue.ToString();
             string cardreader = DD_cardreader.SelectedValue.ToString();
 
-            string asc = "";
-            if (lbl_asr_alert.Text == "")
-            {
-                asc = txt_asr.Value.ToString().Trim();
-            }
+            string asc = txt_asr_clone.Value.ToString().Trim();
 
             //string program = txt_program.Value.ToString().Trim();
             string desc = txt_desc.Value.ToString().Trim();

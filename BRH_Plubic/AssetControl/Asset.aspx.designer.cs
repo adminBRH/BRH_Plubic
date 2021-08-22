@@ -204,6 +204,15 @@ namespace BRH_Plubic.AssetControl
         protected global::System.Web.UI.WebControls.Label lbl_asr_alert;
 
         /// <summary>
+        /// txt_asr_clone control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_asr_clone;
+
+        /// <summary>
         /// btn_asr control.
         /// </summary>
         /// <remarks>

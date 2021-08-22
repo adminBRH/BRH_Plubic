@@ -146,11 +146,11 @@
     <div id="div_list" class="col-lg-11 col-sm-12 mx-auto">
         <div class="col-12 mx-auto text-center mt-5" style="font-size:x-large;">
             <div class="row col-12">
-                <div class="col-4 mx-auto my-auto text-center">
+                <div class="col-5 mx-auto my-auto text-center">
                     วันเวลา <i class="ti ti-filter" data-toggle="modal" data-target="#modalDateTime" style="cursor: pointer;"></i>
                     <hr style="border-width:5px; background-color:gold;"/>
                 </div>
-                <div class="col-6 mx-auto my-auto text-center">
+                <div class="col-5 mx-auto my-auto text-center">
                     หัวข้อการประชุม <i class="ti ti-filter" data-toggle="modal" data-target="#modalTopic" style="cursor: pointer;"></i>
                     <hr style="border-width:5px; background-color:gold;"/>
                 </div>
@@ -168,13 +168,13 @@
             <ItemTemplate>
                 <div class="col-12 card boxShadow rounded mx-auto my-2" style="font-size:x-large;">
                     <div class="row col-12" onclick="goto('<%# Eval("cms_id") %>','<%# Eval("cms_room") %>')">
-                        <div class="col-4 mx-auto my-auto">
-                            <div id="div_time_<%# Eval("cms_id") %>" class="row col-12 bg-<%# Eval("dateCoclor") %> rounded" style="color:white; cursor: pointer;">
-                                <div class="col-12"><%# Eval("dateStart") %></div>
-                                <div class="col-12"><%# Eval("dateEnd") %></div>
+                        <div class="col-5 mx-auto my-auto">
+                            <div id="div_time_<%# Eval("cms_id") %>" class="row col-12 bg-<%# Eval("dateCoclor") %> rounded text-center" style="color:white; cursor: pointer;">
+                                <div class="col-12"><%# Eval("dateStart") %> - <%# Eval("dateEnd") %></div>
+                                <div class="col-12"><%# Eval("timeStart") %> - <%# Eval("timeEnd") %></div>
                             </div>
                         </div>
-                        <div class="col-6 mx-auto my-auto text-center">
+                        <div class="col-5 mx-auto my-auto text-center">
                             <%# Eval("cms_sj") %>
                         </div>
                         <div class="col-2 mx-auto my-auto text-center">

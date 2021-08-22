@@ -396,6 +396,7 @@
     <Content Include="docs\js\app.js" />
     <Content Include="docs\js\signature_pad.umd.js" />
     <Content Include="EmailAuto.aspx" />
+    <Content Include="Employee\Default.aspx" />
     <Content Include="Evaluate360\Default.aspx" />
     <Content Include="Evaluate360\Report.aspx" />
     <Content Include="favicon.ico" />
@@ -1423,6 +1424,13 @@
     </Compile>
     <Compile Include="EmailAuto.aspx.designer.cs">
       <DependentUpon>EmailAuto.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Employee\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Employee\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Evaluate360\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>

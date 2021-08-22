@@ -58,8 +58,10 @@ namespace BRH_Plubic
 
             sql = "select * from ( "+
                 "select *, if (convert(NOW(), date) = convert(cms_timestart, date),'0','1') as 'cms_rank' "+
-                ",DATE_FORMAT(cms_timestart, '%d/%b/%Y %H:%i') as 'dateStart' "+
-                ",DATE_FORMAT(cms_timeend, '%d/%b/%Y %H:%i') as 'dateEnd' "+
+                ",DATE_FORMAT(cms_timestart, '%d/%b/%Y') as 'dateStart' "+
+                ",DATE_FORMAT(cms_timeend, '%d/%b/%Y') as 'dateEnd' "+
+                ",DATE_FORMAT(cms_timestart, '%H:%i') as 'timeStart' "+
+                ",DATE_FORMAT(cms_timeend, '%H:%i') as 'timeEnd' "+
                 "\n,if(convert(cms_timestart,date)=current_date,'primary','info') as 'dateCoclor' " +
                 "\n,concat('ห้อง ',cms_room,' ',cms_sj,' (',cms_timestart,'-',cms_timeend,')') as 'cmsSJ' " +
                 "\n,concat('slot=',cms_id,'&room=',cms_room)as 'cms_link' " +

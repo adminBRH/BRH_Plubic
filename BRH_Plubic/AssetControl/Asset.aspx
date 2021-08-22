@@ -38,7 +38,7 @@
                     <button id="btn_div_add" class="btn btn-outline-warning" onserverclick="btn_div_add_ServerClick" runat="server"><i id="ti_div_add" class="ti-plus" runat="server"></i> New</button>
                 </div>
                 <div id="div_add" class="row col-12 mx-auto my-2" runat="server" visible="false">
-                    <div class="col-12 mx-auto text-center" style="font-size: xx-large;">
+                    <div id="Accessories" class="col-12 mx-auto text-center" style="font-size: xx-large;">
                         เพิ่มทรัพย์สินเข้าสู่ระบบ
                     </div>
                     <div class="col-lg-3 col-sm-6 my-2 mx-auto">
@@ -80,6 +80,7 @@
                         <div class="col-lg-3 col-sm-6 mx-auto my-2">
                             <input type="text" id="txt_asr" value="" class="form-control" placeholder="Accessories of Asset(S/N)" onblur="fn_Accessories()" runat="server" />
                             <asp:Label ID="lbl_asr_alert" Text="" runat="server"></asp:Label>
+                            <input id="txt_asr_clone" value="" runat="server" hidden="hidden" />
                             <a id="btn_asr" onserverclick="btn_asr_ServerClick" runat="server" hidden="hidden"></a>
                         </div>
                         <div class="col-lg-3 col-sm-6 mx-auto my-2">
@@ -136,6 +137,7 @@
         var sn = document.getElementById('<%= txt_asr.ClientID %>');
         document.getElementById('<%= lbl_asr_alert.ClientID %>').innerHTML = '';
         if (sn.value != '') {
+            window.location.href = '#Accessories';
             __doPostBack('<%= btn_asr.UniqueID %>', '');
         }
     }

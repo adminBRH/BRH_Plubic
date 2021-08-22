@@ -51,16 +51,24 @@ namespace BRH_Plubic
 
             sql = "SELECT * FROM checkinmeetingslot WHERE cms_id = '" + slot_name + "'; ";
 
-            dt = new DataTable(); //ต้อง new data table ใหม่ทุกครั้งเมื่อรับค่า
+            dt = new DataTable();
             dt = cl_Sql.select(sql);
 
-            if (dt.Rows.Count > 0) //หาข้อมูลว่ามีบรรทัดนั้นหรือไม่
+            if (dt.Rows.Count > 0)
             {
                 lbl_room.Text = "ห้องประชุม " + dt.Rows[0]["cms_room"].ToString();
                 lbl_topic.Text = dt.Rows[0]["cms_sj"].ToString();
-                string Startdate = DateTime.Parse(dt.Rows[0]["cms_timestart"].ToString()).ToString("dd/MM/yyyy HH:mm");
-                string Enddate = DateTime.Parse(dt.Rows[0]["cms_timeend"].ToString()).ToString("dd/MM/yyyy HH:mm");
-                lbl_dateslot.Text = Startdate + " น. ถึง " + Enddate + " น.";
+                DateTime Startdate = DateTime.Parse(dt.Rows[0]["cms_timestart"].ToString());
+                DateTime Enddate = DateTime.Parse(dt.Rows[0]["cms_timeend"].ToString());
+
+                string ShowDate = cl_Sql.DateTH(Startdate.ToString());
+                if (Enddate.Date > Startdate.Date)
+                {
+                    ShowDate = cl_Sql.DateTH(Startdate.ToString()) + " ถึง " + cl_Sql.DateTH(Enddate.ToString());
+                }
+                string ShowTime = Startdate.ToString("HH:mm") + " - " + Enddate.ToString("HH:mm") + " น.";
+
+                lbl_dateslot.Text = "วันที่ " + ShowDate + " เวลา " + ShowTime;
                 result = true;
             }
 
@@ -89,10 +97,8 @@ namespace BRH_Plubic
                 
 
                 sql = "SELECT * FROM checkinmeetingslot WHERE cms_id = '" + timest_timeend + "'; ";
-
-                dt = new DataTable(); //ต้อง new data table ใหม่ทุกครั้งเมื่อรับค่า
+                dt = new DataTable();
                 dt = cl_Sql.select(sql);
-
                 if (dt.Rows.Count > 0) //หาข้อมูลว่ามีบรรทัดนั้นหรือไม่
                 {
                     string timest = dt.Rows[0]["cms_timestart"].ToString();
@@ -105,7 +111,19 @@ namespace BRH_Plubic
                     int DateNow_M = DateNow.Minute;
                     int DateNow_HM = (DateNow_H * 60) + DateNow_M;
 
-                    DateTime DateStart = DateTime.Parse(timest);
+                    DateTime StartDate = DateTime.Parse(timest);
+                    DateTime EndDate = DateTime.Parse(timeend);
+
+                    DateTime DateStart;
+                    if (DateNow.Date > StartDate.Date && DateNow.Date <= EndDate.Date)
+                    {
+                        DateStart = DateTime.Parse(DateNow.ToString("yyyy-MM-dd") + " " + StartDate.ToString("HH:mm:ss"));
+                    }
+                    else
+                    {
+                        DateStart = StartDate;
+                    }
+
                     int DateStart_H = DateStart.Hour;
                     int DateStart_M = DateStart.Minute;
                     int DateStart_HM = (DateStart_H * 60) + DateStart_M;
@@ -166,7 +184,8 @@ namespace BRH_Plubic
             room = Request.QueryString["room"];
             slot = Request.QueryString["slot"];
 
-            sql = "select * from checkinmeeting where CONVERT(cm_indate, date)=CURRENT_DATE and cm_room = '" + room + "' and cm_slotid = '" + slot + "' and cm_empid = '" + emp + "' ";
+            sql = "select * from checkinmeeting where cm_active='yes' and CONVERT(cm_indate, date)=CURRENT_DATE " +
+                "\nand cm_room = '" + room + "' and cm_slotid = '" + slot + "' and cm_empid = '" + emp + "'; ";
             dt = new DataTable();
             dt = cl_Sql.select(sql);
             if (dt.Rows.Count > 0)
@@ -196,12 +215,14 @@ namespace BRH_Plubic
             room = Request.QueryString["room"];
             slot = Request.QueryString["slot"];
 
+            string key = cl_Sql.GenerateKey(9);
+
             sql = "INSERT INTO checkinmeeting " +
                     "(cm_empid, cm_indate, cm_room, cm_outdate, cm_slotid) " +
-                    "VALUES('', '" + DateNow + "', '" + room + "', NULL, '" + slot + "'); ";
+                    "\nVALUES('" + key + "', '" + DateNow + "', '" + room + "', NULL, '" + slot + "'); ";
             if (cl_Sql.Modify(sql))
             {
-                sql = "select * from checkinmeeting order by cm_id desc LIMIT 5 ";
+                sql = "select cm_id from checkinmeeting where cm_empid='" + key + "'; ";
                 dt = new DataTable();
                 dt = cl_Sql.select(sql);
                 if (dt.Rows.Count > 0)
@@ -210,7 +231,8 @@ namespace BRH_Plubic
 
                     sql = "INSERT INTO checkinmeetingoutsider " +
                         "(cmo_empid, cmo_fname, cmo_lname, cmo_post, cm_id) " +
-                        "VALUES('" + emp + "', '" + fname + "', '" + lname + "', '" + post + "', " + cm_id + "); ";
+                        "\nVALUES('" + emp + "', '" + fname + "', '" + lname + "', '" + post + "', " + cm_id + "); " +
+                        "\nUpdate checkinmeeting set cm_empid='' where cm_empid='" + key + "'; ";
                     if (cl_Sql.Modify(sql))
                     {
                         txt_empid.Value = "";
@@ -241,7 +263,7 @@ namespace BRH_Plubic
                 "\nFROM checkinmeeting as c " +
                 "\nleft join employee as e on e.emp_id = c.cm_empid " +
                 "\nleft join checkinmeetingoutsider as co on co.cm_id = c.cm_id " +
-                "\nWHERE cm_room = '" + room + "' and cm_slotid = '" + slot + "' " +
+                "\nWHERE cm_active='yes' and cm_room = '" + room + "' and cm_slotid = '" + slot + "' " +
                 //"\nand CONVERT(c.cm_indate, date)= CURRENT_DATE" +
                 "\norder by c.cm_id " + sort + " ";
             dt = new DataTable();
