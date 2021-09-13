@@ -43,15 +43,21 @@ namespace BRH_Plubic
 
                 if (userStatus == "customer")
                 {
-                    table = "customer set cus_editdate = current_timestamp, cus_password";
-                    fieldID = "cus_id";
-                    fieldpass = "cus_password";
+                    table = "customer set cm_muser='" + userid + "', cm_mdate = current_timestamp, cm_password";
+                    fieldID = "cm_id";
+                    fieldpass = "cm_password";
                 }
                 else if (userStatus == "employee")
                 {
                     table = "employee set emp_editdate = current_timestamp, emp_password";
                     fieldID = "emp_id";
                     fieldpass = "emp_password";
+                }
+                else if(userStatus == "doctor")
+                {
+                    table = "doctors set drs_muser='" + userid + "', drs_mdate = current_timestamp, drs_password";
+                    fieldID = "drs_id";
+                    fieldpass = "drs_password";
                 }
                 else 
                 {

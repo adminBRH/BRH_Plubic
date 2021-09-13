@@ -234,6 +234,8 @@ namespace BRH_Plubic.VaccineCovid
 
         protected void btn_submit_ServerClick(object sender, EventArgs e)
         {
+            //<button type="button" id="btn_submit" class="btnSend" onserverclick="btn_submit_ServerClick" runat="server">บันทึก <i class="fa fa-send-o" style="position: absolute; margin-top: -10px; color: black"></i></button>
+           
             string alert = "";
             div_alert.Visible = true;
 

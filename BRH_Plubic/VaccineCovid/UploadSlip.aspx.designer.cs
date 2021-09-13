@@ -213,15 +213,6 @@ namespace BRH_Plubic.VaccineCovid
         protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl txt_time;
 
         /// <summary>
-        /// btn_submit control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton btn_submit;
-
-        /// <summary>
         /// lbl_script control.
         /// </summary>
         /// <remarks>

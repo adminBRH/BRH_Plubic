@@ -7,65 +7,83 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BRH_Plubic.NovelCorona
+namespace BRH_Plubic.ArcusAir
 {
 
 
-    public partial class CheckDocument
+    public partial class GenerateBarcode
     {
 
         /// <summary>
-        /// txt_docno control.
+        /// txt_user control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_docno;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_user;
 
         /// <summary>
-        /// btn_submit control.
+        /// txt_pass control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton btn_submit;
+        protected global::System.Web.UI.HtmlControls.HtmlInputPassword txt_pass;
 
         /// <summary>
-        /// btn_Export control.
+        /// img_barcode control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton btn_Export;
+        protected global::System.Web.UI.HtmlControls.HtmlImage img_barcode;
 
         /// <summary>
-        /// DD_Date control.
+        /// lbl_barcode control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DD_Date;
+        protected global::System.Web.UI.WebControls.Label lbl_barcode;
 
         /// <summary>
-        /// LV_Report control.
+        /// div_btnGen control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListView LV_Report;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_btnGen;
 
         /// <summary>
-        /// GridView1 control.
+        /// btn_GenerateBarcode control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView1;
+        protected global::System.Web.UI.HtmlControls.HtmlButton btn_GenerateBarcode;
+
+        /// <summary>
+        /// div_btnPrint control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_btnPrint;
+
+        /// <summary>
+        /// btn_newGen control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton btn_newGen;
     }
 }

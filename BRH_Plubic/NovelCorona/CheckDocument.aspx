@@ -58,6 +58,11 @@
 
     <div class="col-lg-10 col-sm-12 mx-auto my-3">
         <div class="col-12 mx-auto">
+            <asp:DropDownList ID="DD_Date" CssClass="btn btn-outline-info" OnSelectedIndexChanged="DD_Date_SelectedIndexChanged" AutoPostBack="true" runat="server">
+                <asp:ListItem Text="" Value=""></asp:ListItem>
+            </asp:DropDownList>
+        </div>
+        <div class="col-12 mx-auto">
             <asp:ListView ID="LV_Report" runat="server">
                 <LayoutTemplate>
                     <div class="col-12 mx-auto text-center h1">
@@ -77,7 +82,7 @@
                             <div class="col-10 mx-auto">
                                 <div class="row col-12 mx-auto">
                                     <div class="col-4 mx-auto">
-                                        <%# Eval("nc_datetime") %>
+                                        <%# Eval("nc_datetime", "{0:dd/MMM/yyyy}") %>
                                     </div>
                                     <div class="col-3 mx-auto">
                                         <%# Eval("nc_fname") %> <%# Eval("nc_lname") %>

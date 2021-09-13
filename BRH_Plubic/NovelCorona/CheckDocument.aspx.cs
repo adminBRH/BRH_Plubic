@@ -26,7 +26,12 @@ namespace BRH_Plubic.NovelCorona
                 string status = Session["status"].ToString();
                 if (status == "admin" || status == "novelcovid")
                 {
-                    Report();
+                    if (!IsPostBack)
+                    {
+                        DateSelect();
+                        string DateNow = DD_Date.SelectedValue.ToString();
+                        Report(DateNow);
+                    }
                 }
                 else
                 {
@@ -35,7 +40,7 @@ namespace BRH_Plubic.NovelCorona
             }
             else
             {
-                Response.Write("<script>alert('กรุณา login ก่อนเข้าใช้งาน !!'); window.location.href='../default.aspx';</script>");
+                Response.Redirect("../Default.aspx?back=NovelCorona/CheckDocument&login=require");
             }
         }
 
@@ -51,11 +56,30 @@ namespace BRH_Plubic.NovelCorona
             }
         }
 
-        protected void Report()
+        protected void DateSelect()
         {
+            sql = "select distinct date_format(nc_datetime,'%d-%b-%Y') as nc_date from novelcorona where nc_active='yes' order by nc_datetime desc; ";
+            dt = new DataTable();
+            dt = cl_Sql.select(sql);
+            if (dt.Rows.Count > 0)
+            {
+
+            }
+
+            DD_Date.DataSource = dt;
+            DD_Date.DataTextField = "nc_date";
+            DD_Date.DataValueField = "nc_date";
+            DD_Date.DataBind();
+        }
+
+        protected void Report(string date)
+        {
+            date = DateTime.Parse(date).ToString("yyyy-MM-dd");
+
             sql = "select * from novelcorona as nc " +
                 "\nleft join novelcorona_clinic as ncc on ncc.ncc_ncid=nc.nc_id " +
                 "\nwhere nc_active = 'yes' " +
+                "\nand nc_datetime like '%" + date + "%' " +
                 "\norder by nc_staffcheck, nc_id desc ";
             dt = new DataTable();
             dt = cl_Sql.select(sql);
@@ -152,6 +176,12 @@ namespace BRH_Plubic.NovelCorona
         public override void VerifyRenderingInServerForm(Control control)
         {
             /* Verifies that the control is rendered */
+        }
+
+        protected void DD_Date_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string DateNow = DD_Date.SelectedValue.ToString();
+            Report(DateNow);
         }
     }
 }

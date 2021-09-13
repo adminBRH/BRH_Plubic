@@ -28,10 +28,14 @@
     <!-- Font -->
     <link rel="dns-prefetch" href="//fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500" rel="stylesheet">
-    <!-- 'Prompt', sans-serif -->
+    
+    <!-- Font Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- 'Prompt', sans-serif -->
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@200&display=swap" rel="stylesheet">
+    <!-- Font Barcode -->
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+128&family=Libre+Barcode+39&display=swap" rel="stylesheet">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../css/bootstrap.min.css">
@@ -83,6 +87,13 @@
 
         .fontGoogle {
             font-family: 'Prompt', sans-serif;
+        }
+
+        .fontBarcode39 {
+            font-family: 'Libre Barcode 39', cursive;
+        }
+        .fontBarcode128 {
+            font-family: 'Libre Barcode 128', cursive;
         }
 
         .modal-xl {
@@ -482,9 +493,13 @@
             <div class="col-12 rounded btn-outline-primary border-0 text-right" onclick="fn_goto('MorChanaReport')">
                 <strong style="font-size:xx-large;">Mor Chana Report</strong><span class="ti-2x ti-book"></span>
             </div>
-                <br />
+            <br />
             <div class="col-12 rounded btn-outline-primary border-0 text-right" onclick="fn_goto('SelfScreeningReport')">
                 <strong style="font-size:xx-large;">Self Screening Report</strong><span class="ti-2x ti-book"></span>
+            </div>
+            <br />
+            <div class="col-12 rounded btn-outline-primary border-0 text-right" onclick="fn_goto('Arcusair')">
+                <strong style="font-size:xx-large;">Arcus Air </strong><img src="../ArcusAir/images/icon/arcus-white-ico.ico" />
             </div>
             <br />
             <div class="col-12 rounded btn-outline-primary border-0 text-right" onclick="SubMenu('div_Menu_Checkin')">
@@ -691,6 +706,9 @@
                 break;
             case 'InoutManual':
                 location.href = "../CounterCheckin/Manual.aspx";
+                break;
+            case 'Arcusair':
+                location.href = "../ArcusAir";
                 break;
             case 'Happymoney':
                 location.href = "../Happymoney/Default.aspx";

@@ -78,6 +78,33 @@ namespace BRH_Plubic.NovelCorona
         protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl date_DOB;
 
         /// <summary>
+        /// txt_D control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl txt_D;
+
+        /// <summary>
+        /// txt_O control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl txt_O;
+
+        /// <summary>
+        /// txt_B control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl txt_B;
+
+        /// <summary>
         /// rd_nopregnant control.
         /// </summary>
         /// <remarks>

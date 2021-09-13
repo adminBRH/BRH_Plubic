@@ -213,9 +213,8 @@ namespace BRH_Plubic
             else
             {
                 // ยังไม่เปิดให้ใช้งาน
-                sql = "select * from ( "+
-                    "select 'customer' as 'user_id', 'customer' as 'user_password', 'Customer' as 'user_showname', 'customer' as 'user_status' "+
-                    "    ) as a where a.user_id = '" + user + "' and a.user_password = '" + pass + "' ";
+                sql = "select cm_id as 'user_id',concat(cm_pname,' ',cm_fname,' ',cm_lname) as 'user_showname','customer' as 'user_status' " +
+                    "from customer where cm_id='" + user + "' and cm_password=md5('" + pass + "') ";
             }
 
             dt = new DataTable();

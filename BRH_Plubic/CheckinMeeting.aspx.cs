@@ -88,7 +88,8 @@ namespace BRH_Plubic
             slot = Request.QueryString["slot"];
 
             string empid = txt_empid.Value.ToString().Trim();
-            sql = "select * from employee where emp_id = '" + empid + "' ";
+            sql = "SELECT * FROM (SELECT emp_id FROM employee UNION SELECT drs_id FROM doctors) a " +
+                "where a.emp_id = '" + empid + "' ";
             dt = new DataTable();
             dt = cl_Sql.select(sql);
             if (dt.Rows.Count > 0)
@@ -196,9 +197,10 @@ namespace BRH_Plubic
             {
                 sql = "INSERT INTO checkinmeeting " +
                     "(cm_empid, cm_indate, cm_room, cm_outdate, cm_slotid) " +
-                    "VALUES('" + emp + "', '" + DateNow + "', '" + room + "', NULL, '" + slot + "'); ";
+                    "VALUE('" + emp + "', '" + DateNow + "', '" + room + "', NULL, '" + slot + "'); ";
                 if (cl_Sql.Modify(sql))
                 {
+                    sql = "";
                     bl = true;
                 }
             }
@@ -256,16 +258,16 @@ namespace BRH_Plubic
             slot = Request.QueryString["slot"];
 
             sql = "SELECT c.*,co.cm_id " +
-                "\n,if (co.cm_id is null, c.cm_empid, co.cmo_empid) as 'empid' " +
-                "\n,if (co.cm_id is null, concat(e.emp_pname_th, ' ', e.emp_fname_th, ' ', e.emp_lname_th), concat(co.cmo_fname, ' ', co.cmo_lname)) as 'emp_name' " +
-                "\n,if (co.cm_id is null, e.emp_posdesc, co.cmo_post) as emp_posdesc " +
-                "\n,e.emp_deptdesc " +
+                "\n ,if (co.cm_id is null, c.cm_empid, co.cmo_empid) as 'empid' " +
+                "\n ,if (co.cm_id is null, if(e.emp_id is null,d.drs_fullname,concat(e.emp_pname_th, ' ', e.emp_fname_th, ' ', e.emp_lname_th)), concat(co.cmo_fname, ' ', co.cmo_lname)) as 'emp_name' " +
+                "\n ,if (co.cm_id is null, if(e.emp_id is null,concat('Doctor ',d.drs_worktype),e.emp_posdesc), co.cmo_post) as emp_posdesc " +
+                "\n ,if (e.emp_id is null,d.drs_department,e.emp_deptdesc) as 'emp_deptdesc' " +
                 "\nFROM checkinmeeting as c " +
-                "\nleft join employee as e on e.emp_id = c.cm_empid " +
-                "\nleft join checkinmeetingoutsider as co on co.cm_id = c.cm_id " +
+                "\n left join employee as e on e.emp_id = c.cm_empid " +
+                "\n left join doctors as d on d.drs_id = c.cm_empid " +
+                "\n left join checkinmeetingoutsider as co on co.cm_id = c.cm_id " +
                 "\nWHERE cm_active='yes' and cm_room = '" + room + "' and cm_slotid = '" + slot + "' " +
-                //"\nand CONVERT(c.cm_indate, date)= CURRENT_DATE" +
-                "\norder by c.cm_id " + sort + " ";
+                "\nORDER BY c.cm_id " + sort + " ";
             dt = new DataTable();
             dt = cl_Sql.select(sql);
             if (dt.Rows.Count > 0)

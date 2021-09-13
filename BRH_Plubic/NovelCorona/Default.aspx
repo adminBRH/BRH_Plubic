@@ -56,11 +56,20 @@
                 </div>
                 <div class="col-6 mx-auto my-2 text-center">
                     <div class="row col-12 mx-auto">
-                        <div class="col-6 mx-auto my-auto text-center">
+                        <div class="col-6 mx-auto my-auto text-center" hidden="hidden">
                             วันเดือนปีเกิด
                         </div>
-                        <div class="col-6 mx-auto text-center">
-                            <input type="date" id="date_DOB" class="form-control" value="" runat="server" />
+                        <div class="col-6 mx-auto text-center" hidden="hidden">
+                            <input type="date" id="date_DOB" class="form-control" value="" runat="server"/>
+                        </div>
+                        <div class="row col-4 mx-auto text-center">
+                            <span class="col-lg-6 col-sm-12 mx-auto my-auto">วัน</span> <input type="number" id="txt_D" value="" min="1" max="31" class="col-lg-6 col-sm-12 mx-auto" runat="server" />
+                        </div>
+                        <div class="row col-4 mx-auto text-center">
+                            <span class="col-lg-6 col-sm-12 mx-auto my-auto">เดือน</span> <input type="number" id="txt_O" value="" min="1" max="12" class="col-lg-6 col-sm-12 mx-auto" runat="server" />
+                        </div>
+                        <div class="row col-4 mx-auto text-center">
+                            <span class="col-lg-6 col-sm-12 mx-auto my-auto">ปีเกิด</span> <input type="number" id="txt_B" value="" class="col-lg-6 col-sm-12 mx-auto" runat="server" />
                         </div>
                     </div>
                 </div>

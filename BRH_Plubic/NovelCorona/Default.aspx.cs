@@ -65,6 +65,16 @@ namespace BRH_Plubic.NovelCorona
                     Response.Write("<script>alert('กรุณา login ก่อนเข้าใช้งาน !!'); window.location.href='../default.aspx';</script>");
                 }
             }
+            else
+            {
+                if (!IsPostBack)
+                {
+                    DateTime DateNow = DateTime.Now;
+                    txt_B.Attributes.Add("min", (DateNow.Year + 443).ToString());
+                    txt_B.Attributes.Add("max", (DateNow.Year + 543).ToString());
+                    txt_B.Value = (DateNow.Year + 543).ToString();
+                }
+            }
         }
 
         protected void StaffDetails(string id)
@@ -111,7 +121,14 @@ namespace BRH_Plubic.NovelCorona
                 rd_sex_F.Checked = true;
             }
 
-            date_DOB.Value = DateTime.Parse(dt.Rows[0]["nc_dob"].ToString()).ToString("yyyy-MM-dd");
+            DateTime DOB = DateTime.Parse(dt.Rows[0]["nc_dob"].ToString());
+
+            date_DOB.Value = DOB.ToString("yyyy-MM-dd");
+
+            txt_D.Value = DOB.Day.ToString();
+            txt_O.Value = DOB.Month.ToString();
+            txt_B.Value = (DOB.Year+543).ToString();
+
             txt_career.Value = dt.Rows[0]["nc_career"].ToString();
             txt_nationality.Value = dt.Rows[0]["nc_nationality"].ToString();
             txt_race.Value = dt.Rows[0]["nc_race"].ToString();
@@ -495,16 +512,58 @@ namespace BRH_Plubic.NovelCorona
                 div_rd_sex.Attributes.Remove("style");
             }
 
-            string DOB = date_DOB.Value.ToString();
-            if (checkValueNull(DOB))
+            //string DOB = date_DOB.Value.ToString();
+            //if (checkValueNull(DOB))
+            //{
+            //    save = "no";
+            //    date_DOB.Attributes.Add("style", styleRequired);
+            //}
+            //else
+            //{
+            //    date_DOB.Attributes.Remove("style");
+            //}
+
+            string D = txt_D.Value.ToString();
+            if (checkValueNull(D))
             {
                 save = "no";
-                date_DOB.Attributes.Add("style", styleRequired);
+                txt_D.Attributes.Add("style", styleRequired);
             }
             else
             {
-                date_DOB.Attributes.Remove("style");
+                txt_D.Attributes.Remove("style");
             }
+
+            string O = txt_O.Value.ToString();
+            if (checkValueNull(O))
+            {
+                save = "no";
+                txt_O.Attributes.Add("style", styleRequired);
+            }
+            else
+            {
+                txt_O.Attributes.Remove("style");
+            }
+
+            string B = txt_B.Value.ToString();
+            if (checkValueNull(B))
+            {
+                save = "no";
+                txt_B.Attributes.Add("style", styleRequired);
+            }
+            else
+            {
+                txt_B.Attributes.Remove("style");
+            }
+
+            int intB = int.Parse(B);
+            if (intB > DateTime.Now.Year)
+            {
+                intB = intB - 543;
+            }
+
+            string DOB = intB.ToString() + "-" + O + "-" + D;
+
 
             string career = txt_career.Value.ToString().Trim();
             if (checkValueNull(career))

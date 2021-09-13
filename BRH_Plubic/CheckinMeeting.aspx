@@ -34,13 +34,14 @@
             <div class="card card-body">
                 <div class="row col-12 input-group">
                     <input type="text" id="txt_empid" autofocus="autofocus" onblur="fn_tabSubmit()" class="col-9 form-control" placeholder="รหัสพนักงาน" runat="server" />
-                    <asp:Button ID="btn_submit" CssClass="col-3 btn btn-light" Text="Check In" OnClick="btn_submit_Click" runat="server" />
+                    <asp:Button ID="btn_submit" CssClass="col-3 btn btn-light" Text="Check In" runat="server" />
                     <asp:Label ID="lbl_alert" CssClass="col-12" Font-Size="Larger" Text="" runat="server"></asp:Label>
+                    <button id="btnH_submit" hidden="hidden" runat="server" onserverclick="btn_submit_Click"></button> 
                     <script>
                         function fn_tabSubmit() {
                             var txt = document.getElementById('<%= txt_empid.ClientID %>');
                             if (txt.value != '') {
-                                __doPostBack('<%= btn_submit.UniqueID %>', '');
+                                __doPostBack('<%= btnH_submit.UniqueID %>', '');
                             }
                         }
                     </script>

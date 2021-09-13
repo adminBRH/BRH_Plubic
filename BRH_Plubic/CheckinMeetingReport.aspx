@@ -69,12 +69,19 @@
             </div>
             <canvas id="chart_doughnut" style="width: 100%"></canvas>
         </div>
+        <div class="col-lg-6 col-sm-12 mx-auto" style="margin: auto; margin-top: 0px;" hidden="hidden">
+            <div class="titleChart">
+                <span class="badge badge-info">GROUP <i class="fa fa-group"></i></span>
+            </div>
+            <canvas id="chart_bar_group" style="width: 100%"></canvas>
+        </div>
     </div>
 
     <div hidden="hidden">
         <input type="text" id="txtH_bar" value="" runat="server" disabled="disabled" />
         <input type="text" id="txtH_line" value="" runat="server" disabled="disabled" />
         <input type="text" id="txtH_doughnut" value="" runat="server" disabled="disabled" />
+        <input type="text" id="txtH_bar_group" value="" runat="server" disabled="disabled" />
     </div>
     
 
@@ -126,6 +133,9 @@
                 y: {
                     beginAtZero: true
                 }
+            },
+            legend: {
+                display: false,
             }
         }
     });
@@ -143,7 +153,11 @@
                 data: fn_LabelData(arLine, 'data'),
             }]
         },
-        options: {}
+        options: {
+            legend: {
+                display: false,
+            }
+        }
     });
 
     var arDoughnut = document.getElementById('<%= txtH_doughnut.ClientID %>').value;
@@ -173,6 +187,48 @@
                 }
             }
         },
+    });
+
+    var arBarGroup = document.getElementById('<%= txtH_bar_group.ClientID %>').value;
+    arBarGroup = 'PCG 1-5,MAO,Med support,Cashier & Account@158,54,82,62';
+    var ctx = document.getElementById('chart_bar_group').getContext('2d');
+    var chart_bar_group = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: fn_LabelData(arBarGroup, 'label'),
+            datasets: [
+                {
+                    label: 'QTY',
+                    data: fn_LabelData(arBarGroup, 'data'),
+                    backgroundColor: [
+                        fn_color('yellow', 0.5),
+                        fn_color('blue', 0.5),
+                        fn_color('green', 0.5),
+                        fn_color('red', 0.5)
+                    ],
+                    borderColor: [
+                        fn_color('yellow', 1),
+                        fn_color('blue', 1),
+                        fn_color('green', 1),
+                        fn_color('red', 1)
+                    ],
+                    borderWidth: 2
+                }
+            ]
+        },
+        options: {
+            scales: {
+                x: {
+                    min: 0,
+                },
+                y: {
+                    beginAtZero: true,
+                }
+            },
+            legend: {
+                display: false,
+            }
+        }
     });
 
 </script>

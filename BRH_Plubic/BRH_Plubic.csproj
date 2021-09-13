@@ -264,6 +264,10 @@
     <Content Include="AnnualCheckup.aspx" />
     <Content Include="API\Bconnect\Patient.aspx" />
     <Content Include="Appointment\Default.aspx" />
+    <Content Include="ArcusAir\Default.aspx" />
+    <Content Include="ArcusAir\GenerateBarcode.aspx" />
+    <Content Include="ArcusAir\images\icon\arcus-white-ico.ico" />
+    <Content Include="ArcusAir\images\icon\barcode_icon.png" />
     <Content Include="ARIcalendar.aspx" />
     <Content Include="ARIclinic.aspx" />
     <Content Include="ARIQ\Default.aspx" />
@@ -400,6 +404,8 @@
     <Content Include="Evaluate360\Default.aspx" />
     <Content Include="Evaluate360\Report.aspx" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\barcode\free3of9.txt" />
+    <Content Include="fonts\barcode\license.txt" />
     <Content Include="fonts\font-awesome-4.7.0\css\font-awesome.css" />
     <Content Include="fonts\font-awesome-4.7.0\css\font-awesome.min.css" />
     <Content Include="fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
@@ -888,6 +894,8 @@
     <Content Include="CounterCheckin\Document\Evaluate.pdf" />
     <Content Include="CounterCheckin\Document\Mylist.pdf" />
     <Content Include="images\icon\manifest.json" />
+    <Content Include="fonts\barcode\fre3of9x.ttf" />
+    <Content Include="fonts\barcode\free3of9.ttf" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="images\appleicon.png" />
@@ -1108,6 +1116,20 @@
       <DependentUpon>About.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="ArcusAir\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ArcusAir\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ArcusAir\GenerateBarcode.aspx.cs">
+      <DependentUpon>GenerateBarcode.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ArcusAir\GenerateBarcode.aspx.designer.cs">
+      <DependentUpon>GenerateBarcode.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ARIcalendar.aspx.cs">
       <DependentUpon>ARIcalendar.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2245,6 +2267,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="ArcusAir\images\barcode\" />
     <Folder Include="Happymoney\image\slip\" />
     <Folder Include="images\CardID\" />
     <Folder Include="images\MsTeamAgree\" />

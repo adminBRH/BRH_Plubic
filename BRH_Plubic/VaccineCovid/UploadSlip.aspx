@@ -277,7 +277,7 @@
                         </script>
                     </div>
                 </div>
-                <div id="div_data6" class="BoxData col-12 mx-auto mt-2">
+                <div id="div_data6" class="BoxData col-12 mx-auto mt-2" hidden="hidden">
                     <div class="ringBox row col-12 mx-auto text-center">
                         <div class="col-1 mx-auto"><div class="half-circle"></div></div>
                         <div class="col-1 mx-auto"><div class="half-circle"></div></div>
@@ -297,7 +297,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="div_data7" class="BoxData col-12 mx-auto mt-2">
+                <div id="div_data7" class="BoxData col-12 mx-auto mt-2" hidden="hidden">
                     <div class="ringBox row col-12 mx-auto text-center">
                         <div class="col-1 mx-auto"><div class="half-circle"></div></div>
                         <div class="col-1 mx-auto"><div class="half-circle"></div></div>
@@ -352,7 +352,7 @@
                         return name[last];
                     }
                 </script>
-                <div id="div_data8" class="BoxData col-12 mx-auto mt-2">
+                <div id="div_data8" class="BoxData col-12 mx-auto mt-2" hidden="hidden">
                     <div class="ringBox row col-12 mx-auto text-center">
                         <div class="col-1 mx-auto"><div class="half-circle"></div></div>
                         <div class="col-1 mx-auto"><div class="half-circle"></div></div>
@@ -375,13 +375,15 @@
                         </div>
                     </div>
                 </div>
-                <div id="div_data9" class="BoxData col-5 mx-auto mt-2">
+                <div id="div_data9" class="BoxData col-10 mx-auto mt-2">
                     <div class="ringBox row col-12 mx-auto text-center">
                         <div class="col-6 mx-auto"><div class="half-circle"></div></div>
                         <div class="col-6 mx-auto"><div class="half-circle"></div></div>
                     </div>
                     <div class="col-12 mx-auto text-center mt-3">
-                        <button type="button" id="btn_submit" class="btnSend" onserverclick="btn_submit_ServerClick" runat="server">บันทึก <i class="fa fa-send-o" style="position: absolute; margin-top: -10px; color: black"></i></button>
+                        <span class="badge badge-danger">
+                            ขออภัย !! หมดเวลารับชำระและยืนยันสลิปแล้ว
+                        </span>
                     </div>
                 </div>
             </div>
