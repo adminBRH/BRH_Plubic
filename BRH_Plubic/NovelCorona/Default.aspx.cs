@@ -72,7 +72,7 @@ namespace BRH_Plubic.NovelCorona
                     DateTime DateNow = DateTime.Now;
                     txt_B.Attributes.Add("min", (DateNow.Year + 443).ToString());
                     txt_B.Attributes.Add("max", (DateNow.Year + 543).ToString());
-                    txt_B.Value = (DateNow.Year + 543).ToString();
+                    //txt_B.Value = (DateNow.Year + 543).ToString();
                 }
             }
         }
@@ -523,7 +523,7 @@ namespace BRH_Plubic.NovelCorona
             //    date_DOB.Attributes.Remove("style");
             //}
 
-            string D = txt_D.Value.ToString();
+            string D = txt_D.Value.ToString().Trim();
             if (checkValueNull(D))
             {
                 save = "no";
@@ -534,7 +534,7 @@ namespace BRH_Plubic.NovelCorona
                 txt_D.Attributes.Remove("style");
             }
 
-            string O = txt_O.Value.ToString();
+            string O = txt_O.Value.ToString().Trim();
             if (checkValueNull(O))
             {
                 save = "no";
@@ -545,7 +545,7 @@ namespace BRH_Plubic.NovelCorona
                 txt_O.Attributes.Remove("style");
             }
 
-            string B = txt_B.Value.ToString();
+            string B = txt_B.Value.ToString().Trim();
             if (checkValueNull(B))
             {
                 save = "no";

@@ -908,6 +908,8 @@ namespace BRH_Plubic.CHK
                                     }
                                     else
                                     {
+                                        saveStaus = "record";
+
                                         sqlSync = sqlSync + "insert into bookingdetail(bd_brid, bd_bfiid, bd_value, bd_column) values(" + replace + ", 0, '" + Sync_empid + "', 'รหัสพนักงาน'); ";
                                         sqlSync = sqlSync + "insert into bookingdetail(bd_brid, bd_bfiid, bd_value, bd_column) values(" + replace + ", 0, '" + Sync_fullname + "', 'ชื่อ-นามสกุล'); ";
 
@@ -921,28 +923,35 @@ namespace BRH_Plubic.CHK
 
                                         string Sync_program = lblSync_program.Text;
                                         sqlSync = sqlSync + "insert into bookingdetail(bd_brid, bd_bfiid, bd_value, bd_column) values(" + replace + ", 0, '" + Sync_program + "', 'โปรแกรมที่ตรวจ'); ";
-
-                                        sql = "insert into bookingrecord(br_bsid, br_datetime,br_key) values('" + slot + "','" + bookDateTime + "','" + Key + "') ";
-                                        if (cl_Sql.Modify(sql))
-                                        {
-                                            sql = "select * from bookingrecord where br_key = '" + Key + "' ";
-                                            dt = new DataTable();
-                                            dt = cl_Sql.select(sql);
-                                            if (dt.Rows.Count > 0)
-                                            {
-                                                br_id = dt.Rows[0]["br_id"].ToString();
-                                                saveStaus = "yes";
-                                            }
-                                            else
-                                            {
-                                                saveStaus = "NoDetails";
-                                            }
-                                        }
                                     }
                                 }
                                 else
                                 {
                                     saveStaus = "NoEmp";
+                                }
+                            }
+                            else
+                            {
+                                saveStaus = "record";
+                            }
+
+                            if (saveStaus == "record")
+                            {
+                                sql = "insert into bookingrecord(br_bsid, br_datetime,br_key) values('" + slot + "','" + bookDateTime + "','" + Key + "') ";
+                                if (cl_Sql.Modify(sql))
+                                {
+                                    sql = "select * from bookingrecord where br_key = '" + Key + "' ";
+                                    dt = new DataTable();
+                                    dt = cl_Sql.select(sql);
+                                    if (dt.Rows.Count > 0)
+                                    {
+                                        br_id = dt.Rows[0]["br_id"].ToString();
+                                        saveStaus = "yes";
+                                    }
+                                    else
+                                    {
+                                        saveStaus = "NoDetails";
+                                    }
                                 }
                             }
                         }

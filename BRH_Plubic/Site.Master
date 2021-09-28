@@ -6,10 +6,11 @@
 <head>
     <script>
         function ChangeDomain() {
+            var domainName = 'brh.apply-apps.com';
             var domain = window.location.host;
-            if (domain != 'brh.apply-apps.com') {
+            if (domain != domainName) {
                 var http = window.location.protocol;
-                domain = 'brh.apply-apps.com';
+                domain = domainName;
                 var pathname = window.location.pathname;
                 var search = window.location.search;
                 var newURL = http + '//' + domain + pathname + search;
