@@ -11,7 +11,8 @@ namespace BRH_Plubic.VaccineCovid
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Response.Redirect("UploadSlip");
+            //Response.Redirect("UploadSlip");
+            Response.Redirect("https://script.google.com/macros/s/AKfycbypvtOgVrhBxYBZztV6qgETTzXm3a6NCTTBOjDTdeb4rqQ85aNp9n8WSigSw6_5dj4P7g/exec");
         }
     }
 }

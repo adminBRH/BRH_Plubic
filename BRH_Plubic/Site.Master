@@ -616,18 +616,9 @@
             <div class="col-12 rounded btn-outline-primary border-0 text-right" onclick="fn_goto('BookingSlot')">
                 <strong style="font-size:xx-large;">Booking Slot </strong><span class="ti-2x ti-bookmark-alt"></span>
             </div>
-            <br />
-            <div class="col-12 rounded btn-outline-primary border-0 text-right" onclick="SubMenu('div_Menu_ControlAsset')">
-                <strong style="font-size:xx-large;">Control Asset </strong><span class="ti-2x ti-target"></span>
-            </div>
-            <div id="div_Menu_ControlAsset" class="col-12 mx-auto mt-3" hidden="hidden">
-                <div class="btn-outline-info border-0 text-right" onclick="fn_goto('ControlAsset_Check')" style="font-size:x-large;">
-                    Check Asset <span class="ti-search"></span>
-                </div>
                 <br />
-                <div class="btn-outline-info border-0 text-right" onclick="fn_goto('ControlAsset_Report')" style="font-size:x-large;">
-                    Report <span class="ti-book"></span>
-                </div>
+            <div class="col-12 rounded btn-outline-primary border-0 text-right" onclick="fn_goto('AssetControl')">
+                <strong style="font-size:xx-large;">Asset Control </strong><span class="fa fa-object-ungroup"></span>
             </div>
             <br />
             <div class="col-12 rounded btn-outline-primary border-0 text-right" onclick="fn_goto('Live')">
@@ -756,11 +747,8 @@
             case 'BookingSlot':
                 location.href = "../CHK/Default.aspx";
                 break;
-            case 'ControlAsset_Check':
-                location.href = "../ControlAsset/Default.aspx";
-                break;
-            case 'ControlAsset_Report':
-                location.href = "../ControlAsset/Report.aspx";
+            case 'AssetControl':
+                location.href = "../AssetControl";
                 break;
             case 'MsTeam_reg':
                 location.href = "../MsTeamAgree.aspx";

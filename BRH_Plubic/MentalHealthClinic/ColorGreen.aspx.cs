@@ -34,8 +34,12 @@ namespace BRH_Plubic.MentalHealthClinic
             string line = txt_line.Value.ToString().Trim();
             string empid = txt_empid.Value.ToString().Trim();
 
+            string accommodation = dd_accommodation.SelectedValue.ToString();
+            string roomNumber = txt_roomnumber.Value.ToString().Trim();
+
             sql = "UPDATE mentalhealthrecord " +
                 "SET fname = '" + fname + "', lname = '" + lname + "', p_number = '" + pnumber + "', line_id = '" + line + "', emp_id = '" + empid + "' " +
+                ",accommodation = '" + accommodation + "', room_number = '" + roomNumber + "' " +
                 "WHERE m_id = '" + m_id + "';";
             if (CL_Sql.Modify(sql))
             {

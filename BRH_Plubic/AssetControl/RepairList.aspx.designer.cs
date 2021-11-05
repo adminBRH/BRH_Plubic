@@ -7,83 +7,65 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BRH_Plubic.MentalHealthClinic
+namespace BRH_Plubic.AssetControl
 {
 
 
-    public partial class ColorGreen
+    public partial class RepairList
     {
 
         /// <summary>
-        /// txt_fname control.
+        /// txt_id control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_fname;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_id;
 
         /// <summary>
-        /// txt_lname control.
+        /// btn_search control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_lname;
+        protected global::System.Web.UI.HtmlControls.HtmlButton btn_search;
 
         /// <summary>
-        /// txt_empid control.
+        /// dd_status control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_empid;
+        protected global::System.Web.UI.WebControls.DropDownList dd_status;
 
         /// <summary>
-        /// txt_phone control.
+        /// LV_Repair control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_phone;
+        protected global::System.Web.UI.WebControls.ListView LV_Repair;
 
         /// <summary>
-        /// txt_line control.
+        /// txtH_ID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_line;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtH_ID;
 
         /// <summary>
-        /// dd_accommodation control.
+        /// btn_action control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList dd_accommodation;
-
-        /// <summary>
-        /// txt_roomnumber control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_roomnumber;
-
-        /// <summary>
-        /// btn_submit control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton btn_submit;
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor btn_action;
     }
 }

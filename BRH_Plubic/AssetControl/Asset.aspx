@@ -226,8 +226,31 @@
                                     <span data-toggle="tooltip" data-placement="top" title="IP Config">
                                         <i class="fa fa-wifi my-3" data-toggle="popover" data-html="true" title="IP Config." data-content="<b>MAC:</b> <%# Eval("asd_mac") %><br /><b>IP:</b> <%# Eval("asd_ip") %>" style="cursor: pointer;"></i>
                                     </span>
-                                    <i class="fa fa-wrench my-3" data-toggle="tooltip" data-placement="top" title="แจ้งซ่อม" style="cursor: pointer;"></i>
+                                    <script>
+                                        function fn_RepairIcon(status, asid) {
+                                            var cl = 'fa fa-spin fa-spinner my-3';
+                                            var i_ar = document.getElementById('i_ar_' + asid);
+                                            if (status == 'Finish' || status == '') {
+                                                cl = 'fa fa-wrench my-3';
+                                                i_ar.setAttribute('data-toggle','modal');
+                                                i_ar.setAttribute('data-target','#modal_repair');
+                                            } else {
+                                                i_ar.removeAttribute('data-toggle');
+                                                i_ar.removeAttribute('data-target');
+                                                i_ar.setAttribute('onclick', 'fn_repairlist(\'<%# Eval("asr_id") %>\')');
+                                            }
+                                            i_ar.setAttribute('class',cl);
+                                        }
+
+                                        function fn_repairlist(id) {
+                                            location.href = 'RepairList?id=' + id;
+                                        }
+                                    </script>
+                                    <i id="i_ar_<%# Eval("asd_id") %>" data-toggle="modal" data-target="#modal_repair" title="แจ้งซ่อม" style="cursor: pointer;" onclick="fn_repair('<%# Eval("asd_displayname") %>','<%# Eval("ast_name") %>','<%# Eval("ds_desc") %>','<%# Eval("asd_sn") %>','<%# Eval("asr_status") %>','<%# Eval("asr_id") %>')"></i>
                                 </div>
+                                <script>
+                                    fn_RepairIcon('<%# Eval("asr_status") %>', '<%# Eval("asd_id") %>');
+                                </script>
                                 <div class="PostCard-footer">
                                     <a data-toggle="modal" data-target="#modalPerformance" onclick="fn_adjPerformance('<%# Eval("asd_id") %>','<%# Eval("asd_branch") %>&<%# Eval("asd_cate") %>&<%# Eval("asd_type") %>')"><img src="images/Performance/add_icon.png" data-toggle="tooltip" data-placement="top" title="Adjust performance" style="cursor: pointer;" /></a>
                                     <%# Eval("asd_performance") %>
@@ -291,6 +314,80 @@
     function fn_getSN(sn) {
         document.getElementById('<%= txt_asr.ClientID %>').value = sn;
         fn_Accessories();
+    }
+</script>
+
+<!-- Modal repair -->
+<div class="modal fade" id="modal_repair" tabindex="-1" role="dialog" aria-labelledby="modal_repairTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal_repairTitle">แจ้งซ่อม</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <div class="row col-12 mx-auto">
+              <div class="col-12 mx-auto">
+                  <asp:Label id="lbl_repair_display" Text="" runat="server"></asp:Label>
+              </div>
+              <div class="col-12 mx-auto">
+                  <asp:Label id="lbl_repair_machine" Text="" runat="server"></asp:Label>
+              </div>
+              <div class="col-12 mx-auto">
+                  <asp:Label id="lbl_repair_location" Text="" runat="server"></asp:Label>
+              </div>
+              <div class="col-12 mx-auto">
+                  <asp:Label id="lbl_repair_SN" Text="" runat="server"></asp:Label>
+              </div>
+              <textarea id="txt_repair_detail" class="form-control" rows="3" placeholder="รายละเอียด" runat="server"></textarea>
+              <div class="col-12 mx-auto">
+                  <asp:Label ID="lbl_repair_user" Text="" runat="server"></asp:Label>
+              </div>
+          </div>
+          <div hidden="hidden">
+              <input type="text" id="txtH_display" value="" runat="server" />
+              <input type="text" id="txtH_machine" value="" runat="server" />
+              <input type="text" id="txtH_location" value="" runat="server" />
+              <input type="text" id="txtH_SN" value="" runat="server" />
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btn_repair_submit" class="btn btn-outline-primary" onserverclick="btn_repair_submit_ServerClick" runat="server">ส่งซ่อม</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    function fn_repair(displayname, Name, location, sn, RepairStatus, RepairID) {
+        if (RepairStatus == '' || RepairStatus == 'Finish') {
+            var lblDisplay = document.getElementById('<%= lbl_repair_display.ClientID %>');
+            var lblMachine = document.getElementById('<%= lbl_repair_machine.ClientID %>');
+            var lblLocation = document.getElementById('<%= lbl_repair_location.ClientID %>');
+            var lblSN = document.getElementById('<%= lbl_repair_SN.ClientID %>');
+
+            var txtHDisplay = document.getElementById('<%= txtH_display.ClientID %>');
+            var txtHMachine = document.getElementById('<%= txtH_machine.ClientID %>');
+            var txtHLocation = document.getElementById('<%= txtH_location.ClientID %>');
+            var txtHSN = document.getElementById('<%= txtH_SN.ClientID %>');
+
+            txtHDisplay.value = displayname;
+            txtHMachine.value = Name;
+            txtHLocation.value = location;
+            txtHSN.value = sn;
+
+            lblDisplay.innerHTML = displayname;
+            lblMachine.innerHTML = 'ประเภท : ' + Name;
+            lblLocation.innerHTML = 'แผนก : ' + location;
+            lblSN.innerHTML = 'SN : ' + sn;
+        } else {
+            var http = window.location.protocol;
+            var domain = window.location.host;
+            var pathname = '/AssetControl'; //window.location.pathname;
+            window.location.href = http + '//' + domain + pathname + '/RepairList?id=' + RepairID;
+        }
     }
 </script>
 

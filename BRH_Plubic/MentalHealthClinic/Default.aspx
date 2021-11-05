@@ -65,7 +65,7 @@ input[type=radio] {
     </div>
 
     <div class="col-11 mx-auto text-center mt-5">
-        <asp:Button ID="btn_next" Text="Next" CssClass="btn btn-light" OnClick="btn_next_Click" runat="server" />
+        <asp:Button ID="btn_next" Text="Next" CssClass="btn btn-light" Font-Size="X-Large" OnClick="btn_next_Click" runat="server" />
     </div>
     
     <div class="col-11 mx-auto text-center mt-5" visible="true" runat="server">

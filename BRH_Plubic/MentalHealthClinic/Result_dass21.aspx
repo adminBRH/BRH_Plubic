@@ -13,15 +13,25 @@
                        
                         
                     </div>
-                    <div class="card-body col-5 mx-auto" style="background-color:azure" id="div_yellow" >
+                    <div class="card-body col-lg-5 col-sm-9 mx-auto" style="background-color:azure" id="div_yellow" >
                          <input type="text" class="form-control mt-1" placeholder="ชื่อ" id="txt_fname" onkeyup="checkData()" runat="server"/>
                          <input type="text" class="form-control mt-1" placeholder="นามสกุล" id="txt_lname" onkeyup="checkData()" runat="server"/>
-                         <input type="text" class="form-control mt-1" placeholder="รหัสพนักงาน" id="txt_empid" onkeyup="checkData()" runat="server"/>
+                         <input type="text" class="form-control mt-1" placeholder="รหัสพนักงาน" id="txt_empid" onkeyup="checkData()" runat="server" hidden="hidden"/>
                          <input type="text" class="form-control mt-1" placeholder="เบอร์โทร" id="txt_phone" onkeyup="checkData()" runat="server"/>
                          <input type="text" class="form-control mt-1" placeholder="LineID" id="txt_line" onkeyup="checkData()" runat="server"/>
+                        <asp:DropDownList ID="dd_accommodation" CssClass="form-control mt1" runat="server">
+                            <asp:ListItem Text="โปรดเลือก สถานที่พักรักษา" Value=""></asp:ListItem>
+                            <asp:ListItem Text="โรงพยาบาลกรุงเทพระยอง" Value="โรงพยาบาลกรุงเทพระยอง"></asp:ListItem>
+                            <asp:ListItem Text="Hospitel ในโรงพยาบาลกรุงเทพระยอง" Value="Hospitel ในโรงพยาบาลกรุงเทพระยอง"></asp:ListItem>
+                            <asp:ListItem Text="โรงแรมตำนานป่า" Value="โรงแรมตำนานป่า"></asp:ListItem>
+                            <asp:ListItem Text="โรงแรม Fuse" Value="โรงแรม Fuse"></asp:ListItem>
+                            <asp:ListItem Text="โรงแรม Cruise" Value="โรงแรม Cruise"></asp:ListItem>
+                            <asp:ListItem Text="โรงแรมอักษร" Value="โรงแรมอักษร"></asp:ListItem>
+                        </asp:DropDownList>
+                        <input type="text" class="form-control mt-1" placeholder="หมายเลขห้อง" id="txt_roomnumber" onkeyup="checkData()" runat="server"/>
                     </div>  
                     <div class="col-12 mt-3 mx-auto text-center">
-                            <button type="button" class="btn btn-primary" id="btn_submit_result_dass" onserverclick="btn_submit_result_dass_ServerClick" disabled="disabled" runat="server">Next</button>
+                            <button type="button" class="btn btn-primary" id="btn_submit_result_dass" onserverclick="btn_submit_result_dass_ServerClick" disabled="disabled" runat="server" style="font-size: x-large;">Next</button>
                         </div>
                 </div>
             </div>

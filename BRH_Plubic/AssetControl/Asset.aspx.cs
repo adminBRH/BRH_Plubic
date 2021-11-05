@@ -10,6 +10,8 @@ using System.Text;
 using MySql.Data.MySqlClient;
 
 using System.Drawing;
+using System.Net;
+using System.IO;
 
 namespace BRH_Plubic.AssetControl
 {
@@ -32,6 +34,8 @@ namespace BRH_Plubic.AssetControl
                     Department("BRH");
                     Category("", "");
                     AeetType("", "", "");
+
+                    lbl_repair_user.Text = "แจ้งซ่อมโดย : " + Session["name"].ToString() + " (" + Session["userid"].ToString() + ")";
 
                     CheckSelect();
 
@@ -58,14 +62,29 @@ namespace BRH_Plubic.AssetControl
             }
         }
 
+        public Boolean CheckStatus()
+        {
+            Boolean bl = false;
+
+            string userStatus = Session["status"].ToString();
+            if (userStatus == "admin")
+            {
+                bl = true;
+            }
+
+            return bl;
+        }
+
         protected void ListAsset(string search, string searchby, string status, string limit)
         {
             sql = "select *, null as 'asd_timeago', null as 'asd_performance', null as 'asd_performance_ar' " +
-                "from asset_details as ad  " +
-                "left join department_service as ds on ds.ds_id = ad.asd_dept " +
-                "left join asset_cate as ac on ac.asc_id = ad.asd_cate " +
-                "left join asset_type as at on at.ast_id = ad.asd_type " +
-                "left join asset_status as st on st.ass_id = ad.asd_status " +
+                "\n,if(ar.asr_status is null,'Finish',ar.asr_status) as 'asr_status', ar.asr_id " +
+                "\nfrom asset_details as ad  " +
+                "\nleft join department_service as ds on ds.ds_id = ad.asd_dept " +
+                "\nleft join asset_cate as ac on ac.asc_id = ad.asd_cate " +
+                "\nleft join asset_type as at on at.ast_id = ad.asd_type " +
+                "\nleft join asset_status as st on st.ass_id = ad.asd_status " +
+                "\nleft join asset_repair as ar on ar.asr_asdid = ad.asd_id " +
                 "\nwhere asd_status like '%" + status + "%' ";
             if (searchby == "code")
             {
@@ -541,54 +560,61 @@ namespace BRH_Plubic.AssetControl
         {
             string scModal = "";
 
-            string muser = Session["userid"].ToString();
-
-            string asdID = txtH_asdID.Value.ToString().Trim();
-
-            string comname = txt_edit_comname.Value.ToString();
-            string displayname = txt_edit_displayname.Value.ToString();
-            string sn = txt_edit_sn.Value.ToString();
-            string asr = txt_edit_asr.Value.ToString();
-            string gls = txt_edit_gls.Value.ToString();
-            string nhealth = txt_edit_nhealth.Value.ToString();
-            string mac = txt_edit_mac.Value.ToString();
-            string ip = txt_edit_ip.Value.ToString();
-            string desc = txt_edit_desc.Value.ToString();
-
-            sql = "INSERT INTO asset_details_log(asd_id,asd_status,asd_branch,asd_dept,asd_cate,asd_type,asd_cuser,asd_cdate,asd_muser,asd_mdate,asd_displayname ,asd_sn,asd_gls_barcode,asd_nhealth_barcode,asd_mac,asd_ip,asd_comname,asd_camera,asd_cardreader,asd_pgo,asd_asr_id,asd_desc,asd_warrant_end) " +
-                "\nSELECT * FROM asset_details where asd_id = '" + asdID + "' ";
-            if (cl_Sql.Modify(sql))
+            if (CheckStatus() == false)
             {
-                sql = "update asset_details set asd_comname='" + comname + "', asd_displayname='" + displayname + "', " +
-                    "\nasd_sn='" + sn + "', asd_asr_id='" + asr + "', " +
-                    "\nasd_gls_barcode='" + gls + "', asd_nhealth_barcode='" + nhealth + "', asd_mac='" + mac + "', asd_ip='" + ip + "', asd_desc='" + desc + "', " +
-                    "\nasd_muser='" + muser + "', asd_mdate=CURRENT_TIMESTAMP " +
-                    "\nwhere asd_id='" + asdID + "'; ";
-                if (cl_Sql.Modify(sql))
-                {
-                    string SearchType = "";
-                    string SearchValue = "";
-                    string limit = dd_limit.SelectedValue.ToString();
-                    if (txt_search_location.Value.ToString() != "")
-                    {
-                        SearchType = "location";
-                        SearchValue = txt_search_location.Value.ToString().Trim();
-                    }
-                    if (txt_search_code.Value.ToString() != "")
-                    {
-                        SearchType = "code";
-                        SearchValue = txt_search_code.Value.ToString().Trim();
-                    }
-                    scModal = "fn_AlertModal('Success','Success !!','Asset?st=" + SearchType + "&sv=" + SearchValue + "&lm=" + limit + "',1000);";
-                }
-                else
-                {
-                    scModal = "fn_AlertModal('Warning','ไม่สามารถบันทึกได้กรุณาติดต่อผู้ดูแลระบบ [error code: ed001]','',0);";
-                }
+                scModal = "fn_AlertModal('Warning','คุณไม่มีสิทธิ์แก้ไขข้อมูลสินทรัพย์ !!','',0);";
             }
             else
             {
-                scModal = "fn_AlertModal('Warning','ไม่สามารถบันทึกได้กรุณาติดต่อผู้ดูแลระบบ [error code: ed002]','',0);";
+                string muser = Session["userid"].ToString();
+
+                string asdID = txtH_asdID.Value.ToString().Trim();
+
+                string comname = txt_edit_comname.Value.ToString();
+                string displayname = txt_edit_displayname.Value.ToString();
+                string sn = txt_edit_sn.Value.ToString();
+                string asr = txt_edit_asr.Value.ToString();
+                string gls = txt_edit_gls.Value.ToString();
+                string nhealth = txt_edit_nhealth.Value.ToString();
+                string mac = txt_edit_mac.Value.ToString();
+                string ip = txt_edit_ip.Value.ToString();
+                string desc = txt_edit_desc.Value.ToString();
+
+                sql = "INSERT INTO asset_details_log(asd_id,asd_status,asd_branch,asd_dept,asd_cate,asd_type,asd_cuser,asd_cdate,asd_muser,asd_mdate,asd_displayname ,asd_sn,asd_gls_barcode,asd_nhealth_barcode,asd_mac,asd_ip,asd_comname,asd_camera,asd_cardreader,asd_pgo,asd_asr_id,asd_desc,asd_warrant_end) " +
+                    "\nSELECT * FROM asset_details where asd_id = '" + asdID + "' ";
+                if (cl_Sql.Modify(sql))
+                {
+                    sql = "update asset_details set asd_comname='" + comname + "', asd_displayname='" + displayname + "', " +
+                        "\nasd_sn='" + sn + "', asd_asr_id='" + asr + "', " +
+                        "\nasd_gls_barcode='" + gls + "', asd_nhealth_barcode='" + nhealth + "', asd_mac='" + mac + "', asd_ip='" + ip + "', asd_desc='" + desc + "', " +
+                        "\nasd_muser='" + muser + "', asd_mdate=CURRENT_TIMESTAMP " +
+                        "\nwhere asd_id='" + asdID + "'; ";
+                    if (cl_Sql.Modify(sql))
+                    {
+                        string SearchType = "";
+                        string SearchValue = "";
+                        string limit = dd_limit.SelectedValue.ToString();
+                        if (txt_search_location.Value.ToString() != "")
+                        {
+                            SearchType = "location";
+                            SearchValue = txt_search_location.Value.ToString().Trim();
+                        }
+                        if (txt_search_code.Value.ToString() != "")
+                        {
+                            SearchType = "code";
+                            SearchValue = txt_search_code.Value.ToString().Trim();
+                        }
+                        scModal = "fn_AlertModal('Success','Success !!','Asset?st=" + SearchType + "&sv=" + SearchValue + "&lm=" + limit + "',1000);";
+                    }
+                    else
+                    {
+                        scModal = "fn_AlertModal('Warning','ไม่สามารถบันทึกได้กรุณาติดต่อผู้ดูแลระบบ [error code: ed001]','',0);";
+                    }
+                }
+                else
+                {
+                    scModal = "fn_AlertModal('Warning','ไม่สามารถบันทึกได้กรุณาติดต่อผู้ดูแลระบบ [error code: ed002]','',0);";
+                }
             }
 
             Page.ClientScript.RegisterStartupScript(this.GetType(), "cllAlertModal", scModal, true);
@@ -629,17 +655,27 @@ namespace BRH_Plubic.AssetControl
 
         protected void btn_adjPerf_ServerClick(object sender, EventArgs e)
         {
-            string asdID = txtH_adjPerf_id.Value.ToString().Trim();
+            string scModal = "";
+            if (CheckStatus() == false)
+            {
+                scModal = "fn_AlertModal('Warning','คุณไม่มีสิทธิ์แก้ไขข้อมูลสินทรัพย์ !!','',0);";
+            }
+            else
+            {
+                string asdID = txtH_adjPerf_id.Value.ToString().Trim();
 
-            ListProformance(asdID);
+                ListProformance(asdID);
 
-            string BCT = txtH_adjPerf_BCT.Value.ToString().Trim();
-            string[] arBCT = BCT.Split('&');
-            string bran = arBCT[0];
-            string cate = arBCT[1];
-            string type = arBCT[2];
+                string BCT = txtH_adjPerf_BCT.Value.ToString().Trim();
+                string[] arBCT = BCT.Split('&');
+                string bran = arBCT[0];
+                string cate = arBCT[1];
+                string type = arBCT[2];
 
-            ddProformance(bran, cate, type);
+                ddProformance(bran, cate, type);
+            }
+
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "cllAlertModal", scModal, true);
         }
 
         protected void btn_adjPerf_add_ServerClick(object sender, EventArgs e)
@@ -701,6 +737,141 @@ namespace BRH_Plubic.AssetControl
         protected void btn_reload_ServerClick(object sender, EventArgs e)
         {
             ReloadDATA();
+        }
+
+        public Boolean Linenotify(string txt, string sendTo)
+        {
+            Boolean bl = false;
+
+            string token = "zAnirYUlJsqdbI9ISjXe7wPP0xbje3pAufQKXjs4UQ0";
+            if (sendTo == "Clinic")
+            {
+                token = "KvQLv7ml6usGawbF7ljp5GxZDyxo2LbGzdaVL09E8h6";
+            }
+            string msg = txt;
+
+            try
+            {
+                var request = (HttpWebRequest)WebRequest.Create("https://notify-api.line.me/api/notify");
+                var postData = string.Format("message={0}", msg);
+                var data = Encoding.UTF8.GetBytes(postData);
+                request.Method = "POST";
+                request.ContentType = "application/x-www-form-urlencoded";
+                request.ContentLength = data.Length;
+                request.Headers.Add("Authorization", "Bearer " + token);
+
+                using (var stream = request.GetRequestStream())
+                {
+                    stream.Write(data, 0, data.Length);
+                }
+
+                var response = (HttpWebResponse)request.GetResponse();
+                var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
+
+                bl = true;
+            }
+            catch (Exception ex)
+            {
+                bl = false;
+            }
+
+            return bl;
+        }
+
+        protected void btn_repair_submit_ServerClick(object sender, EventArgs e)
+        {
+            string username = Session["name"].ToString() + "(" + Session["userid"].ToString() + ")";
+            string Display = txtH_display.Value.ToString();
+            string Location = txtH_location.Value.ToString();
+            string Type = txtH_machine.Value.ToString();
+            string DESC = txt_repair_detail.Value.ToString().Trim();
+            string SN = txtH_SN.Value.ToString();
+
+            sql = "select * from asset_details where asd_sn='" + SN + "'; ";
+            dt = new DataTable();
+            dt = cl_Sql.select(sql);
+            if (dt.Rows.Count > 0)
+            {
+                string asdID = dt.Rows[0]["asd_id"].ToString();
+                string typeID = dt.Rows[0]["asd_type"].ToString();
+                string cateID = dt.Rows[0]["asd_cate"].ToString();
+                string deptID = dt.Rows[0]["asd_dept"].ToString();
+
+                string RepairID = "";
+
+                // Check Duplicate Insert
+                sql = "select * from asset_repair where asr_sn='" + SN + "' and asr_status='Notify' ";
+                dt = new DataTable();
+                dt = cl_Sql.select(sql);
+                if (dt.Rows.Count > 0)
+                { }
+                else
+                {
+                    sql = "INSERT INTO asset_repair " +
+                        "\n(asr_asdid, asr_sn, asr_cuser, asr_dsid, asr_ascid, asr_astid, asr_desc) " +
+                        "\nVALUES('" + asdID + "', '" + SN + "', '" + Session["userid"].ToString() + "','" + deptID + "', '" + cateID + "', '" + typeID + "', '" + DESC + "'); ";
+                    if (cl_Sql.Modify(sql))
+                    {
+                        sql = "select max(asr_id) as 'asr_id' from asset_repair " +
+                            "\nwhere asr_asdid='" + asdID + "' and convert(asr_cdate, date)=current_date ";
+                        dt = new DataTable();
+                        dt = cl_Sql.select(sql);
+                        if (dt.Rows.Count > 0)
+                        {
+                            RepairID = dt.Rows[0]["asr_id"].ToString();
+
+                            string domain = Request.Url.Host;
+                            string Link = "http://" + domain + "/AssetControl/RepairList?id=" + RepairID;
+
+                            string txt = "\nแจ้งซ่อมอุปกรณ์ !!\nRepair ID: " + RepairID + "\nLocation: " + Location + "\nAsset Type: " + Type + "" +
+                                "\nDisplay Name: " + Display + "\nSN: " + SN + "\nBy: " + username + "\nLink: " + Link;
+                            Linenotify(txt, "IT");
+
+                            txt = "\nหมายเลขการแจ้ง: " + RepairID + "\n" + Location + "\nแจ้งซ่อม " + Type + "(" + Display + ")" +
+                                "\nSN: " + SN + "\nแจ้งโดย: " + username + "\nLink: " + Link;
+                            Linenotify(txt, "Clinic");
+
+                            string searchLo = txt_search_location.Value.ToString().Trim();
+                            string searchCo = txt_search_code.Value.ToString().Trim();
+                            string limit = dd_limit.SelectedValue.ToString();
+
+                            string searchType = "";
+                            string search = "";
+                            if (searchLo != "")
+                            {
+                                searchType = "location";
+                                search = searchLo;
+                            }
+                            if (searchCo != "")
+                            {
+                                searchType = "code";
+                                search = searchCo;
+                            }
+
+                            if (searchType == "")
+                            {
+                                Response.Redirect(Page.Request.Url.ToString(), true);
+                            }
+                            else
+                            {
+                                Search(searchType, search, limit);
+                            }
+                        }
+                        else
+                        {
+
+                        }
+                    }
+                    else
+                    {
+
+                    }
+                }
+            }
+            else
+            {
+
+            }
         }
     }
 }

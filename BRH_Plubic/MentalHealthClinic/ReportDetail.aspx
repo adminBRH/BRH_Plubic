@@ -2,11 +2,10 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContentDesktop" runat="server">
-     <div class="card ">
         <div class="card-body text-center">
             <h3>MentalHealthClinic Report</h3>
             <br />
-            <asp:GridView ID="Report_user" class="col-10 mx-auto bg-light" runat="server" AutoGenerateColumns="False" CellPadding="3" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px">
+            <asp:GridView ID="Report_user" class="col-11 mx-auto bg-light" runat="server" AutoGenerateColumns="False" CellPadding="3" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px">
                 <Columns>
                     <asp:BoundField DataField="m_id" HeaderText="ID"></asp:BoundField>
                     <asp:BoundField DataField="fname" HeaderText="Firstname"></asp:BoundField>
@@ -15,6 +14,8 @@
                     <asp:BoundField DataField="color_id" HeaderText="TempNumber"></asp:BoundField>
                     <asp:BoundField DataField="p_number" HeaderText="Phone"></asp:BoundField>
                     <asp:BoundField DataField="line_id" HeaderText="LineID"></asp:BoundField>
+                    <asp:BoundField DataField="accommodation" HeaderText="สถานที่พักรักษา"></asp:BoundField>
+                    <asp:BoundField DataField="room_number" HeaderText="หมายเลขห้อง"></asp:BoundField>
 
                     <asp:TemplateField HeaderText="Report">
                         <ItemTemplate>
@@ -47,5 +48,4 @@
 
 
             </div>
-         </div>
 </asp:Content>

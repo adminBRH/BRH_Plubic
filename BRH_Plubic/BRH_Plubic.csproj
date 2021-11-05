@@ -307,6 +307,7 @@
     <Content Include="AssetControl\images\Performance\windows10.png" />
     <Content Include="AssetControl\images\Performance\windows7.png" />
     <Content Include="AssetControl\images\Question.png" />
+    <Content Include="AssetControl\RepairList.aspx" />
     <Content Include="assets\css\fullcalendar.css" />
     <Content Include="assets\css\fullcalendar.print.css" />
     <Content Include="assets\js\fullcalendar.js" />
@@ -896,6 +897,7 @@
     <Content Include="images\icon\manifest.json" />
     <Content Include="fonts\barcode\fre3of9x.ttf" />
     <Content Include="fonts\barcode\free3of9.ttf" />
+    <Content Include="AssetControl\document\manual\HowtoRepair.pdf" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="images\appleicon.png" />
@@ -1228,6 +1230,13 @@
     </Compile>
     <Compile Include="AssetControl\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AssetControl\RepairList.aspx.cs">
+      <DependentUpon>RepairList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssetControl\RepairList.aspx.designer.cs">
+      <DependentUpon>RepairList.aspx</DependentUpon>
     </Compile>
     <Compile Include="BookVaccinate.aspx.cs">
       <DependentUpon>BookVaccinate.aspx</DependentUpon>

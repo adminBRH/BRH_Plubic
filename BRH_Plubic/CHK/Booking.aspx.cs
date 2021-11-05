@@ -805,6 +805,7 @@ namespace BRH_Plubic.CHK
                     {
                         string ConTID = dt.Rows[i]["bfi_id"].ToString();
                         string type = dt.Rows[i]["bfi_type"].ToString();
+                        string title = dt.Rows[i]["bfi_title"].ToString();
                         string index = dt.Rows[i]["bfi_index"].ToString();
                         string required = dt.Rows[i]["bfi_required"].ToString();
 
@@ -836,7 +837,7 @@ namespace BRH_Plubic.CHK
                         }
                         else
                         {
-                            SQLs = SQLs + "insert into bookingdetail(bd_brid, bd_bfiid, bd_value) values(" + replace + ", " + ConTID + ", '" + input.Trim() + "'); \n";
+                            SQLs = SQLs + "insert into bookingdetail(bd_brid, bd_bfiid, bd_value, bd_column) values(" + replace + ", " + ConTID + ", '" + input.Trim() + "', '" + title + "'); \n";
                         }
                     }
                 }

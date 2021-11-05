@@ -33,6 +33,24 @@ namespace BRH_Plubic.GoodDoctor
         protected global::System.Web.UI.WebControls.DropDownList DD_Department;
 
         /// <summary>
+        /// div_cbActive control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_cbActive;
+
+        /// <summary>
+        /// CB_Active control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox CB_Active;
+
+        /// <summary>
         /// UpdatePanel_AddDoctor control.
         /// </summary>
         /// <remarks>
@@ -76,6 +94,24 @@ namespace BRH_Plubic.GoodDoctor
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputText txtH_scid;
+
+        /// <summary>
+        /// txt_active control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_active;
+
+        /// <summary>
+        /// btn_active control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton btn_active;
 
         /// <summary>
         /// lbl_manual control.

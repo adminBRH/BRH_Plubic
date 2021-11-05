@@ -95,6 +95,29 @@ namespace BRH_Plubic.CHK
                 lbl_slotDate.Text = dt.Rows[0]["startDate"].ToString() + " ถึง " + dt.Rows[0]["endDate"].ToString();
                 lbl_slotTime.Text = dt.Rows[0]["startTime"].ToString() + " ถึง " + dt.Rows[0]["endTime"].ToString();
 
+                DateTime stDate = DateTime.Parse(dt.Rows[0]["startDate"].ToString());
+                DateTime enDate = DateTime.Parse(dt.Rows[0]["endDate"].ToString());
+                DateTime nowDate = DateTime.Now;
+                if (txtH_filterDate.Value == "yes")
+                {
+                    stDate = DateTime.Parse(date_ST.Value.ToString());
+                    enDate = DateTime.Parse(date_EN.Value.ToString());
+                }
+                else
+                {
+                    if (nowDate.Date > enDate.Date)
+                    {
+                        stDate = enDate;
+                    }
+                    else
+                    {
+                        stDate = nowDate;
+                        enDate = nowDate;
+                    }
+                }
+                date_ST.Value = stDate.ToString("yyyy-MM-dd");
+                date_EN.Value = enDate.ToString("yyyy-MM-dd");
+
                 DataTable dtF = FormTable(dt.Rows[0]["bs_bfid"].ToString());
                 lbl_form.Text = dtF.Rows[0]["bf_formname"].ToString();
 
@@ -127,12 +150,15 @@ namespace BRH_Plubic.CHK
             return result;
         }
 
-        private DataTable RecordDetail(string slotID)
+        private DataTable RecordDetail(string slotID, string STdateRport, string ENdateRport)
         {
             sql = "select *,convert(br_datetime,date) as 'br_bookdate' " +
                 "\n,date_format(br_datetime, '%d %b %Y') as 'BookDate' " +
                 "\n,date_format(br_datetime, '%H:%i') as 'BookTime' " +
-                "\nfrom bookingrecord where br_active='yes' and br_bsid = '" + slotID + "' " + 
+                "\nfrom bookingrecord " +
+                "\nwhere br_active='yes' and br_bsid = '" + slotID + "' " +
+                //"\nand ( convert('" + STdateRport + "', date) <= convert(br_createdate, date) and convert(br_createdate, date) <= convert('" + ENdateRport + "', date) ) " + 
+                "and (convert(br_datetime, date) between '" + STdateRport + "' and '" + ENdateRport + "') " +
                 "\norder by br_id ";
             DataTable result = new DataTable();
             result = cl_Sql.select(sql);
@@ -191,8 +217,11 @@ namespace BRH_Plubic.CHK
 
         private void ListView_Report(string slotID, string num, string name, string bookdate)
         {
+            string STdate = date_ST.Value.ToString();
+            string ENdate = date_EN.Value.ToString();
+
             DataTable dtR = new DataTable();
-            dtR = RecordDetail(slotID);
+            dtR = RecordDetail(slotID, STdate, ENdate);
             int cc = dtR.Rows.Count;
             if (dtR.Rows.Count > 0)
             {
@@ -237,6 +266,8 @@ namespace BRH_Plubic.CHK
         protected void DD_Slot_SelectedIndexChanged(object sender, EventArgs e)
         {
             string slotID = DD_Slot.SelectedValue.ToString();
+
+            txtH_filterDate.Value = "";
 
             if (slotID != "0")
             {
@@ -345,6 +376,12 @@ namespace BRH_Plubic.CHK
             }
 
             Page.ClientScript.RegisterStartupScript(this.GetType(), "cllAlertModal", scModal, true);
+        }
+
+        protected void btn_dateSearch_ServerClick(object sender, EventArgs e)
+        {
+            txtH_filterDate.Value = "yes";
+            Search();
         }
     }
 }

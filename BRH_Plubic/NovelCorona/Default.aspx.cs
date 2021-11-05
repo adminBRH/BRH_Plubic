@@ -954,7 +954,15 @@ namespace BRH_Plubic.NovelCorona
             //}
 
             string pcr_ar = txtH_pcr.Value.ToString().Trim();
+            if (cb_pcr_no.Checked)
+            {
+                pcr_ar = cb_pcr_no.Value.ToString();
+            }
             string antibody_ar = txtH_antibody.Value.ToString().Trim();
+            if (cb_antibody_no.Checked)
+            {
+                antibody_ar = cb_antibody_no.Value.ToString();
+            }
 
             string opd = ""; if (cb_opd.Checked) { opd = cb_opd.Value.ToString(); }
             string admit = ""; if (cb_admit.Checked) { admit = cb_admit.Value.ToString(); }

@@ -96,6 +96,42 @@ namespace BRH_Plubic.CHK
         protected global::System.Web.UI.WebControls.Label lbl_SplitText;
 
         /// <summary>
+        /// date_ST control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl date_ST;
+
+        /// <summary>
+        /// date_EN control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl date_EN;
+
+        /// <summary>
+        /// btn_dateSearch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton btn_dateSearch;
+
+        /// <summary>
+        /// txtH_filterDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtH_filterDate;
+
+        /// <summary>
         /// div_search_sync control.
         /// </summary>
         /// <remarks>

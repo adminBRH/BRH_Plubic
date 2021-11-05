@@ -35,12 +35,20 @@ input[type=radio] {
 
     <div class="col-12 mx-auto">
         <div class="row col-12 mx-auto">
-            <div class="col-6 mx-auto text-left">
+            <div class="col-4 mx-auto text-left">
                 <asp:DropDownList ID="DD_Department" CssClass="card btnShadow" Font-Size="X-Large" OnSelectedIndexChanged="DD_Department_SelectedIndexChanged" AutoPostBack="true" runat="server">
                     <asp:ListItem Text="" Value=""></asp:ListItem>
                 </asp:DropDownList>
             </div>
-            <div class="col-6 mx-auto" style="font-size: large;">
+            <div class="col-4 mx-auto text-center">
+                <div id="div_cbActive" runat="server" visible="false">
+                <label class="switch">
+                    <input type="checkbox" name="CB_Active" id="CB_Active" checked="checked" onclick="fn_active()" runat="server"  />
+                    <span class="slider round"></span>
+                </label> Active
+                </div>
+            </div>
+            <div class="col-4 mx-auto" style="font-size: large;">
                 <div class="col-12 mx-auto text-right">
                     <asp:UpdatePanel ID="UpdatePanel_AddDoctor" runat="server">
                         <ContentTemplate>
@@ -125,17 +133,26 @@ input[type=radio] {
                             </ItemTemplate>
                         </asp:ListView>
                     </div>
+
+                    <div hidden="hidden">
+                        <input type="text" id="txtH_scid" value="" runat="server" />
+                        <input type="text" id="txt_active" value="yes" runat="server" />
+                        <button id="btn_active" onserverclick="btn_active_ServerClick" runat="server"></button>
+                    </div>
+
                 </ContentTemplate>
-                <Triggers>
+                <%--<Triggers>
                     <asp:AsyncPostBackTrigger ControlID="DD_Department" />
-                </Triggers>
+                </Triggers>--%>
             </asp:UpdatePanel>
         </div>
     </div>
 
-<div hidden="hidden">
-    <input type="text" id="txtH_scid" value="" runat="server" />
-</div>
+<script>
+    function fn_active() {
+        __doPostBack('<%= btn_active.UniqueID %>', '');
+    }
+</script>
 
 <!-- Modal Manual -->
 <div class="modal fade" id="modalManual" tabindex="-1" role="dialog" aria-labelledby="modalManualTitle" aria-hidden="true">

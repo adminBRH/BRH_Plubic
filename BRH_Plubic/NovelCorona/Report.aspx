@@ -297,28 +297,33 @@
                                         <script>
                                             function fn_table_show(ar) {
                                                 if (ar != '') {
-                                                    var table_ar = ar.split('|');
                                                     var html = '';
-                                                    html = html + '<table style="width: 100%" border="1">';
-                                                    html = html + '<tr>';
-                                                    html = html + '<td style="width: 10%" class="text-center">ครั้งที่</td>';
-                                                    html = html + '<td style="width: 20%" class="text-center">วันที่เก็บ</td>';
-                                                    html = html + '<td style="width: 20%" class="text-center">ชนิดตัวอย่าง</td>';
-                                                    html = html + '<td style="width: 20%" class="text-center">สถานที่ส่งตรวจ</td>';
-                                                    html = html + '<td style="width: 30%" class="text-center">ผลตรวจ</td>';
-                                                    html = html + '</tr>';
-                                                    for (var i = 0; i < table_ar.length; i++) {
+                                                    if (ar == 'no') {
+                                                        html = '<span class="DotUnder">&nbsp;&nbsp;&nbsp;' + 'ไม่เคยรับการตรวจ' + '&nbsp;&nbsp;&nbsp;</span>';
+                                                    } else {
+                                                        var table_ar = ar.split('|');
+                                                        
+                                                        html = html + '<table style="width: 100%" border="1">';
                                                         html = html + '<tr>';
-                                                        var no = i + 1;
-                                                        html = html + '<td>' + no + '</td>';
-                                                        var table_val = table_ar[i].split(',');
-                                                        for (var j = 0; j < table_val.length; j++) {
-                                                            html = html + '<td>' + table_val[j] + '</td>';
-                                                        }
+                                                        html = html + '<td style="width: 10%" class="text-center">ครั้งที่</td>';
+                                                        html = html + '<td style="width: 20%" class="text-center">วันที่เก็บ</td>';
+                                                        html = html + '<td style="width: 20%" class="text-center">ชนิดตัวอย่าง</td>';
+                                                        html = html + '<td style="width: 20%" class="text-center">สถานที่ส่งตรวจ</td>';
+                                                        html = html + '<td style="width: 30%" class="text-center">ผลตรวจ</td>';
                                                         html = html + '</tr>';
+                                                        for (var i = 0; i < table_ar.length; i++) {
+                                                            html = html + '<tr>';
+                                                            var no = i + 1;
+                                                            html = html + '<td>' + no + '</td>';
+                                                            var table_val = table_ar[i].split(',');
+                                                            for (var j = 0; j < table_val.length; j++) {
+                                                                html = html + '<td>' + table_val[j] + '</td>';
+                                                            }
+                                                            html = html + '</tr>';
+                                                        }
+                                                        html = html + '</table>';
+                                                        //alert(html);
                                                     }
-                                                    html = html + '</table>';
-                                                    //alert(html);
                                                     document.write(html);
                                                 }
                                             }
@@ -326,21 +331,23 @@
                                         <tr>
                                             <td>
                                                 ผลการตรวจ SARS-CoV-2 PCR
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
                                                 <script> fn_table_show('<%# Eval("ncc_pcr_array") %>'); </script>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                ผลการตรวจ SARS-CoV-2 Antibody
+                                                
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
+                                                ผลการตรวจ SARS-CoV-2 Antibody
                                                 <script> fn_table_show('<%# Eval("ncc_antibody_array") %>'); </script>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                
                                             </td>
                                         </tr>
                                         <tr>

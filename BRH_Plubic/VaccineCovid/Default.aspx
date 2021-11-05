@@ -39,7 +39,7 @@
     </style>
 </head>
 <body style="font-family: 'Prompt', sans-serif;">
-    
+
     <!-- Modal -->
 <%--<div class="modal fade" id="modalAlert" tabindex="-1" role="dialog" aria-labelledby="modalAlertTitle" aria-hidden="true">
   <div class="modal-center modal-xl" role="document">

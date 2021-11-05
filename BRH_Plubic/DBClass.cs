@@ -38,7 +38,7 @@ public class SQLclass
 
     // FTP: 103.245.164.57 Id=brh-admin; Password=P@ssw0rd1168;
     // Database: db1.telecorp.co.th/phpMyAdmin Id=telecorp; Password=@Telecorp$12345;
-    string connection = "Server=db1.telecorp.co.th;User Id=telecorp; Password=@Telecorp$12345; Database=brh_hospitaldb; charset=utf8;Pooling=false";
+    string connection = "Server=db1.telecorp.co.th;User Id=telecorp; Password=@Telecorp$12345; Database=brh_hospitaldb; charset=utf8;Pooling=false; convert zero datetime=True;";
 
     // Server in BRH
     //string connection = "Server=10.3.10.103;User Id=clusteruser; Password=clusterp@$$; Database=brh_informatics; charset=utf8;Pooling=false";

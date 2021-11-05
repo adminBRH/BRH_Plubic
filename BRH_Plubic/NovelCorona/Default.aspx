@@ -421,9 +421,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 mx-auto my-2">
-                        ผลการตรวจ SARS-CoV-2 PCR
-                        <table style="width: 100%" border="1">
+                    <div class="row col-12 mx-auto my-2">
+                        <div class="col-lg-4 col-sm-6 mx-auto">
+                            ผลการตรวจ SARS-CoV-2 PCR
+                        </div>
+                        <div class="col-lg-8 col-sm-6 mx-auto text-left">
+                            <input type="checkbox" id="cb_pcr_no" value="no" onclick="fn_pcr_no()" runat="server" /> ไม่เคยรับการตรวจ
+                        </div>
+                        <table id="table_pcr" style="width: 100%" border="1">
                             <tr>
                                 <td style="width: 10%" class="text-center">ครั้งที่</td>
                                 <td style="width: 20%" class="text-center">วันที่เก็บ</td>
@@ -452,9 +457,14 @@
                                     <input type="text" id="txt_pcr_location" value="" class="form-control" />
                                 </td>
                                 <td>
-                                    <input type="radio" id="rd_pcr_y" name="rd_pcr" value="Detected" /> Detected
-                                    <br />
-                                    <input type="radio" id="rd_pcr_n" name="rd_pcr" value="Not detected" /> Not detected
+                                    <div class="row col-12 mx-auto">
+                                        <div class="col-lg-6 col-sm-12 mx-auto">
+                                            <input type="radio" id="rd_pcr_y" name="rd_pcr" value="Detected" /> Detected
+                                        </div>
+                                        <div class="col-lg-6 col-sm-12 mx-auto">
+                                            <input type="radio" id="rd_pcr_n" name="rd_pcr" value="Not detected" /> Not detected
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                         </table>
@@ -484,12 +494,27 @@
 
                                 lblPcr.innerHTML = fn_table_show('pcr',pcr_txt.value);
                             }
+
+                            function fn_pcr_no() {
+                                var cb_no = document.getElementById('<%= cb_pcr_no.ClientID %>');
+                                var table = document.getElementById('table_pcr');
+                                if (cb_no.checked) {
+                                    table.setAttribute('hidden', 'hidden');
+                                } else {
+                                    table.removeAttribute('hidden');
+                                }
+                            }
                         </script>
                     </div>
 
-                    <div class="col-12 mx-auto my-2">
-                        ผลการตรวจ SARS-CoV-2 Antibody
-                        <table style="width: 100%" border="1">
+                    <div class="row col-12 mx-auto my-2">
+                        <div class="col-lg-4 col-sm-6 mx-auto">
+                            ผลการตรวจ SARS-CoV-2 Antibody
+                        </div>
+                        <div class="col-lg-8 col-sm-6 mx-auto text-left">
+                            <input type="checkbox" id="cb_antibody_no" value="no" onclick="fn_antibody_no()" runat="server" /> ไม่เคยรับการตรวจ
+                        </div>
+                        <table id="table_antibody" style="width: 100%" border="1">
                             <tr>
                                 <td style="width: 10%" class="text-center">ครั้งที่</td>
                                 <td style="width: 20%" class="text-center">วันที่เก็บ</td>
@@ -518,7 +543,15 @@
                                     <input type="text" id="txt_antibody_location" value="" class="form-control" />
                                 </td>
                                 <td>
-                                    <input type="text" id="txt_antibody_result" value="" class="form-control" />
+                                    <%--<input type="text" id="txt_antibody_result" value="" class="form-control" />--%>
+                                    <div class="row col-12 mx-auto">
+                                        <div class="col-lg-6 col-sm-12 mx-auto">
+                                            <input type="radio" id="rd_antibody_y" name="rd_antibody" value="Positive" /> Positive
+                                        </div>
+                                        <div class="col-lg-6 col-sm-12 mx-auto">
+                                            <input type="radio" id="rd_antibody_n" name="rd_antibody" value="Negative" /> Negative
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                         </table>
@@ -534,18 +567,31 @@
                             var antibody_date = document.getElementById('date_antibody');
                             var antibody_ex = document.getElementById('txt_antibody_ex');
                             var antibody_location = document.getElementById('txt_antibody_location');
-                            var antibody_result =  document.getElementById('txt_antibody_result');
+                            var antibody_result = '';
+                            //var antibody_result = document.getElementById('txt_antibody_result').value;
+                            var antibody_y = document.getElementById('rd_antibody_y');
+                            var antibody_n = document.getElementById('rd_antibody_n');
                             if (antibody_y.checked) {
-                                antibody_yn = antibody_y.value;
+                                antibody_result = antibody_y.value;
                             } else {
-                                antibody_yn = antibody_n.value;
+                                antibody_result = antibody_n.value;
                             }
-                                var antibody_ar = antibody_txt.value;
-                                if (antibody_ar != '') { antibody_ar = antibody_ar + '|'; }
-                                antibody_ar = antibody_ar + antibody_date.value + ',' + antibody_ex.value + ',' + antibody_location.value + ',' + antibody_result;
-                                antibody_txt.value = antibody_ar;
+                            var antibody_ar = antibody_txt.value;
+                            if (antibody_ar != '') { antibody_ar = antibody_ar + '|'; }
+                            antibody_ar = antibody_ar + antibody_date.value + ',' + antibody_ex.value + ',' + antibody_location.value + ',' + antibody_result;
+                            antibody_txt.value = antibody_ar;
 
                             lblAnti.innerHTML = fn_table_show('antibody',antibody_txt.value);
+                        }
+
+                        function fn_antibody_no() {
+                            var cb_no = document.getElementById('<%= cb_antibody_no.ClientID %>');
+                            var table = document.getElementById('table_antibody');
+                            if (cb_no.checked) {
+                                table.setAttribute('hidden','hidden');
+                            } else {
+                                table.removeAttribute('hidden');
+                            }
                         }
 
                         

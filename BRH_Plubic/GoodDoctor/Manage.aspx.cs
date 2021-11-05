@@ -32,7 +32,7 @@ namespace BRH_Plubic.GoodDoctor
                         if (Request.QueryString["dept"] != null)
                         {
                             string dept = Request.QueryString["dept"].ToString();
-                            DoctorList(dept);
+                            DoctorList(dept,"yes");
                             DD_Department.SelectedValue = dept;
                         }
                     }
@@ -89,7 +89,7 @@ namespace BRH_Plubic.GoodDoctor
             DD_Department.DataBind();
         }
 
-        protected void DoctorList(string deptid)
+        protected void DoctorList(string deptid, string active)
         {
             DateTime DateTimeNow = DateTime.Now;
 
@@ -127,6 +127,7 @@ namespace BRH_Plubic.GoodDoctor
                 "\nfrom doctor_schedule as ds " +
                 "\nleft join doctor as dr on dr.dr_id = ds.ds_drid " +
                 "\nwhere dr_forename is not null and ds_dlid = '" + deptid + "' " +
+                "\nand ds_active = '"+ active +"' " +
                 "\n) a " +
                 "\n) a " +
                 "\norder by ds_active desc,Working desc,dr_username; ";
@@ -181,17 +182,22 @@ namespace BRH_Plubic.GoodDoctor
 
         protected void DD_Department_SelectedIndexChanged(object sender, EventArgs e)
         {
+            txt_active.Value = "yes";
+            CB_Active.Checked = true;
+
             string deptid = DD_Department.SelectedValue.ToString();
             if (deptid == "")
             {
                 a_addDoctor.Visible = false;
+                div_cbActive.Visible = false;
             }
             else
             {
                 a_addDoctor.Visible = true;
+                div_cbActive.Visible = true;
                 iframe_queue.Src = "../Queue/myWebForm.aspx?dept=" + deptid;
             }
-            DoctorList(deptid);
+            DoctorList(deptid,"yes");
         }
 
         protected void btn_updateManual_ServerClick(object sender, EventArgs e)
@@ -505,6 +511,26 @@ namespace BRH_Plubic.GoodDoctor
             }
 
             Page.ClientScript.RegisterStartupScript(this.GetType(), "cllAlertModal", scModal, true);
+        }
+
+        protected void btn_active_ServerClick(object sender, EventArgs e)
+        {
+            string deptid = DD_Department.SelectedValue.ToString();
+            string active = txt_active.Value.ToString().Trim();
+            if (active == "yes")
+            {
+                txt_active.Value = "no";
+                active = "no";
+                CB_Active.Checked = false;
+            }
+            else
+            {
+                txt_active.Value = "yes";
+                active = "yes";
+                CB_Active.Checked = true;
+            }
+
+            DoctorList(deptid, active);
         }
     }
 }

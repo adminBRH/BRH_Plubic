@@ -58,7 +58,7 @@ namespace BRH_Plubic.NovelCorona
 
         protected void DateSelect()
         {
-            sql = "select distinct date_format(nc_datetime,'%d-%b-%Y') as nc_date from novelcorona where nc_active='yes' order by nc_datetime desc; ";
+            sql = "select distinct date_format(nc_datetime,'%d-%b-%Y') as nc_date, convert(nc_datetime, date) as nc_datetime from novelcorona where nc_active='yes' order by nc_datetime desc ";
             dt = new DataTable();
             dt = cl_Sql.select(sql);
             if (dt.Rows.Count > 0)
@@ -68,7 +68,7 @@ namespace BRH_Plubic.NovelCorona
 
             DD_Date.DataSource = dt;
             DD_Date.DataTextField = "nc_date";
-            DD_Date.DataValueField = "nc_date";
+            DD_Date.DataValueField = "nc_datetime";
             DD_Date.DataBind();
         }
 
@@ -79,7 +79,7 @@ namespace BRH_Plubic.NovelCorona
             sql = "select * from novelcorona as nc " +
                 "\nleft join novelcorona_clinic as ncc on ncc.ncc_ncid=nc.nc_id " +
                 "\nwhere nc_active = 'yes' " +
-                "\nand nc_datetime like '%" + date + "%' " +
+                "\nand convert(nc_datetime, date) = '" + date + "' " +
                 "\norder by nc_staffcheck, nc_id desc ";
             dt = new DataTable();
             dt = cl_Sql.select(sql);

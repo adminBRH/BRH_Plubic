@@ -28,7 +28,7 @@ namespace BRH_Plubic.MentalHealthClinic
         {
             Boolean result = false;
 
-            sql = "SELECT m_id, fname, lname, color_temp, color_id, p_number, line_id FROM mentalhealthrecord ORDER BY m_id DESC;";
+            sql = "SELECT * FROM mentalhealthrecord ORDER BY m_id DESC;";
 
             dt = new DataTable(); //ต้อง new data table ใหม่ทุกครั้งเมื่อรับค่า
             dt = CL_Sql.select(sql);

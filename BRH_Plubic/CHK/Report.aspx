@@ -71,7 +71,7 @@
                 <div id="div_detail" class="row col-12 mx-auto" runat="server" visible="false">
                     <div class="row col-12 mx-auto mb-5 h3">
                         <div class="col-6 mx-auto my-3">
-                            <b>ตั้งแต่วันที่ :</b>
+                            <b>วันที่เปิดให้ทำการจอง :</b>
                             <br />&nbsp;&nbsp;&nbsp;<asp:Label ID="lbl_slotDate" Text="" runat="server"></asp:Label>
                             <div class="card boxShadow col-10 mx-auto my-3"></div>
                             <b>เวลา :</b>
@@ -84,7 +84,26 @@
                             <b>เงื่อนไขการจอง :</b>
                             <br />&nbsp;&nbsp;&nbsp;<asp:Label ID="lbl_SplitText" Text="" runat="server"></asp:Label>
                         </div>
-                        <div class="card boxShadow col-10 mx-auto"></div>
+                        <div class="col-12 my-3">&nbsp;</div>
+                        <b>แสดงข้อมูลการจอง :</b>
+                        <div class="row col-12 mx-auto">
+                            <div class="col-5 mx-auto text-center">
+                                วันที่
+                                <input type="date" id="date_ST" value="" class="form-control col-lg-6 col-sm-12 mx-auto my-auto" runat="server" />
+                            </div>
+                            <div class="col-5 mx-auto text-center">
+                                ถึงวันที่
+                                <input type="date" id="date_EN" value="" class="form-control col-lg-6 col-sm-12 mx-auto my-auto" runat="server" />
+                            </div>
+                            <div class="col-2 mx-auto my-auto">
+                                &nbsp;<br />
+                                <button id="btn_dateSearch" class="btn btn-outline-primary" onserverclick="btn_dateSearch_ServerClick" runat="server">Filter</button>
+                            </div>
+                            <div hidden="hidden">
+                                <input type="text" id="txtH_filterDate" value="" runat="server" />
+                            </div>
+                        </div>
+                        <div class="card boxShadow col-10 mx-auto mt-2"></div>
                     </div>
                     <div id="div_search_sync" class="row col-12 mx-auto my-5 h3" runat="server" visible="false">
                         <div class="col-2 mx-auto my-auto">ค้นหาจาก</div>

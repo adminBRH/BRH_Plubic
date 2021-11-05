@@ -708,6 +708,15 @@ namespace BRH_Plubic.NovelCorona
         protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_flu_B;
 
         /// <summary>
+        /// cb_pcr_no control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_pcr_no;
+
+        /// <summary>
         /// lbl_PCR_table control.
         /// </summary>
         /// <remarks>
@@ -724,6 +733,15 @@ namespace BRH_Plubic.NovelCorona
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputText txtH_pcr;
+
+        /// <summary>
+        /// cb_antibody_no control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_antibody_no;
 
         /// <summary>
         /// lbl_antibody_table control.

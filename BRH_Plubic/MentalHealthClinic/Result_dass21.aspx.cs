@@ -38,8 +38,12 @@ namespace BRH_Plubic.MentalHealthClinic
             string line = txt_line.Value.ToString().Trim();
             string empid = txt_empid.Value.ToString().Trim();
 
+            string accommodation = dd_accommodation.SelectedValue.ToString();
+            string roomNumber = txt_roomnumber.Value.ToString().Trim();
+
             sql = "UPDATE mentalhealthrecord " +
                 "SET fname = '" + fname + "', lname = '" + lname + "', p_number = '" + pnumber + "', line_id = '" + line + "', emp_id = '" + empid + "' " +
+                ",accommodation = '" + accommodation + "', room_number = '" + roomNumber + "' " +
                 "WHERE m_id = '" + m_id + "';";
             if (CL_Sql.Modify(sql))
             {
@@ -64,9 +68,14 @@ namespace BRH_Plubic.MentalHealthClinic
             string phonenumber = txt_phone.Value.ToString().Trim();
             string lineid = txt_line.Value.ToString().Trim();
 
+            string accommodation = dd_accommodation.SelectedValue.ToString();
+            string roomNumber = txt_roomnumber.Value.ToString().Trim();
+
             msg = msg + "\nชื่อ: " + firstname + " " + lasttname;
             msg = msg + "\nTel: " + phonenumber;
             msg = msg + "\nLine: " + lineid;
+            msg = msg + "\nสถานที่พักรักษา: " + accommodation;
+            msg = msg + "\nหมายเลขห้อง: " + roomNumber;
             msg = msg + "\nLink: http://brh.seedoctor.asia/MentalHealthClinic/Default.aspx?id=" + m_id;
 
             try
