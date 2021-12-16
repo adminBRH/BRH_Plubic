@@ -48,6 +48,7 @@
                         <input id="txtH_bookdate" value="" runat="server" />
                         <input id="txtH_bookTimeStart" value="" runat="server" />
                         <input id="txtH_bookTimeEnd" value="" runat="server" />
+                        <input id="txtH_TimeSlot" value="" runat="server" />
                         <input id="txtH_booktime" value="" runat="server" />
                         <input id="txtH_booktimeID" value="" runat="server" />
                     </div>
@@ -69,7 +70,7 @@
                 <ContentTemplate>
                     <div id="div_CheckSync" class="row col-12" runat="server" visible="false">
                         <div class="col-4 mx-auto my-auto text-right h5">
-                            รหัสพนักงาน : 
+                            <asp:Label ID="lbl_syncName" Text="" runat="server"></asp:Label> : 
                         </div>
                         <div class="col-4 mx-auto my-auto text-left">
                             <input type="text" id="txtSync_empid" class="form-control mx-auto my-auto" value="" placeholder="" runat="server" />
@@ -89,12 +90,15 @@
                         <div class="col-8 mx-auto my-2 text-left">
                             <input type="text" id="txtSync_fullname" class="form-control mx-auto my-auto" value="" disabled="disabled" runat="server" />
                         </div>
-                        <div class="col-4 mx-auto my-2 text-right h5">
+                        <div id="div_DOB_title" class="col-4 mx-auto my-2 text-right h5" runat="server" visible="false">
                             วันเกิด : 
                         </div>
-                        <div class="col-8 mx-auto my-2 text-left">
+                        <div id="div_DOB_detail" class="col-8 mx-auto my-2 text-left" runat="server" visible="false">
                             <input type="date" id="dateSync_DOB" value="" disabled="disabled" runat="server" />
                             <asp:Label ID="lbl_age" Text="" Font-Size="Large" runat="server"></asp:Label>
+                        </div>
+                        <div id="div_vaccine" class="col-12 mx-auto text-center" runat="server" visible="false" style="font-size: x-large;">
+                                จองไว้ <asp:Label ID="lbl_vaccine" Text="" runat="server"></asp:Label> เข็ม
                         </div>
                         <div id="div_program" class="row col-12 mx-auto my-2" runat="server" visible="false">
                             <div class="col-4 mx-auto my-2 text-right h5">
@@ -126,7 +130,9 @@
                         <asp:Label ID="lbl_alert" Text="" Font-Size="X-Large" ForeColor="Red" runat="server"></asp:Label>
                     </div>
                     <div id="div_submit" class="col-12 mx-auto text-xl-center" runat="server">
-                        <asp:Button Text="Submit" ID="btn_submit" CssClass="btn btn-outline-primary mx-auto text-center" Font-Size="XX-Large" OnClick="btn_submit_Click" OnClientClick="alertModal('#Modal_Loading');" runat="server" />
+                        <a class="btn btn-outline-primary my-3" onclick="fn_submit()" style="cursor: pointer; font-size: x-large;">Submit</a>
+                        <button id="btnSubmit" runat="server" onserverclick="btn_submit_Click" hidden="hidden"></button>
+                        <asp:Button Text="Submit" ID="btn_submit" CssClass="btn btn-outline-primary mx-auto text-center" Font-Size="XX-Large" OnClick="btn_submit_Click" OnClientClick="alertModal('#Modal_Loading');" runat="server" Visible="false" />
                     </div>
                     <script>
                         var txtH_ID = document.getElementById('<%= txtH_booktimeID.ClientID %>');
@@ -200,6 +206,22 @@
         // Get time 
         var txtH_Time = document.getElementById('<%= txtH_booktime.ClientID %>');
         txtH_Time.value = time;
+    }
+
+    function fn_submit() {
+        var Timeslot = document.getElementById('<%= txtH_TimeSlot.ClientID %>');
+        var booktime = document.getElementById('<%= txtH_booktime.ClientID %>');
+        var btnNext = "yes";
+        if (Timeslot.value == "yes") {
+            if (booktime.value == "") {
+                btnNext = "no";
+            }
+        }
+        if (btnNext == "yes") {
+            __doPostBack('<%= btnSubmit.UniqueID %>', '');
+        } else {
+            alert('กรุณาเลือกเวลาที่ต้องการจอง !!');
+        }
     }
 </script>
 

@@ -307,6 +307,7 @@
     <Content Include="AssetControl\images\Performance\windows10.png" />
     <Content Include="AssetControl\images\Performance\windows7.png" />
     <Content Include="AssetControl\images\Question.png" />
+    <Content Include="AssetControl\Pickup.aspx" />
     <Content Include="AssetControl\RepairList.aspx" />
     <Content Include="assets\css\fullcalendar.css" />
     <Content Include="assets\css\fullcalendar.print.css" />
@@ -343,6 +344,9 @@
     <Content Include="CHK\image\icon\ListSlot.png" />
     <Content Include="CHK\image\icon\Report.png" />
     <Content Include="CHK\image\icon\ReportExcel.png" />
+    <Content Include="CHK\LimitOver.aspx" />
+    <Content Include="CHK\ModernaList.aspx" />
+    <Content Include="CHK\OnlineUser.aspx" />
     <Content Include="CHK\Report.aspx" />
     <Content Include="CHK\Slot.aspx" />
     <Content Include="ConsentForm\Default.aspx" />
@@ -1050,6 +1054,7 @@
     <Content Include="VaccineCovid\image\VaccineEfficacy.jpg" />
     <Content Include="VaccineCovid\image\VaccineEfficacy1.jpg" />
     <Content Include="VaccineCovid\image\VaccineEfficacy2.jpg" />
+    <Content Include="VaccineCovid\Lot1Confirm.aspx" />
     <Content Include="VaccineCovid\Report.aspx" />
     <Content Include="VaccineCovid\UploadSlip.aspx" />
     <Content Include="vendor\animate\animate.css" />
@@ -1231,6 +1236,13 @@
     <Compile Include="AssetControl\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="AssetControl\Pickup.aspx.cs">
+      <DependentUpon>Pickup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssetControl\Pickup.aspx.designer.cs">
+      <DependentUpon>Pickup.aspx</DependentUpon>
+    </Compile>
     <Compile Include="AssetControl\RepairList.aspx.cs">
       <DependentUpon>RepairList.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1321,6 +1333,27 @@
     </Compile>
     <Compile Include="CHK\Form.aspx.designer.cs">
       <DependentUpon>Form.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CHK\LimitOver.aspx.cs">
+      <DependentUpon>LimitOver.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CHK\LimitOver.aspx.designer.cs">
+      <DependentUpon>LimitOver.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CHK\ModernaList.aspx.cs">
+      <DependentUpon>ModernaList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CHK\ModernaList.aspx.designer.cs">
+      <DependentUpon>ModernaList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CHK\OnlineUser.aspx.cs">
+      <DependentUpon>OnlineUser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CHK\OnlineUser.aspx.designer.cs">
+      <DependentUpon>OnlineUser.aspx</DependentUpon>
     </Compile>
     <Compile Include="CHK\Report.aspx.cs">
       <DependentUpon>Report.aspx</DependentUpon>
@@ -2251,6 +2284,13 @@
     </Compile>
     <Compile Include="VaccineCovid\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="VaccineCovid\Lot1Confirm.aspx.cs">
+      <DependentUpon>Lot1Confirm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VaccineCovid\Lot1Confirm.aspx.designer.cs">
+      <DependentUpon>Lot1Confirm.aspx</DependentUpon>
     </Compile>
     <Compile Include="VaccineCovid\Report.aspx.cs">
       <DependentUpon>Report.aspx</DependentUpon>

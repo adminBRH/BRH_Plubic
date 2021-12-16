@@ -95,10 +95,11 @@ namespace BRH_Plubic.CHK
                 lbl_slotDate.Text = dt.Rows[0]["startDate"].ToString() + " ถึง " + dt.Rows[0]["endDate"].ToString();
                 lbl_slotTime.Text = dt.Rows[0]["startTime"].ToString() + " ถึง " + dt.Rows[0]["endTime"].ToString();
 
-                DateTime stDate = DateTime.Parse(dt.Rows[0]["startDate"].ToString());
-                DateTime enDate = DateTime.Parse(dt.Rows[0]["endDate"].ToString());
+                DateTime stDate = DateTime.Parse(dt.Rows[0]["bs_startdate"].ToString());
+                DateTime enDate = DateTime.Parse(dt.Rows[0]["bs_enddate"].ToString());
                 DateTime nowDate = DateTime.Now;
-                if (txtH_filterDate.Value == "yes")
+                string filter = txtH_filterDate.Value.Trim();
+                if (filter == "yes")
                 {
                     stDate = DateTime.Parse(date_ST.Value.ToString());
                     enDate = DateTime.Parse(date_EN.Value.ToString());
@@ -178,7 +179,8 @@ namespace BRH_Plubic.CHK
 
                     string recodeID = row["br_id"].ToString();
 
-                    sql = "select * from bookingdetail as bd left join bookingforminput as bfi on bfi.bfi_id=bd.bd_bfiid " +
+                    sql = "select * from bookingdetail as bd " +
+                        "\nleft join bookingforminput as bfi on bfi.bfi_id=bd.bd_bfiid " +
                         "\nwhere bd_brid = '" + recodeID + "' " +
                         "\norder by bd_id ";
                     DataTable resultI = new DataTable();
@@ -222,7 +224,6 @@ namespace BRH_Plubic.CHK
 
             DataTable dtR = new DataTable();
             dtR = RecordDetail(slotID, STdate, ENdate);
-            int cc = dtR.Rows.Count;
             if (dtR.Rows.Count > 0)
             {
                 DataView dv = new DataView(dtR);

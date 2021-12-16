@@ -36,6 +36,12 @@ namespace BRH_Plubic.CHK
             {
                 string key = Request.QueryString["key"].ToString();
                 string slot = Request.QueryString["slot"].ToString();
+
+                if (Session["status"] == null)
+                {
+                    VIPSlot(slot);
+                }
+
                 if (Request.QueryString["permiss"] == null)
                 {
                     string url = HttpContext.Current.Request.Url.AbsoluteUri;
@@ -56,6 +62,106 @@ namespace BRH_Plubic.CHK
                     }
                 }
             }
+        }
+
+        protected void VIPSlot(string slot)
+        {
+            if (slot == "59")
+            {
+                Response.Redirect("LimitOver"); // Full slot
+
+                string companyID = "";
+                if (Request.QueryString["co"] != null)
+                {
+                    companyID = Request.QueryString["co"].ToString();
+                }
+                string privateID = "";
+                if (Request.QueryString["privateid"] != null)
+                {
+                    privateID = Request.QueryString["privateid"].ToString();
+                }
+
+                string next = "no";
+                if (companyID != "" && privateID != "")
+                {
+                    if (PrivateKey(companyID, privateID))
+                    {
+                        next = "yes";
+                    }
+                }
+
+                if (next == "yes")
+                {
+                    if (!IsPostBack)
+                    {
+                        string now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                        if (!LimitUser(slot, now))
+                        {
+                            Response.Redirect("../CHK/LimitOver");
+                        }
+                    }
+                }
+                else
+                {
+                    Response.Redirect("../VaccineCovid/Lot1Confirm");
+                }
+            }
+        }
+
+        protected Boolean LimitUser(string slot, string now)
+        {
+            Boolean bl = false;
+
+            if (Session["onlineUser"] != null)
+            {
+                bl = true;
+            }
+            else
+            {
+                sql = "select bl_id,bl_count,bl_limit from bookinglimit " +
+                    "\nwhere bl_bsid='" + slot + "' " +
+                    "\nand (bl_timest <= convert('" + now + "', datetime) and convert('" + now + "', datetime) <= bl_timeen) ";
+                dt = new DataTable();
+                dt = cl_Sql.select(sql);
+                if (dt.Rows.Count > 0)
+                {
+                    string id = dt.Rows[0]["bl_id"].ToString();
+                    int count = int.Parse(dt.Rows[0]["bl_count"].ToString());
+                    int limit = int.Parse(dt.Rows[0]["bl_limit"].ToString());
+                    if (count < limit)
+                    {
+                        Session.Timeout = 10;
+                        Session["onlineUser"] = id;
+
+                        sql = "update bookinglimit set bl_count = '" + (count + 1) + "' where bl_id = '" + id + " ' ";
+                        if (cl_Sql.Modify(sql))
+                        {
+                            bl = true;
+                        }
+
+                    }
+                }
+            }
+
+            return bl;
+        }
+
+        public Boolean PrivateKey(string cpid,string id)
+        {
+            Boolean bl = false;
+
+            sql = "select ce_active from company_employee where ce_active='yes' and ce_cp_id='" + cpid + "' and ce_empid='" + id + "' ";
+            dt = new DataTable();
+            dt = cl_Sql.select(sql);
+            if (dt.Rows.Count > 0)
+            {
+                if (dt.Rows[0]["ce_active"].ToString() == "yes")
+                {
+                    bl = true;
+                }
+            }
+
+            return bl;
         }
 
         private Boolean CheckKey(string id, string key)
@@ -84,6 +190,7 @@ namespace BRH_Plubic.CHK
 
                 if (dt.Rows[0]["bs_sync"].ToString() == "sync")
                 {
+                    lbl_syncName.Text = dt.Rows[0]["bs_syncname"].ToString();
                     div_CheckSync.Visible = true;
                     div_submit.Visible = false;
                 }
@@ -148,13 +255,45 @@ namespace BRH_Plubic.CHK
                             lbl_docno.Text = "Booking number : " + bsid;
                             string bookDateTime = dt.Rows[0]["BookingDateTime"].ToString();
                             string bookDate = DateTime.Parse(bookDateTime).ToString("dd MMM yyyy");
+                            
                             string bookTime = DateTime.Parse(bookDateTime).ToString("HH:mm");
                             if (bookTime == "00:00") { bookTime = ""; } else { bookTime = " เวลา " + bookTime + " น."; }
-                            lbl_KeyRecord.Text = "วันที่จอง " + bookDate + " " + bookTime;
+                            string text = "วันที่จอง " + bookDate + " " + bookTime;
+                            if (slotID == "59")
+                            {
+                                string nextDate = DateTime.Parse(bookDateTime).AddDays(28).ToString("dd MMM yyyy");
+                                string cpid = Request.QueryString["co"].ToString();
+                                string empid = Request.QueryString["privateid"].ToString();
+                                int VaccineQTY = 0;
+                                sql = "select ce_vaccine from company_employee " +
+                                    "\nwhere ce_active='yes' and ce_empid='" + empid + "' and ce_cp_id = '" + cpid+ "' ";
+                                dt = new DataTable();
+                                dt = cl_Sql.select(sql);
+                                if (dt.Rows.Count > 0)
+                                {
+                                    VaccineQTY = int.Parse(dt.Rows[0]["ce_vaccine"].ToString());
+                                }
+                                if (VaccineQTY > 1)
+                                {
+                                    text += "<br /><br />ครั้งถัดไปวันที่ " + nextDate;
+                                }
+                            }
+                            lbl_KeyRecord.Text = text;
                         }
 
                         lbl_script.Text = "<script>alertModal('#ModalAlertSubmit');</script>";
                     }
+                }
+            }
+            else
+            {
+                if (Request.QueryString["co"] != null && Request.QueryString["privateid"] != null)
+                {
+                    string companyID = Request.QueryString["co"].ToString().Trim();
+                    string privateID = Request.QueryString["privateid"].ToString().Trim();
+                    txtSync_empid.Value = privateID;
+                    Sync();
+                    btn_Sync.Visible = false;
                 }
             }
         }
@@ -258,46 +397,71 @@ namespace BRH_Plubic.CHK
                         string timeEnd = DateEnd.ToString("HH:mm:ss");
                         txtH_bookTimeEnd.Value = dateSelect + " " + timeEnd;
 
-                        if (splittime == "0")
-                        {
-                            if (CounterBooking(id, dateSelect, "yes"))
-                            {
-                                txtH_booktime.Value = "00:00:00";
-                            }
-                            else
-                            {
-                                txtH_bookdate.Value = "";
-                                txtH_booktime.Value = "";
+                        txtH_TimeSlot.Value = "yes";
 
-                                e.Day.IsSelectable = false;
-                                e.Cell.ForeColor = System.Drawing.Color.LightGray;
-                                e.Cell.BackColor = System.Drawing.Color.WhiteSmoke;
+                        if (splittimeUnit == "manual")
+                        {
+                            if (!ManualSlot(id))
+                            {
+                                lbl_TimeSlot.Text = "<font size='20px;'>เต็มแล้ว !!</font>";
+                                lbl_TimeSlot.ForeColor = System.Drawing.Color.Red;
                             }
                         }
                         else
                         {
-                            TimeSlot(txtH_bookTimeStart.Value, txtH_bookTimeEnd.Value, splittime, splittimeUnit, breakSt, breakEn, maxqty, startAfterBreak);
+                            if (splittime == "0")
+                            {
+                                txtH_TimeSlot.Value = "no";
+
+                                if (CounterBooking(id, dateSelect, "yes"))
+                                {
+                                    txtH_booktime.Value = "00:00:00";
+                                }
+                                else
+                                {
+                                    txtH_bookdate.Value = "";
+                                    txtH_booktime.Value = "";
+
+                                    e.Day.IsSelectable = false;
+                                    e.Cell.ForeColor = System.Drawing.Color.LightGray;
+                                    e.Cell.BackColor = System.Drawing.Color.WhiteSmoke;
+                                }
+                            }
+                            else
+                            {
+                                TimeSlot(txtH_bookTimeStart.Value, txtH_bookTimeEnd.Value, splittime, splittimeUnit, breakSt, breakEn, maxqty, startAfterBreak);
+                            }
                         }
                     }
                     else
                     {
                         string Limitfull = "";
-                        if (splittime == "0")
+
+                        if (splittimeUnit == "manual")
                         {
-                            if (CounterBooking(id, e.Day.Date.ToString("yyyy-MM-dd"), "no") == false)
+                            if (!CountRecord(id, e.Day.Date.ToString("yyyy-MM-dd"), 0))
                             {
                                 Limitfull = "yes";
                             }
                         }
                         else
                         {
-                            DateTime StartDate = DateTime.Parse(e.Day.Date.ToString());
-                            if (CheckBookSlot(StartDate.ToString("yyyy-MM-dd HH:mm:ss")))
+                            if (splittime == "0")
                             {
-                                Limitfull = "yes";
+                                if (CounterBooking(id, e.Day.Date.ToString("yyyy-MM-dd"), "no") == false)
+                                {
+                                    Limitfull = "yes";
+                                }
+                            }
+                            else
+                            {
+                                DateTime StartDate = DateTime.Parse(e.Day.Date.ToString());
+                                if (CheckBookSlot(StartDate.ToString("yyyy-MM-dd HH:mm:ss")))
+                                {
+                                    Limitfull = "yes";
+                                }
                             }
                         }
-
 
                         if (Limitfull == "yes")
                         {
@@ -528,6 +692,7 @@ namespace BRH_Plubic.CHK
 
             if (Html != "")
             {
+                Html = "<span class='col-11 mx-auto mb-2 text-center boxShadow bg-gradient-blue' style='font-size: x-large;'>เลือกเวลาที่ต้องการจอง</span>" + Html;
                 bl = true;
             }
 
@@ -611,6 +776,79 @@ namespace BRH_Plubic.CHK
             return bl;
         }
 
+        public Boolean ManualSlot(string bsid)
+        {
+            Boolean bl = false;
+
+            string Html = "";
+
+            sql = "select * from bookingslot_manual " +
+                "\nwhere bsm_active='yes' and bsm_bsid='" + bsid + "' " +
+                "\norder by bsm_time_st ";
+            dt = new DataTable();
+            dt = cl_Sql.select(sql);
+            if (dt.Rows.Count > 0)
+            {
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    string date = cld_booking.SelectedDate.ToString("yyyy-MM-dd");
+                    string time = dt.Rows[i]["bsm_time_st"].ToString();
+                    string datetime = date + " " + time;
+                    int limit = int.Parse(dt.Rows[i]["bsm_qty"].ToString());
+                    if (CountRecord(bsid, datetime, limit)) 
+                    {
+                        string TimeShow = DateTime.Parse(time).ToString("HH:mm");
+                        Html = Html + "<a id=\"btn_slot_" + i.ToString() + "\" class=\"col-lg-2 col-sm-3 btn btn-outline-success mx-auto my-auto\" style=\"font-size:xx-large; cursor: pointer;\" onclick=\"SelectTime('" + i.ToString() + "','" + TimeShow + "')\">" + TimeShow + "</a> ";
+                        bl = true;
+                    }
+                }
+            }
+
+            Html = "<span class='col-11 mx-auto mb-2 text-center boxShadow bg-gradient-blue' style='font-size: x-large;'>เลือกเวลาที่ต้องการจอง</span>" + Html;
+            lbl_TimeSlot.Text = Html;
+
+            return bl;
+        }
+
+        public Boolean CountRecord(string bsid, string datetime, int limit)
+        {
+            Boolean bl = false;
+
+            sql = "select count(br_id) as 'br_count' " +
+                "\nfrom bookingrecord where br_active='yes' and br_bsid='" + bsid + "' ";
+            if (limit == 0)
+            {
+                sql += "and convert(br_datetime, date) = convert('" + datetime + "', date) ";
+            }
+            else
+            {
+                sql += "and br_datetime = '" + datetime + "' ";
+            }
+            DataTable dtRC = new DataTable();
+            dtRC = cl_Sql.select(sql);
+            if (dtRC.Rows.Count > 0)
+            {
+                int CNT = int.Parse(dtRC.Rows[0]["br_count"].ToString());
+
+                if (limit == 0)
+                {
+                    sql = "select sum(bsm_qty) as 'bsm_sumqty' from bookingslot_manual where bsm_bsid='" + bsid + "' ";
+                    dtRC = new DataTable();
+                    dtRC = cl_Sql.select(sql);
+                    if (dtRC.Rows.Count > 0)
+                    {
+                        limit = int.Parse(dtRC.Rows[0]["bsm_sumqty"].ToString());
+                    }
+                }
+                if (CNT < limit)
+                {
+                    bl = true;
+                }
+            }
+
+            return bl;
+        }
+
         public Boolean Controler(string formID)
         {
             Boolean bl = false;
@@ -640,6 +878,11 @@ namespace BRH_Plubic.CHK
         }
 
         protected void btn_Sync_Click(object sender, EventArgs e)
+        {
+            Sync();
+        }
+
+        private void Sync()
         {
             string slot = Request.QueryString["slot"].ToString();
             string empid = txtSync_empid.Value.ToString().Trim();
@@ -709,7 +952,14 @@ namespace BRH_Plubic.CHK
                 string DOB = "";
                 if (dt.Rows[0]["ce_dob"].ToString() != "")
                 {
+                    div_DOB_title.Visible = true;
+                    div_DOB_detail.Visible = true;
                     DOB = DateTime.Parse(dt.Rows[0]["ce_dob"].ToString()).ToString("yyyy-MM-dd");
+                }
+                if (dt.Rows[0]["ce_vaccine"].ToString() != "")
+                {
+                    div_vaccine.Visible = true;
+                    lbl_vaccine.Text = dt.Rows[0]["ce_vaccine"].ToString();
                 }
                 string program = dt.Rows[0]["ce_program"].ToString();
 
@@ -776,235 +1026,289 @@ namespace BRH_Plubic.CHK
         protected void btn_submit_Click(object sender, EventArgs e)
         {
             lbl_alert.Text = "";
+            string alert = "";
 
             string slot = Request.QueryString["slot"].ToString();
             string key = Request.QueryString["key"].ToString();
 
+            string syncName = "รหัสพนักงาน";
+
             string bookDate = txtH_bookdate.Value.ToString();
             string bookTime = txtH_booktime.Value.ToString();
 
-            if (bookDate == "" || bookTime == "")
+            string TimeSlot = txtH_TimeSlot.Value.ToString();
+
+            if (bookDate == "")
             {
-                lbl_alert.Text = "กรุณาเลือกวันเวลาที่ต้องการจอง !!";
+                alert = "กรุณาเลือกวันที่ต้องการจอง !!";
             }
             else
             {
-                string next = "Yes";
-                string SQLs = "";
-                string replace = key + "_" + cl_Sql.GenerateKey(4);
-
-                string bookDateTime = DateTime.Parse(bookDate + " " + bookTime).ToString("yyyy-MM-dd HH:mm:ss");
-
-                sql = "select * from bookingforminput " +
-                    "where bfi_bfid in (select bs_bfid from bookingslot where bs_id = '" + slot + "') order by bfi_index ";
-                dt = new DataTable();
-                dt = cl_Sql.select(sql);
-                if (dt.Rows.Count > 0)
+                if (TimeSlot == "yes" && bookTime == "")
                 {
-                    for (int i = 0; i < dt.Rows.Count; i++)
-                    {
-                        string ConTID = dt.Rows[i]["bfi_id"].ToString();
-                        string type = dt.Rows[i]["bfi_type"].ToString();
-                        string title = dt.Rows[i]["bfi_title"].ToString();
-                        string index = dt.Rows[i]["bfi_index"].ToString();
-                        string required = dt.Rows[i]["bfi_required"].ToString();
-
-                        string input = "";
-                        string conID = "conT_" + index;
-                        if (type == "checkbox")
-                        {
-                            sql = "select * from bookingforminputlist where bfil_bfiid = '" + ConTID + "' ";
-                            DataTable dt2 = new DataTable();
-                            dt2 = cl_Sql.select(sql);
-                            if (dt2.Rows.Count > 0)
-                            {
-                                for (int j = 0; j < dt2.Rows.Count; j++)
-                                {
-                                    string checkboxID = conID + "_" + dt2.Rows[j]["bfil_index"].ToString();
-                                    string value = String.Format("{0}", Request.Form[checkboxID]);
-                                    if (input != "" && value != "") { input = input + ","; }
-                                    input = input + value;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            input = String.Format("{0}", Request.Form[conID]);
-                        }
-                        if (required == "yes" && input.Trim() == "")
-                        {
-                            next = "Null";
-                        }
-                        else
-                        {
-                            SQLs = SQLs + "insert into bookingdetail(bd_brid, bd_bfiid, bd_value, bd_column) values(" + replace + ", " + ConTID + ", '" + input.Trim() + "', '" + title + "'); \n";
-                        }
-                    }
-                }
-
-                if (next == "Null")
-                {
-                    lbl_alert.Text = "กรุณากรอกข้อมูลให้ครบถ้วน !!";
-                    lbl_alert.ForeColor = System.Drawing.Color.Red;
+                    alert = "กรุณาเลือกเวลาที่ต้องการจอง !!";
                 }
                 else
                 {
-                    string id = Request.QueryString["slot"].ToString();
-                    string splittime = txtH_splittime.Value.ToString().Trim();
-                    string splittimeQty = txtH_splittimeQty.Value.ToString().Trim();
-                    string Limitfull = "";
-                    if (splittime == "0") // Condition No splittime
+                    string next = "Yes";
+                    string SQLs = "";
+                    string replace = key + "_" + cl_Sql.GenerateKey(4);
+
+                    string bookDateTime = DateTime.Parse(bookDate + " " + bookTime).ToString("yyyy-MM-dd HH:mm:ss");
+
+                    sql = "select * from bookingforminput " +
+                        "where bfi_bfid in (select bs_bfid from bookingslot where bs_id = '" + slot + "') order by bfi_index ";
+                    dt = new DataTable();
+                    dt = cl_Sql.select(sql);
+                    if (dt.Rows.Count > 0)
                     {
-                        if (CounterBooking(id, bookDateTime, "no") == false)
+                        for (int i = 0; i < dt.Rows.Count; i++)
                         {
-                            Limitfull = "yes";
-                        }
-                    }
-                    else // Condition for splittime
-                    {
-                        DateTime SelectDate = DateTime.Parse(bookDateTime);
-                        if (CheckBookSlot(SelectDate.ToString("yyyy-MM-dd HH:mm:ss")))
-                        {
-                            Limitfull = "yes";
+                            string ConTID = dt.Rows[i]["bfi_id"].ToString();
+                            string type = dt.Rows[i]["bfi_type"].ToString();
+                            string title = dt.Rows[i]["bfi_title"].ToString();
+                            string index = dt.Rows[i]["bfi_index"].ToString();
+                            string required = dt.Rows[i]["bfi_required"].ToString();
+
+                            string input = "";
+                            string conID = "conT_" + index;
+                            if (type == "checkbox")
+                            {
+                                sql = "select * from bookingforminputlist where bfil_bfiid = '" + ConTID + "' ";
+                                DataTable dt2 = new DataTable();
+                                dt2 = cl_Sql.select(sql);
+                                if (dt2.Rows.Count > 0)
+                                {
+                                    for (int j = 0; j < dt2.Rows.Count; j++)
+                                    {
+                                        string checkboxID = conID + "_" + dt2.Rows[j]["bfil_index"].ToString();
+                                        string value = String.Format("{0}", Request.Form[checkboxID]);
+                                        if (input != "" && value != "") { input = input + ","; }
+                                        input = input + value;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                input = String.Format("{0}", Request.Form[conID]);
+                            }
+                            if (required == "yes" && input.Trim() == "")
+                            {
+                                next = "Null";
+                            }
+                            else
+                            {
+                                SQLs = SQLs + "insert into bookingdetail(bd_brid, bd_bfiid, bd_value, bd_column) values(" + replace + ", " + ConTID + ", '" + input.Trim() + "', '" + title + "'); \n";
+                            }
                         }
                     }
 
-
-                    if (Limitfull == "yes")
+                    if (next == "Null")
                     {
-                        lbl_alert.Text = "วันเวลาที่ทำการจองเต็มแล้ว กรุณาเลือกวันเวลาอื่น !!";
+                        lbl_alert.Text = "กรุณากรอกข้อมูลให้ครบถ้วน !!";
                         lbl_alert.ForeColor = System.Drawing.Color.Red;
-                        lbl_TimeSlot.Text = "";
                     }
                     else
                     {
-                        string alert = "ไม่สามารถบันทึกการจองได้ กรุณาติดต่อผู้ดูแลระบบ !!";
-                        lbl_alert.ForeColor = System.Drawing.Color.Red;
+                        string id = Request.QueryString["slot"].ToString();
+                        string splittime = txtH_splittime.Value.ToString().Trim();
+                        string splittimeQty = txtH_splittimeQty.Value.ToString().Trim();
+                        string Limitfull = "";
 
-                        string Key = cl_Sql.GenerateKey(5);
-
-                        string br_id = "";
-                        string sqlSync = "";
-                        string saveStaus = "no";
-
-                        sql = "select bs_duplicatenextday, bs_sync from bookingslot where bs_id = '" + slot + "'";
+                        string splitUnit = "";
+                        sql = "select * from bookingslot where bs_id = '" + slot + "' and bs_key = '" + key + "' ";
                         dt = new DataTable();
                         dt = cl_Sql.select(sql);
                         if (dt.Rows.Count > 0)
                         {
-                            string duplicatenextday = dt.Rows[0]["bs_duplicatenextday"].ToString();
-                            string sync = dt.Rows[0]["bs_sync"].ToString();
-                            if (sync == "sync")
-                            {
-                                string Sync_empid = txtSync_empid.Value.ToString().Trim();
-                                string Sync_fullname = txtSync_fullname.Value.ToString().Trim();
-
-                                string resultSync = empSync(slot, Sync_empid, bookDate);
-
-                                if (resultSync == "success")
-                                {
-                                    if (checkDuplicate(duplicatenextday, slot, Sync_empid, bookDate))
-                                    {
-                                        saveStaus = "duplicate";
-                                    }
-                                    else
-                                    {
-                                        saveStaus = "record";
-
-                                        sqlSync = sqlSync + "insert into bookingdetail(bd_brid, bd_bfiid, bd_value, bd_column) values(" + replace + ", 0, '" + Sync_empid + "', 'รหัสพนักงาน'); ";
-                                        sqlSync = sqlSync + "insert into bookingdetail(bd_brid, bd_bfiid, bd_value, bd_column) values(" + replace + ", 0, '" + Sync_fullname + "', 'ชื่อ-นามสกุล'); ";
-
-                                        if (dateSync_DOB.Value.ToString() != "")
-                                        {
-                                            //string Sync_DOB = DateTime.Parse(dateSync_DOB.Value.ToString()).ToString("yyyy-MM-dd");
-                                            //sqlSync = sqlSync + "insert into bookingdetail(bd_brid, bd_bfiid, bd_value, bd_column) values(" + replace + ", 0, '" + Sync_DOB + "', 'วันเกิด'); ";
-                                            int Age = cl_Sql.Date2YearOld(DateTime.Parse(dateSync_DOB.Value.ToString()));
-                                            sqlSync = sqlSync + "insert into bookingdetail(bd_brid, bd_bfiid, bd_value, bd_column) values(" + replace + ", 0, '" + Age + "', 'อายุ'); ";
-                                        }
-
-                                        string Sync_program = lblSync_program.Text;
-                                        sqlSync = sqlSync + "insert into bookingdetail(bd_brid, bd_bfiid, bd_value, bd_column) values(" + replace + ", 0, '" + Sync_program + "', 'โปรแกรมที่ตรวจ'); ";
-                                    }
-                                }
-                                else
-                                {
-                                    saveStaus = "NoEmp";
-                                }
-                            }
-                            else
-                            {
-                                saveStaus = "record";
-                            }
-
-                            if (saveStaus == "record")
-                            {
-                                sql = "insert into bookingrecord(br_bsid, br_datetime,br_key) values('" + slot + "','" + bookDateTime + "','" + Key + "') ";
-                                if (cl_Sql.Modify(sql))
-                                {
-                                    sql = "select * from bookingrecord where br_key = '" + Key + "' ";
-                                    dt = new DataTable();
-                                    dt = cl_Sql.select(sql);
-                                    if (dt.Rows.Count > 0)
-                                    {
-                                        br_id = dt.Rows[0]["br_id"].ToString();
-                                        saveStaus = "yes";
-                                    }
-                                    else
-                                    {
-                                        saveStaus = "NoDetails";
-                                    }
-                                }
-                            }
+                            splitUnit = dt.Rows[0]["bs_splittimeunit"].ToString();
                         }
 
-                        if (saveStaus == "yes")
+                        if (splitUnit == "manual")
                         {
-                            SQLs = sqlSync + SQLs;
-                            if (SQLs == "")
+                            if (!CountRecord(id, DateTime.Parse(bookDateTime).ToString("yyyy-MM-dd"), 0))
                             {
-                                alert = "success";
-                            }
-                            else
-                            {
-                                SQLs = SQLs.Replace(replace, br_id);
-                                if (cl_Sql.Modify(SQLs))
-                                {
-                                    alert = "success";
-
-                                }
-                            }
-
-                            if (alert == "success")
-                            {
-                                lbl_alert.ForeColor = System.Drawing.Color.Green;
-                                Response.Redirect("Booking.aspx?key=" + key + "&slot=" + slot + "&bsid=" + br_id + "&success=yes");
+                                Limitfull = "yes";
                             }
                         }
                         else
                         {
-                            lbl_alert.ForeColor = System.Drawing.Color.Red;
-                            if (saveStaus == "NoEmp")
+                            if (splittime == "0") // Condition No splittime
                             {
-                                alert = "รหัสพนักงานไม่ถูกต้อง !!";
+                                if (CounterBooking(id, bookDateTime, "no") == false)
+                                {
+                                    Limitfull = "yes";
+                                }
                             }
-                            else if (saveStaus == "duplicate")
+                            else // Condition for splittime
                             {
-                                alert = "ไม่สามารถจองซ้ำในวันเดียวกันได้ กรุณาเลือกวันอื่นๆ !!";
-                            }
-                            else if (saveStaus == "NoDetails")
-                            {
-                                alert = "บันทึกการจองแล้ว เลขที่[" + br_id + "] แต่ไม่สามารถบันทึกรายละเอียดได้ กรุณาติดต่อผู้ดูแลระบบ !!";
-                            }
-                            else
-                            {
-                                alert = "ไม่สามารถบันทึกข้อมูลได้ กรุณาติดต่อผู้ดูแลระบบ !!";
+                                DateTime SelectDate = DateTime.Parse(bookDateTime);
+                                if (CheckBookSlot(SelectDate.ToString("yyyy-MM-dd HH:mm:ss")))
+                                {
+                                    Limitfull = "yes";
+                                }
                             }
                         }
 
-                        lbl_alert.Text = alert;
+
+                        if (Limitfull == "yes")
+                        {
+                            lbl_alert.Text = "วันเวลาที่ทำการจองเต็มแล้ว กรุณาเลือกวันเวลาอื่น !!";
+                            lbl_alert.ForeColor = System.Drawing.Color.Red;
+                            lbl_TimeSlot.Text = "";
+                        }
+                        else
+                        {
+                            alert = "ไม่สามารถบันทึกการจองได้ กรุณาติดต่อผู้ดูแลระบบ !!";
+                            lbl_alert.ForeColor = System.Drawing.Color.Red;
+
+                            string Key = cl_Sql.GenerateKey(5);
+
+                            string br_id = "";
+                            string sqlSync = "";
+                            string saveStaus = "no";
+
+                            sql = "select bs_duplicatenextday, bs_sync, bs_syncname from bookingslot where bs_id = '" + slot + "'";
+                            dt = new DataTable();
+                            dt = cl_Sql.select(sql);
+                            if (dt.Rows.Count > 0)
+                            {
+                                string duplicatenextday = dt.Rows[0]["bs_duplicatenextday"].ToString();
+                                string sync = dt.Rows[0]["bs_sync"].ToString();
+                                syncName = dt.Rows[0]["bs_syncname"].ToString();
+                                if (sync == "sync")
+                                {
+                                    string Sync_empid = txtSync_empid.Value.ToString().Trim();
+                                    string Sync_fullname = txtSync_fullname.Value.ToString().Trim();
+
+                                    string resultSync = empSync(slot, Sync_empid, bookDate);
+
+                                    if (resultSync == "success")
+                                    {
+                                        if (checkDuplicate(duplicatenextday, slot, Sync_empid, bookDate))
+                                        {
+                                            saveStaus = "duplicate";
+                                        }
+                                        else
+                                        {
+                                            saveStaus = "record";
+
+                                            sqlSync = sqlSync + "insert into bookingdetail(bd_brid, bd_bfiid, bd_value, bd_column) values(" + replace + ", 0, '" + Sync_empid + "', '" + syncName + "'); ";
+                                            sqlSync = sqlSync + "insert into bookingdetail(bd_brid, bd_bfiid, bd_value, bd_column) values(" + replace + ", 0, '" + Sync_fullname + "', 'ชื่อ-นามสกุล'); ";
+
+                                            if (dateSync_DOB.Value.ToString() != "")
+                                            {
+                                                //string Sync_DOB = DateTime.Parse(dateSync_DOB.Value.ToString()).ToString("yyyy-MM-dd");
+                                                //sqlSync = sqlSync + "insert into bookingdetail(bd_brid, bd_bfiid, bd_value, bd_column) values(" + replace + ", 0, '" + Sync_DOB + "', 'วันเกิด'); ";
+                                                int Age = cl_Sql.Date2YearOld(DateTime.Parse(dateSync_DOB.Value.ToString()));
+                                                sqlSync = sqlSync + "insert into bookingdetail(bd_brid, bd_bfiid, bd_value, bd_column) values(" + replace + ", 0, '" + Age + "', 'อายุ'); ";
+                                            }
+
+                                            string Sync_program = lblSync_program.Text;
+                                            sqlSync = sqlSync + "insert into bookingdetail(bd_brid, bd_bfiid, bd_value, bd_column) values(" + replace + ", 0, '" + Sync_program + "', 'โปรแกรมที่ตรวจ'); ";
+                                        }
+                                    }
+                                    else
+                                    {
+                                        saveStaus = "NoEmp";
+                                    }
+                                }
+                                else
+                                {
+                                    saveStaus = "record";
+                                }
+
+                                if (saveStaus == "record")
+                                {
+                                    // --------------------------------------------------------------------- Break Booking ---------
+                                    if (slot == "")
+                                    {
+                                        alert = "ยังไม่เปิดให้ทำการจอง !!";
+                                    }
+                                    else
+                                    {
+                                        sql = "insert into bookingrecord(br_bsid, br_datetime,br_key) values('" + slot + "','" + bookDateTime + "','" + Key + "') ";
+                                        if (cl_Sql.Modify(sql))
+                                        {
+                                            sql = "select * from bookingrecord where br_key = '" + Key + "' ";
+                                            dt = new DataTable();
+                                            dt = cl_Sql.select(sql);
+                                            if (dt.Rows.Count > 0)
+                                            {
+                                                br_id = dt.Rows[0]["br_id"].ToString();
+                                                saveStaus = "yes";
+                                            }
+                                            else
+                                            {
+                                                saveStaus = "NoDetails";
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            if (saveStaus == "yes")
+                            {
+                                SQLs = sqlSync + SQLs;
+                                if (SQLs == "")
+                                {
+                                    alert = "success";
+                                }
+                                else
+                                {
+                                    // --------------------------------------------------------------------- Break Booking ---------
+                                    if (slot == "")
+                                    {
+                                        alert = "ยังไม่เปิดให้ทำการจอง !!";
+                                    }
+                                    else
+                                    {
+                                        SQLs = SQLs.Replace(replace, br_id);
+                                        if (cl_Sql.Modify(SQLs))
+                                        {
+                                            alert = "success";
+                                        }
+                                    }
+                                }
+
+                                if (alert == "success")
+                                {
+                                    lbl_alert.ForeColor = System.Drawing.Color.Green;
+                                    string link = "Booking.aspx?key=" + key + "&slot=" + slot + "&bsid=" + br_id + "&success=yes";
+                                    if (splitUnit == "manual")
+                                    {
+                                        string co = Request.QueryString["co"].ToString();
+                                        string privateID = Request.QueryString["privateid"].ToString();
+                                        link += "&co=" + co + "&privateid=" + privateID;
+                                    }
+                                    Response.Redirect(link);
+                                }
+                            }
+                            else
+                            {
+                                lbl_alert.ForeColor = System.Drawing.Color.Red;
+                                if (saveStaus == "NoEmp")
+                                {
+                                    alert = "" + syncName + "ไม่ถูกต้อง !!";
+                                }
+                                else if (saveStaus == "duplicate")
+                                {
+                                    alert = "ไม่สามารถจองซ้ำในวันเดียวกันได้ กรุณาเลือกวันอื่นๆ !!";
+                                }
+                                else if (saveStaus == "NoDetails")
+                                {
+                                    alert = "บันทึกการจองแล้ว เลขที่[" + br_id + "] แต่ไม่สามารถบันทึกรายละเอียดได้ กรุณาติดต่อผู้ดูแลระบบ !!";
+                                }
+                                else
+                                {
+                                    alert = "ไม่สามารถบันทึกข้อมูลได้ กรุณาติดต่อผู้ดูแลระบบ !!";
+                                }
+                            }
+                        }
                     }
                 }
             }
+            lbl_alert.Text = alert;
         }
 
         public override void VerifyRenderingInServerForm(Control control)

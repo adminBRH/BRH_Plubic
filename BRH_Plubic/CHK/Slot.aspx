@@ -245,9 +245,23 @@
                         </div>
                         <div class="col-12 mx-auto my-auto">
                             <label class="switch">
-                                <input type="checkbox" name="CB_SFTime[1][]" id="CB_splittime" value="split" onclick="getValueSFTime('split')" />
+                                <input type="checkbox" name="CB_SFTime[1][]" id="CB_splittime" value="split" onclick="fn_SelectSplit()" />
                                 <span class="slider round"></span>
                             </label> แบบแบ่งช่วงเวลา
+                        </div>
+                        <div id="div_splitSelect" class="row col-12 mx-auto my-auto" hidden="hidden">
+                            <div class="col-6 mx-auto my-auto">
+                                <label class="switch">
+                                    <input type="checkbox" name="CB_SpSe[1][]" id="CB_SpSeAuto" value="auto" onclick="getValueSFTime('split')" />
+                                    <span class="slider round"></span>
+                                </label> Auto
+                            </div>
+                            <div class="col-6 mx-auto my-auto">
+                                <label class="switch">
+                                    <input type="checkbox" name="CB_SpSe[1][]" id="CB_SpSeManual" value="manual" onclick="getValueSFTime('manual')" />
+                                    <span class="slider round"></span>
+                                </label> Manual
+                            </div>
                         </div>
                         <div id="div_splittime" class="row col-12 mx-auto my-auto" hidden="hidden">
                             <div class="row col-6 mx-auto my-auto">
@@ -293,6 +307,84 @@
                                 </div>
                             </div>
                         </div>
+                        <div id="div_splitMe" class="row col-12 mx-auto my-auto" hidden="hidden">
+                            <div class="col-12 mx-auto my-auto">
+                                <label class="col-12 mx-auto" id="lbl_splitMe"></label>
+                            </div>
+                            <div hidden="hidden">
+                                <input type="text" id="txtH_splitMe" value="" runat="server" />
+                            </div>
+                            <div class="col-3 mx-auto my-auto">
+                                <input type="time" id="time_manual_ST" value="" class="form-control" />
+                            </div>
+                            <div class="col-1 mx-auto my-auto">-</div>
+                            <div class="col-3 mx-auto my-auto">
+                                <input type="time" id="time_manual_EN" value="" class="form-control" />
+                            </div>
+                            <div class="col-3 mx-auto my-auto">
+                                <input type="text" id="txt_manual_QTY" value="" placeholder="จำนวนคน" class="form-control" />
+                            </div>
+                            <div class="col-2 mx-auto my-auto">
+                                <i class="fa fa-plus-square-o mx-auto" style="cursor:pointer;" onclick="fn_SplitMe('add','')"></i>
+                            </div>
+                        </div>
+                        <script>
+                            function fn_SelectSplit() {
+                                var CB = document.getElementById('CB_splittime');
+                                var DIV = document.getElementById('div_splitSelect');
+                                if (CB.checked) {
+                                    DIV.removeAttribute('hidden');
+                                } else {
+                                    DIV.setAttribute('hidden','hidden');
+                                }
+                            }
+
+                            function fn_SplitMe(act,ar) {
+                                var txtH = document.getElementById('<%= txtH_splitMe.ClientID %>');
+                                var timeST = document.getElementById('time_manual_ST');
+                                var timeEN = document.getElementById('time_manual_EN');
+                                var txtQTY = document.getElementById('txt_manual_QTY');
+                                var txtAR = txtH.value;
+                                if (act == 'add') {
+                                    if (txtAR != '') { txtAR = txtAR + '|'; }
+                                    txtAR = txtAR + timeST.value + ',' + timeEN.value + ',' + txtQTY.value;
+                                } else {
+                                    const splitAR = txtAR.split('|');
+                                    splitAR.splice(ar, 1);
+                                    txtAR = splitAR.join('|');
+                                }
+                                txtH.value = txtAR;
+
+                                timeST.value = '';
+                                timeEN.value = '';
+                                txtQTY.value = '';
+
+                                fn_SplitMe_show();
+                            }
+
+                            function fn_SplitMe_show() {
+                                var txtH = document.getElementById('<%= txtH_splitMe.ClientID %>');
+                                var label = document.getElementById('lbl_splitMe');
+                                var html = '';
+                                if (txtH.value != '') {
+                                    const dt = txtH.value.split('|');
+                                    html = '<table style="width: 100%;" border="1">';
+                                    for (var i = 0; i < dt.length; i++) {
+                                        const dr = dt[i].split(',');
+                                        html += '<tr>';
+                                        html += '<td style="width: 70%;">' + dr[0] + ' - ' + dr[1] + '</td>';
+                                        html += '<td style="width: 25%;">' + dr[2] + '</td>';
+                                        html += '<td style="width: 5%;"><i class="fa fa-trash-o" style="cursor: pointer;" onclick="fn_SplitMe(\'del\',\'' + i + '\')"></i></td>';
+                                        html += '</tr>';
+                                    }
+                                    html += '</table>';
+                                }
+                                label.innerHTML = html;
+                            }
+
+                            fn_SplitMe_show();
+
+                        </script>
                     </div>
                 </div>
                 <div class="col-12"><hr /></div>
@@ -581,13 +673,19 @@
 
     function getValueSFTime(val) {
         var txtH = document.getElementById('<%= txtH_FullSplit.ClientID %>');
-        var div = document.getElementById('div_splittime');
+        var divSelect = document.getElementById('div_splitSelect');
+        var divAuto = document.getElementById('div_splittime');
+        var divManual = document.getElementById('div_splitMe');
+        divSelect.removeAttribute('hidden');
+        divAuto.setAttribute('hidden', 'hidden');
+        divManual.setAttribute('hidden', 'hidden');
         txtH.value = val;
         if (val == 'split') {
-            div.removeAttribute('hidden');
-        }
-        else {
-            div.setAttribute('hidden', 'hidden');
+            divAuto.removeAttribute('hidden');
+        } else if(val == 'manual') {
+            divManual.removeAttribute('hidden');
+        } else {
+            divSelect.setAttribute('hidden','hidden');
             var splitTime = document.getElementById('<%= txt_time.ClientID %>');
             var splitUnit = document.getElementById('<%=  DD_timeunit.ClientID %>');
             splitTime.value = "";

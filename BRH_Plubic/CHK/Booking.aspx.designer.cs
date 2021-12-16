@@ -96,6 +96,15 @@ namespace BRH_Plubic.CHK
         protected global::System.Web.UI.HtmlControls.HtmlInputText txtH_bookTimeEnd;
 
         /// <summary>
+        /// txtH_TimeSlot control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtH_TimeSlot;
+
+        /// <summary>
         /// txtH_booktime control.
         /// </summary>
         /// <remarks>
@@ -139,6 +148,15 @@ namespace BRH_Plubic.CHK
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_CheckSync;
+
+        /// <summary>
+        /// lbl_syncName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_syncName;
 
         /// <summary>
         /// txtSync_empid control.
@@ -186,6 +204,24 @@ namespace BRH_Plubic.CHK
         protected global::System.Web.UI.HtmlControls.HtmlInputText txtSync_fullname;
 
         /// <summary>
+        /// div_DOB_title control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_DOB_title;
+
+        /// <summary>
+        /// div_DOB_detail control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_DOB_detail;
+
+        /// <summary>
         /// dateSync_DOB control.
         /// </summary>
         /// <remarks>
@@ -202,6 +238,24 @@ namespace BRH_Plubic.CHK
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_age;
+
+        /// <summary>
+        /// div_vaccine control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_vaccine;
+
+        /// <summary>
+        /// lbl_vaccine control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_vaccine;
 
         /// <summary>
         /// div_program control.
@@ -283,6 +337,15 @@ namespace BRH_Plubic.CHK
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_submit;
+
+        /// <summary>
+        /// btnSubmit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton btnSubmit;
 
         /// <summary>
         /// btn_submit control.

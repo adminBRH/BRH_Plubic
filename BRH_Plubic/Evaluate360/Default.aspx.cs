@@ -57,10 +57,9 @@ namespace BRH_Plubic.Evaluate360
                 if (nowDate < stDate || nowDate > enDate)
                 {
                     result = "ระบบจะเปิดให้ใช้งานในวันที่ ";
-                    result = result + stDate.Day.ToString() + "/" + stDate.Month.ToString() + "/" + (stDate.Year + 543).ToString() + " 00:00:00";
+                    result = result + stDate.Day.ToString() + " " + stDate.ToString("MMM") + " " + stDate.Year.ToString();// + " 00:00:00";
                     result = result + " ถึง ";
-                    result = result + enDate.Day.ToString() + "/" + enDate.Month.ToString() + "/" + (enDate.Year + 543).ToString() + " 23:59:59";
-                    result = result + " !!";
+                    result = result + enDate.Day.ToString() + " " + enDate.ToString("MMM") + " " + enDate.Year.ToString();// + " 23:59:59";
                 }
             }
             else

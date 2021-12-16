@@ -197,6 +197,7 @@ namespace BRH_Plubic.CHK
                 string splittimeQty = num_qty.Value.ToString().Trim();
                 string DuplicateNextDay = "no"; if (CB_DuplicateNextDay.Checked) { DuplicateNextDay = "yes"; }
                 string maxqty = splittimeQty;
+
                 string splitType = txtH_FullSplit.Value.ToString();
                 if (splitType == "split")
                 {
@@ -213,6 +214,13 @@ namespace BRH_Plubic.CHK
 
                     maxqty = txt_maxqty.Value.ToString().Trim();
                 }
+                if (splitType == "manual")
+                {
+                    splittimeunit = "manual";
+                    splittimeQty = "1";
+                    maxqty = "0";
+                }
+
                 string alertSubmit = txt_NotifySubmit.Value.ToString().Trim();
                 if (alertSubmit == "")
                 {
@@ -242,10 +250,58 @@ namespace BRH_Plubic.CHK
                 sql = "insert into bookingslot" +
                     "(bs_createby, bs_name, bs_alertonform, bs_startdate, bs_enddate, bs_age_condition, bs_age_lessequal, bs_age_lessequalqty, bs_age_moreequal, bs_age_moreequalqty, bs_splittime, bs_splittimeunit, bs_splittimeqty, bs_cpid, bs_key, bs_bfid, bs_alertsubmit, bs_sync, bs_break_startdate, bs_break_enddate, bs_maxqty, bs_hiddendate, bs_startaftetbreak, bs_duplicatenextday) " +
                     "\nvalues" +
-                    "('" + userid + "','" + name + "','" + alertonform + "','" + StartDate + "','" + EndDate + "','" + ageCondition + "','"+ age_lessequal + "','"+ age_lessequalQty + "','"+ age_morethan + "','"+ age_morethanQty + "','" + splittime + "','" + splittimeunit + "','" + splittimeQty + "','" + company + "', '" + cl_Sql.GenerateKey(11) + "', '" + Form + "', '" + alertSubmit + "', '" + Sync + "', " + breakSt + ", " + breakEn + ", " + maxqty + ", '" + Hiddendate + "', '" + startAfterBreak + "', '" + DuplicateNextDay + "') ";
+                    "('" + userid + "','" + name + "','" + alertonform + "','" + StartDate + "','" + EndDate + "','" + ageCondition + "','"+ age_lessequal + "','"+ age_lessequalQty + "','"+ age_morethan + "','"+ age_morethanQty + "','" + splittime + "','" + splittimeunit + "','" + splittimeQty + "','" + company + "', '" + cl_Sql.GenerateKey(11) + "', '" + Form + "', '" + alertSubmit + "', '" + Sync + "', " + breakSt + ", " + breakEn + ", " + maxqty + ", '" + Hiddendate + "', '" + startAfterBreak + "', '" + DuplicateNextDay + "'); ";
                 if (cl_Sql.Modify(sql))
                 {
                     result = "success";
+
+                    if (splitType == "manual")
+                    {
+                        result = "";
+
+                        string bsID = "";
+
+                        sql = "select max(bs_id) as 'bs_id' from bookingslot where bs_name='" + name + "'; ";
+                        dt = new DataTable();
+                        dt = cl_Sql.select(sql);
+                        if (dt.Rows.Count > 0)
+                        {
+                            bsID = dt.Rows[0]["bs_id"].ToString();
+
+                            sql = "\ninsert into bookingslot_manual(bsm_bsid,bsm_time_st,bsm_time_en,bsm_qty) values ";
+                            string[] AR = txtH_splitMe.Value.ToString().Split('|');
+                            string sqlVal = "";
+                            for (int i = 0; i < AR.Length; i++)
+                            {
+                                string[] AR2 = AR[i].ToString().Split(',');
+
+                                string timeST = AR2[0].ToString();
+                                string timeEN = AR2[1].ToString();
+                                string QTY = AR2[2].ToString();
+
+                                sqlVal += "\n('" + bsID + "','" + timeST + "','" + timeEN + "','" + QTY + "')";
+                                if (i == (AR.Length - 1))
+                                {
+                                    sqlVal += ";";
+                                }
+                                else
+                                {
+                                    sqlVal += ",";
+                                }
+                            }
+                            sql = sql + sqlVal;
+                            if (cl_Sql.Modify(sql))
+                            {
+                                result = "success";
+                            }
+                            else
+                            {
+                                result = "manual fail";
+                                sql = "update bookingslot set bs_active='no' where bs_id = '" + bsID + "'; ";
+                                cl_Sql.Modify(sql);
+                            }
+                        }
+                    }
                 }
             }
 
@@ -265,6 +321,10 @@ namespace BRH_Plubic.CHK
             else if (result == "nameEmpty")
             {
                 alert = "alertModalInfo('#Modal_Info','กรุณาระบุ Slot name !!'); ";
+            }
+            else if (result == "manual fail")
+            {
+                alert = "alertModalWarning('#Modal_Warning','ไม่สามารถบันทึกการแบ่งช่วงเวลาแบบ Manual ได้ กรุณาติดต่อผู้ดูแลระบบ !!'); ";
             }
             else
             {
