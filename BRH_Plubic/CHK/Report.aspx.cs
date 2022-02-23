@@ -51,7 +51,7 @@ namespace BRH_Plubic.CHK
             {
                 Where = "and bs_id='" + slotID + "' ";
             }
-            sql = "select bs_id,bs_name from bookingslot where bs_active in ('yes','no') " + Where + " order by bs_id ";
+            sql = "select bs_id,bs_name from bookingslot where bs_active in ('yes') " + Where + " order by bs_id ";
             dt = new DataTable();
             dt = cl_Sql.select(sql);
             if (dt.Rows.Count > 0)
@@ -128,13 +128,13 @@ namespace BRH_Plubic.CHK
                 string splitTime = dt.Rows[0]["bs_splittime"].ToString();
                 string splitUnit = dt.Rows[0]["bs_splittimeunit"].ToString();
                 if (splitUnit == "hour") { splitUnit = "ชั่วโมง"; } else { splitUnit = "นาที"; }
-                if (splitTime == "0") 
-                { 
-                    splitText = splitText + " ในแต่ละวัน"; 
-                } 
-                else 
-                { 
-                    splitText = splitText + " ทุกๆ " + splitTime + " " + splitUnit; 
+                if (splitTime == "0")
+                {
+                    splitText = splitText + " ในแต่ละวัน";
+                }
+                else
+                {
+                    splitText = splitText + " ทุกๆ " + splitTime + " " + splitUnit;
                 }
                 lbl_SplitText.Text = splitText;
             }
@@ -153,14 +153,30 @@ namespace BRH_Plubic.CHK
 
         private DataTable RecordDetail(string slotID, string STdateRport, string ENdateRport)
         {
+            sql = "select MIN(br_datetime) as 'br_datetime' from bookingrecord where br_active='yes' and br_bsid='" + slotID + "'; ";
+            DataTable dtDate = new DataTable();
+            dtDate = cl_Sql.select(sql);
+            if (dtDate.Rows.Count > 0)
+            {
+                DateTime slotStart = DateTime.Parse(dtDate.Rows[0]["br_datetime"].ToString());
+                DateTime reportStart = DateTime.Parse(STdateRport);
+                if (reportStart < slotStart)
+                {
+                    STdateRport = slotStart.ToString("yyyy-MM-dd");
+                    date_ST.Value = STdateRport;
+                    ENdateRport = slotStart.ToString("yyyy-MM-dd");
+                    date_EN.Value = ENdateRport;
+                }
+            }
+
             sql = "select *,convert(br_datetime,date) as 'br_bookdate' " +
-                "\n,date_format(br_datetime, '%d %b %Y') as 'BookDate' " +
-                "\n,date_format(br_datetime, '%H:%i') as 'BookTime' " +
-                "\nfrom bookingrecord " +
-                "\nwhere br_active='yes' and br_bsid = '" + slotID + "' " +
-                //"\nand ( convert('" + STdateRport + "', date) <= convert(br_createdate, date) and convert(br_createdate, date) <= convert('" + ENdateRport + "', date) ) " + 
-                "and (convert(br_datetime, date) between '" + STdateRport + "' and '" + ENdateRport + "') " +
-                "\norder by br_id ";
+                    "\n,date_format(br_datetime, '%d %b %Y') as 'BookDate' " +
+                    "\n,date_format(br_datetime, '%H:%i') as 'BookTime' " +
+                    "\nfrom bookingrecord " +
+                    "\nwhere br_active='yes' and br_bsid = '" + slotID + "' " +
+                    //"\nand ( convert('" + STdateRport + "', date) <= convert(br_createdate, date) and convert(br_createdate, date) <= convert('" + ENdateRport + "', date) ) " + 
+                    "and (convert(br_datetime, date) between '" + STdateRport + "' and '" + ENdateRport + "') " +
+                    "\norder by br_id ";
             DataTable result = new DataTable();
             result = cl_Sql.select(sql);
             if (result.Rows.Count > 0)
@@ -174,7 +190,7 @@ namespace BRH_Plubic.CHK
                 foreach (DataRow row in result.Rows)
                 {
                     string HTMLDetail = "<table border=\"1\" style=\"width: 100%\">";
-                    
+
                     row["RowIndex"] = result.Rows.IndexOf(row) + 1;
 
                     string recodeID = row["br_id"].ToString();
@@ -213,7 +229,6 @@ namespace BRH_Plubic.CHK
                     row["RowHTML"] = HTMLDetail;
                 }
             }
-
             return result;
         }
 
@@ -226,6 +241,8 @@ namespace BRH_Plubic.CHK
             dtR = RecordDetail(slotID, STdate, ENdate);
             if (dtR.Rows.Count > 0)
             {
+                lbl_Modal.Text = "";
+
                 DataView dv = new DataView(dtR);
                 if (num != "")
                 {
@@ -254,10 +271,12 @@ namespace BRH_Plubic.CHK
             }
             else
             {
+                lbl_Modal.Text = "ไม่มีข้อมูล !!";
+
                 LV_Report.DataSource = dtR;
                 LV_Report.DataBind();
-
-                div_detail.Visible = false;
+                
+                //div_detail.Visible = false;
             }
 
             GridView1.DataSource = dtR;
@@ -274,7 +293,7 @@ namespace BRH_Plubic.CHK
             {
                 Slot(slotID);
                 div_detail.Visible = true;
-                ListView_Report(slotID,"","","");
+                ListView_Report(slotID, "", "", "");
             }
             else
             {

@@ -1038,6 +1038,14 @@
     <Content Include="TaskSchedule\itOutreach.aspx" />
     <Content Include="Test.aspx" />
     <Content Include="VaccineBooking\Default.aspx" />
+    <Content Include="VaccineCovid\Booking.aspx" />
+    <Content Include="VaccineCovid\Booking2.aspx" />
+    <Content Include="VaccineCovid\Booking3.aspx" />
+    <Content Include="VaccineCovid\Booking4.aspx" />
+    <Content Include="VaccineCovid\Booking5.aspx" />
+    <Content Include="VaccineCovid\Booking6.aspx" />
+    <Content Include="VaccineCovid\BookingEmp.aspx" />
+    <Content Include="VaccineCovid\BookingModerna.aspx" />
     <Content Include="VaccineCovid\Default.aspx" />
     <Content Include="VaccineCovid\image\BK_coronavirus_blue.jpg" />
     <Content Include="VaccineCovid\image\bk_full.jpg" />
@@ -1783,12 +1791,14 @@
     </Compile>
     <Compile Include="MentalHealthClinic\GAD7Negative.aspx.cs">
       <DependentUpon>GAD7Negative.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="MentalHealthClinic\GAD7Negative.aspx.designer.cs">
       <DependentUpon>GAD7Negative.aspx</DependentUpon>
     </Compile>
     <Compile Include="MentalHealthClinic\GAD7Postive.aspx.cs">
       <DependentUpon>GAD7Postive.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="MentalHealthClinic\GAD7Postive.aspx.designer.cs">
       <DependentUpon>GAD7Postive.aspx</DependentUpon>
@@ -1830,12 +1840,14 @@
     </Compile>
     <Compile Include="MentalHealthClinic\PHQ8Negative.aspx.cs">
       <DependentUpon>PHQ8Negative.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="MentalHealthClinic\PHQ8Negative.aspx.designer.cs">
       <DependentUpon>PHQ8Negative.aspx</DependentUpon>
     </Compile>
     <Compile Include="MentalHealthClinic\PHQ8Positive.aspx.cs">
       <DependentUpon>PHQ8Positive.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="MentalHealthClinic\PHQ8Positive.aspx.designer.cs">
       <DependentUpon>PHQ8Positive.aspx</DependentUpon>
@@ -1849,6 +1861,7 @@
     </Compile>
     <Compile Include="MentalHealthClinic\PHQ9Negative.aspx.cs">
       <DependentUpon>PHQ9Negative.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="MentalHealthClinic\PHQ9Negative.aspx.designer.cs">
       <DependentUpon>PHQ9Negative.aspx</DependentUpon>
@@ -1897,12 +1910,14 @@
     </Compile>
     <Compile Include="MentalHealthClinic\SPST20Negative.aspx.cs">
       <DependentUpon>SPST20Negative.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="MentalHealthClinic\SPST20Negative.aspx.designer.cs">
       <DependentUpon>SPST20Negative.aspx</DependentUpon>
     </Compile>
     <Compile Include="MentalHealthClinic\SPST20Positive.aspx.cs">
       <DependentUpon>SPST20Positive.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="MentalHealthClinic\SPST20Positive.aspx.designer.cs">
       <DependentUpon>SPST20Positive.aspx</DependentUpon>
@@ -1923,6 +1938,7 @@
     </Compile>
     <Compile Include="MentalHealthClinic\Test.aspx.cs">
       <DependentUpon>Test.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="MentalHealthClinic\Test.aspx.designer.cs">
       <DependentUpon>Test.aspx</DependentUpon>
@@ -2277,6 +2293,62 @@
     </Compile>
     <Compile Include="VaccineBooking\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="VaccineCovid\Booking.aspx.cs">
+      <DependentUpon>Booking.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VaccineCovid\Booking.aspx.designer.cs">
+      <DependentUpon>Booking.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="VaccineCovid\Booking2.aspx.cs">
+      <DependentUpon>Booking2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VaccineCovid\Booking2.aspx.designer.cs">
+      <DependentUpon>Booking2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="VaccineCovid\Booking3.aspx.cs">
+      <DependentUpon>Booking3.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VaccineCovid\Booking3.aspx.designer.cs">
+      <DependentUpon>Booking3.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="VaccineCovid\Booking4.aspx.cs">
+      <DependentUpon>Booking4.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VaccineCovid\Booking4.aspx.designer.cs">
+      <DependentUpon>Booking4.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="VaccineCovid\Booking5.aspx.cs">
+      <DependentUpon>Booking5.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VaccineCovid\Booking5.aspx.designer.cs">
+      <DependentUpon>Booking5.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="VaccineCovid\Booking6.aspx.cs">
+      <DependentUpon>Booking6.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VaccineCovid\Booking6.aspx.designer.cs">
+      <DependentUpon>Booking6.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="VaccineCovid\BookingEmp.aspx.cs">
+      <DependentUpon>BookingEmp.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VaccineCovid\BookingEmp.aspx.designer.cs">
+      <DependentUpon>BookingEmp.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="VaccineCovid\BookingModerna.aspx.cs">
+      <DependentUpon>BookingModerna.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VaccineCovid\BookingModerna.aspx.designer.cs">
+      <DependentUpon>BookingModerna.aspx</DependentUpon>
     </Compile>
     <Compile Include="VaccineCovid\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>

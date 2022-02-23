@@ -151,7 +151,7 @@ namespace BRH_Plubic.MentalHealthClinic
             //msg = msg + "\nชื่อ: " + firstname + " " + lasttname;
             //msg = msg + "\nTel: " + phonenumber;
             //msg = msg + "\nLine: " + lineid;
-            msg = msg + "\nLink: http://brh.seedoctor.asia/MentalHealthClinic/Default.aspx?id=" + m_id;
+            msg = msg + "\nLink: http://brh.apply-apps.com/MentalHealthClinic/Default.aspx?id=" + m_id;
 
             try
             {

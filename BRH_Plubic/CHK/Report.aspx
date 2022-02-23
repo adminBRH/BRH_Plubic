@@ -68,7 +68,7 @@
                         <asp:ListItem Text="" Value=""></asp:ListItem>
                     </asp:DropDownList>
                 </div>
-                <div id="div_detail" class="row col-12 mx-auto" runat="server" visible="false">
+                <div id="div_detail" class="row col-12 mx-auto" runat="server">
                     <div class="row col-12 mx-auto mb-5 h3">
                         <div class="col-6 mx-auto my-3">
                             <b>วันที่เปิดให้ทำการจอง :</b>

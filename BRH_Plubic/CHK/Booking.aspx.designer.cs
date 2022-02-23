@@ -285,6 +285,15 @@ namespace BRH_Plubic.CHK
         protected global::System.Web.UI.WebControls.Label lbl_controler;
 
         /// <summary>
+        /// lbl_scCTRL control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_scCTRL;
+
+        /// <summary>
         /// txtH_CreateConT control.
         /// </summary>
         /// <remarks>

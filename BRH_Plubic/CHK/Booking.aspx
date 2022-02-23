@@ -116,6 +116,7 @@
             </asp:UpdatePanel>
             <!-- ================================= Controler ==================================== -->
             <asp:Label ID="lbl_controler" Text="" runat="server"></asp:Label>
+            <asp:Label ID="lbl_scCTRL" Text="" runat="server"></asp:Label>
             <!-- ================================================================================ -->
             <div hidden="hidden">
                 <input id="txtH_CreateConT" value="" runat="server" />
@@ -130,14 +131,77 @@
                         <asp:Label ID="lbl_alert" Text="" Font-Size="X-Large" ForeColor="Red" runat="server"></asp:Label>
                     </div>
                     <div id="div_submit" class="col-12 mx-auto text-xl-center" runat="server">
-                        <a class="btn btn-outline-primary my-3" onclick="fn_submit()" style="cursor: pointer; font-size: x-large;">Submit</a>
+                        <a class="btn btn-outline-primary my-3" onclick="fn_recheck()" data-toggle="modal" data-target="#modalRecheck" style="cursor: pointer; font-size: x-large;">Submit</a>
                         <button id="btnSubmit" runat="server" onserverclick="btn_submit_Click" hidden="hidden"></button>
                         <asp:Button Text="Submit" ID="btn_submit" CssClass="btn btn-outline-primary mx-auto text-center" Font-Size="XX-Large" OnClick="btn_submit_Click" OnClientClick="alertModal('#Modal_Loading');" runat="server" Visible="false" />
                     </div>
+                    <!-- Modal Recheck -->
+                    <div class="modal fade" id="modalRecheck" tabindex="-1" role="dialog" aria-labelledby="modalRecheckTitle" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document" style="padding-top: 20%;">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="modalRecheckTitle"><label id="lbl_recheckhead"></label></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                              <div class="col-12 mx-auto text-center">
+                                  <label id="lbl_recheck"></label>
+                              </div>
+                          </div>
+                          <div class="modal-footer">
+                              <div id="div_recheck_button" class="row col-12 mx-auto">
+                                  <div class="col-6 mx-auto text-center">
+                                      <button type="button" class="btn btn-outline-danger" data-dismiss="modal">ไม่ยืนยัน</button>
+                                  </div>
+                                  <div class="col-6 mx-auto text-center">
+                                      <button type="button" class="btn btn-outline-primary" onclick="fn_submit()" data-dismiss="modal">ยืนยัน</button>
+                                  </div>
+                              </div>
+                              <div id="div_recheck_alert" class="col-12 mx-auto" hidden="hidden">
+                                  <button type="button" class="btn btn-outline-danger" data-dismiss="modal">ตกลง</button>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
                     <script>
                         var txtH_ID = document.getElementById('<%= txtH_booktimeID.ClientID %>');
                         if (txtH_ID.value != '' && txtH_ID.value != id) {
                             document.getElementById('btn_slot_' + txtH_ID.value).setAttribute("class", "col-lg-2 col-sm-3 btn btn-outline-success mx-auto my-auto");
+                        }
+
+                        function fn_recheck() {
+                            var lblhead = document.getElementById('lbl_recheckhead');
+                            var lblbody = document.getElementById('lbl_recheck');
+                            var bookdate = document.getElementById('<%= txtH_bookdate.ClientID %>');
+                            var booktime = document.getElementById('<%= txtH_booktime.ClientID %>');
+                            var divButton = document.getElementById('div_recheck_button');
+                            var divAlert = document.getElementById('div_recheck_alert');
+                            divButton.setAttribute('hidden', 'hidden');
+                            divAlert.removeAttribute('hidden');
+                            var head = '';
+                            var body = '';
+                            if (bookdate.value == '') {
+                                head = 'Alert !!';
+                                body = 'กรุณาเลือกวันที่';
+                            } else if (booktime.value == '') {
+                                head = 'Alert !!';
+                                body = 'กรุณาเลือกเวลา';
+                            } else {
+                                head = 'วันเวลาที่คุณต้องการจอง';
+                                var DateAR = bookdate.value.split('-');
+                                var month = parseInt(DateAR[1]) - 1;
+                                var yearTH = parseInt(DateAR[0]) + 543;
+                                var DateTH = DateAR[2] + ' ' + monthTH(month) + ' ' + yearTH;
+                                body = DateTH + ' เวลา ' + booktime.value + ' น.';
+                                divAlert.setAttribute('hidden', 'hidden');
+                                divButton.removeAttribute('hidden');
+                            }
+                            lblhead.innerHTML = head;
+                            lblbody.innerHTML = body;
                         }
                     </script>
                 </ContentTemplate>
@@ -148,7 +212,6 @@
         </div>
     </div>
 
-
 <!-- Modal -->
 <div class="modal fade" id="ModalAlertSubmit" tabindex="-1" role="dialog" aria-labelledby="ModalAlertSubmitLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl" role="document">
@@ -156,7 +219,8 @@
       <div class="modal-header">
         <div class="modal-title row col-12 mx-auto" id="ModalAlertSubmitLabel">
             <div class="col-6 mx-auto text-left">
-                <img src="../images/BGH_Rayong-Logo.jpg" style="width: 30%;" />
+                <%--<img src="../images/BGH_Rayong-Logo.jpg" style="width: 30%;" />--%>
+                <img src="../images/logo-BRH_200x80px.png" style="width: 30%;" />
             </div>
             <div class="col-6 mx-auto my-auto text-right" style="margin-right: 25px;">
                 <asp:Label ID="lbl_docno" Text="" runat="server"></asp:Label>

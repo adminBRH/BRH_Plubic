@@ -7,12 +7,11 @@ using System.Web.UI.WebControls;
 
 namespace BRH_Plubic.VaccineCovid
 {
-    public partial class Default1 : System.Web.UI.Page
+    public partial class Booking5 : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-        //Response.Redirect("UploadSlip");
-            Response.Redirect("https://script.google.com/macros/s/AKfycbxczEog1gZ9CAdcbfajpFyZXrdvkzo_vBxGD8HIbQe-OSUSQLIe/exec");
+            Response.Redirect("https://script.google.com/macros/s/AKfycbzF_Cp-5OUgm1wYUTlIXYypnydQX-F5etcBVanCKIL4QQxmgBniM34JB9BwK4c6e75E/exec");
         }
     }
 }

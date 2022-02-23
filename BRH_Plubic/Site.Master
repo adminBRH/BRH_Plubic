@@ -342,6 +342,11 @@
             document.write(dayName);
         }
 
+        function monthTH(num) {
+            var month = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
+            return month[num];
+        }
+
         function DayColor() {
             var colors = ['darkred', 'yellow', 'deeppink', 'green', 'orange', 'deepskyblue', 'purple'];
             var d = new Date();
