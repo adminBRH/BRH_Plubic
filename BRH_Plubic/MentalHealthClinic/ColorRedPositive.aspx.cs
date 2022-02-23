@@ -75,7 +75,7 @@ namespace BRH_Plubic.MentalHealthClinic
             msg = msg + "\nLine: " + lineid;
             msg = msg + "\nสถานที่พักรักษา: " + accommodation;
             msg = msg + "\nหมายเลขห้อง: " + roomNumber;
-            msg = msg + "\nLink: http://brh.seedoctor.asia/MentalHealthClinic/Default.aspx?id=" + m_id;
+            msg = msg + "\nLink: http://brh.apply-apps.com/MentalHealthClinic/Default.aspx?id=" + m_id;
 
             try
             {

@@ -133,54 +133,6 @@ namespace BRH_Plubic.MentalHealthClinic
             return result;
         }
 
-        public Boolean Linenotify(string txt)
-        {
-            Boolean bl = false;
-
-            string m_id = "";
-            m_id = Request.QueryString["id"].ToString();
-
-            string token = "IcicbalDCvpgEvD4mjHhQW0199PNY9lE7f0lzW5Yh2O";
-            string msg = txt;
-
-            //string firstname = register_fname.Value.ToString().Trim();
-            //string lasttname = register_lname.Value.ToString().Trim();
-            //string phonenumber = register_pnumber.Value.ToString().Trim();
-            //string lineid = register_line.Value.ToString().Trim();
-
-            //msg = msg + "\nชื่อ: " + firstname + " " + lasttname;
-            //msg = msg + "\nTel: " + phonenumber;
-            //msg = msg + "\nLine: " + lineid;
-            msg = msg + "\nLink: http://brh.apply-apps.com/MentalHealthClinic/Default.aspx?id=" + m_id;
-
-            try
-            {
-                var request = (HttpWebRequest)WebRequest.Create("https://notify-api.line.me/api/notify");
-                var postData = string.Format("message={0}", msg);
-                var data = Encoding.UTF8.GetBytes(postData);
-                request.Method = "POST";
-                request.ContentType = "application/x-www-form-urlencoded";
-                request.ContentLength = data.Length;
-                request.Headers.Add("Authorization", "Bearer " + token);
-
-                using (var stream = request.GetRequestStream())
-                {
-                    stream.Write(data, 0, data.Length);
-                }
-
-                var response = (HttpWebResponse)request.GetResponse();
-                var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
-
-                bl = true;
-            }
-            catch (Exception ex)
-            {
-                bl = false;
-            }
-
-            return bl;
-        }
-
         protected void btn_next_Click(object sender, EventArgs e)
         {
             int score = int.Parse(txtH_Score.Value.ToString());
