@@ -46,7 +46,8 @@
                         </div>
                         <div class="col-2 mx-auto my-auto text-center">
                             <div class="col-12 mx-auto my-2">
-                                <a class="btn btn-outline-info" onclick="fn_details('<%# Eval("asr_desc") %>')" style="cursor: pointer;" data-toggle="modal" data-target="#modalDetails">
+                                <input id="txtH_details_<%# Eval("asr_id") %>" value="<%# Eval("asr_desc") %>" hidden="hidden" />
+                                <a class="btn btn-outline-info" onclick="fn_details('<%# Eval("asr_id") %>')" style="cursor: pointer;">
                                     Details <i class="fa fa-book"></i>
                                 </a>
                             </div>
@@ -88,9 +89,11 @@
 </div>
 
 <script>
-    function fn_details(desc) {
+    function fn_details(id) {
+        var desc = document.getElementById('txtH_details_' + id);
         var txtDetails = document.getElementById('txt_details');
-        txtDetails.innerText = desc;
+        txtDetails.innerText = desc.value;
+        $('#modalDetails').modal('show');
     }
 
     function fn_action(id, status) {

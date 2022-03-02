@@ -70,7 +70,8 @@ namespace BRH_Plubic.AssetControl
                 "\nleft join asset_cate as ac on ac.asc_id=ar.asr_ascid " +
                 "\nleft join asset_type as at on at.ast_id=ar.asr_astid " +
                 "\nleft join employee as em on em.emp_id=ar.asr_cuser " +
-                "\nwhere ar.asr_status like '%" + status + "%' " + searchID;
+                "\nwhere ar.asr_status like '%" + status + "%' " + searchID +
+                "\norder by asr_id desc ";
             dt = new DataTable();
             dt = cl_Sql.select(sql);
             if (dt.Rows.Count > 0)
@@ -110,10 +111,12 @@ namespace BRH_Plubic.AssetControl
                     dt = cl_Sql.select(sql);
                     if (dt.Rows.Count > 0)
                     {
+                        string AcknowledgeTime = "";
                         string status = dt.Rows[0]["asr_status"].ToString();
                         if (status == "Notify")
                         {
                             status = "Acknowledge";
+                            AcknowledgeTime = ",asr_auser='" + userid + "', asr_adate=CURRENT_TIMESTAMP ";
                         }
                         else if (status == "Acknowledge")
                         {
@@ -124,7 +127,7 @@ namespace BRH_Plubic.AssetControl
                             status = "Finish";
                         }
 
-                        sql = "update asset_repair set asr_status='" + status + "', asr_muser='" + userid + "', asr_mdate=CURRENT_TIMESTAMP " +
+                        sql = "update asset_repair set asr_status='" + status + "', asr_muser='" + userid + "', asr_mdate=CURRENT_TIMESTAMP " + AcknowledgeTime +
                             "\nwhere asr_id = '" + id + "'; ";
                         if (cl_Sql.Modify(sql))
                         {
