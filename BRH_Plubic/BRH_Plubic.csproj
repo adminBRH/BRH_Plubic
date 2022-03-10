@@ -761,6 +761,7 @@
     <Content Include="NovelCorona\CheckDocument.aspx" />
     <Content Include="NovelCorona\Default.aspx" />
     <Content Include="NovelCorona\Report.aspx" />
+    <Content Include="OTP\Default.aspx" />
     <Content Include="Patient\Default.aspx" />
     <Content Include="PreRegister.aspx" />
     <Content Include="privacy\cookie-notice.aspx" />
@@ -2013,6 +2014,13 @@
     </Compile>
     <Compile Include="NovelCorona\Report.aspx.designer.cs">
       <DependentUpon>Report.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OTP\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OTP\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Patient\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>

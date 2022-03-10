@@ -15,15 +15,6 @@ namespace BRH_Plubic.GoodDoctor
     {
 
         /// <summary>
-        /// lbl_department control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_department;
-
-        /// <summary>
         /// div_key control.
         /// </summary>
         /// <remarks>
@@ -31,6 +22,15 @@ namespace BRH_Plubic.GoodDoctor
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_key;
+
+        /// <summary>
+        /// lbl_department control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_department;
 
         /// <summary>
         /// txt_key control.

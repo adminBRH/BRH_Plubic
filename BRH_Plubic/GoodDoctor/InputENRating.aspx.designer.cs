@@ -51,6 +51,15 @@ namespace BRH_Plubic.GoodDoctor
         protected global::System.Web.UI.HtmlControls.HtmlButton btn_submit;
 
         /// <summary>
+        /// lbl_doctor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_doctor;
+
+        /// <summary>
         /// div_alert control.
         /// </summary>
         /// <remarks>

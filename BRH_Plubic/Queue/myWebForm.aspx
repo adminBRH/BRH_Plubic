@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>SignalR Simple Chat</title>
+    <title>BRH Queue by Department (SignalR)</title>
     <style type="text/css">
         .container {
             background-color: #99CCFF;

@@ -145,8 +145,6 @@
 }
 </style>
 
-<asp:Label ID="lbl_department" Text="" Font-Size="XX-Large" runat="server"></asp:Label>
-
     <div id="div_key" class="row col-12 mx-auto" runat="server" style="position: absolute; top: 30%;">
         <div class="col-12 mx-auto">
             <style>
@@ -205,11 +203,12 @@
                 <span class="ti-star starSize"></span>
             </div>
         </div>
-        <div class="col-12 mx-auto text-center my-3 h1">
-            ให้คะแนนความพึงพอใจแพทย์
+        <div class="col-12 mx-auto text-center my-3">
+            <h1>ให้คะแนนความพึงพอใจแพทย์</h1>
+            <h3><asp:Label ID="lbl_department" Text="" runat="server"></asp:Label></h3>
         </div>
         <div class="col-12 mx-auto text-center my-3">
-            <input type="text" id="txt_key" class="col-6 form-control mx-auto mb-3" value="" placeholder="กรุณากรอก หมายเลขคิว หรือ EN" runat="server" style="font-size: x-large;" />
+            <input type="text" id="txt_key" class="col-6 form-control mx-auto mb-3" value="" placeholder="กรุณากรอกรหัส ที่ได้รับจากเจ้าหน้าที่" runat="server" style="font-size: x-large;" />
         </div>
         <div class="col-12 mx-auto text-center my-3">
             <button id="btn_key" class="btn btn-outline-primary" onserverclick="btn_key_ServerClick" runat="server" style="font-size:x-large">ตรวจสอบ</button>

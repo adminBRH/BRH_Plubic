@@ -391,20 +391,30 @@ input[type=radio] {
 
 <style>
     .btnShowQueue {
+        cursor: pointer;
         height: 60px;
         top: 40%; left: auto; right: 0;  
         border-top-left-radius:10px; 
         border-bottom-left-radius:10px;
     }
     .btnAddQueue {
+        cursor: pointer;
         height: 60px;
         top: 50%; left: auto; right: 0;  
+        border-top-left-radius:10px; 
+        border-bottom-left-radius:10px;
+    }
+    .btnLinkScore {
+        cursor: pointer;
+        height: 60px;
+        top: 60%; left: auto; right: 0;  
         border-top-left-radius:10px; 
         border-bottom-left-radius:10px;
     }
 </style>
 <a class="btn btn-warning fixed-bottom btnShowQueue" data-toggle="modal" data-target="#Modal_ShowQueue"><i class="ti-2x ti-agenda"></i></a>
 <a class="btn btn-info fixed-bottom btnAddQueue" data-toggle="modal" data-target="#Modal_AddQueue"><i class="ti-2x ti-pencil"></i></a>
+<a class="btn btn-outline-primary fixed-bottom btnLinkScore" id="a_linkscore" target="_blank" runat="server"><i class="ti-2x ti-link"></i></a>
 
 <!-- Modal Show Queue -->
 <div class="modal right fade" id="Modal_ShowQueue" tabindex="-1" role="dialog" aria-hidden="true">
@@ -413,6 +423,9 @@ input[type=radio] {
             <div class="modal-body">
                 <asp:UpdatePanel ID="UpdatePanel_Queue" runat="server">
                     <ContentTemplate>
+                        <div class="col-12 mx-auto my-2 text-right">
+                            <a id="btn_loadQueue" style="cursor: pointer;" onserverclick="btn_loadQueue_ServerClick" runat="server"><i class="fa fa-refresh"></i> Refresh</a>
+                        </div>
                         <iframe id="iframe_queue" src="../Queue/myWebForm.aspx" class="row col-12 mx-auto" style="position: fixed; height: 100%; overflow-y: auto;" runat="server"></iframe>
                     </ContentTemplate>
                 </asp:UpdatePanel>

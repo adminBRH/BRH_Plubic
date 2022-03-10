@@ -18,10 +18,14 @@
 
             <div id="div_register" class="row col-12 mx-auto" runat="server" visible="true" style="position: absolute; top: 40%;">
                 <div class="col-12 mx-auto text-center">
-                    <input type="text" id="txt_en" value="" autofocus="autofocus" class="form-control" placeholder="กรุณากรอก EN" runat="server" />
+                    <input type="text" id="txt_en" value="" autofocus="autofocus" class="form-control" placeholder="กำหนดรหัสให้ลูกค้า" runat="server" />
                 </div>
                 <div class="col-12 mx-auto text-center">
                     <button id="btn_submit" class="btn btn-outline-primary" onserverclick="btn_submit_ServerClick" runat="server">Register</button>
+                </div>
+                <div class="col-12 mx-auto mt-3 text-center">
+                    สำหรับประเมินแพทย์ชื่อ<br />
+                    <asp:Label ID="lbl_doctor" Text="" runat="server"></asp:Label>
                 </div>
             </div>
             <div id="div_alert" runat="server" visible="false" style="position: fixed; bottom: 40%;">
@@ -48,7 +52,7 @@
             // Start the connection.
             $.connection.hub.start().done(function () {
                 //First load
-                chat.server.callFunction("", "select * from mytable order by id desc;");
+                chat.server.callFunction("", "select * from mytable where convert(datetimes,date)=CURRENT_DATE order by id desc;");
             });
 
         });

@@ -29,6 +29,7 @@ namespace BRH_Plubic.GoodDoctor
                 string location = Request.QueryString["location"].ToString();
 
                 string IP = GetUserIP();
+                lbl_department.Text = "แผนก: " + Department(location);
                 string queue = CheckQueueByIP(location, IP);
                 if (queue != "")
                 {
@@ -51,6 +52,20 @@ namespace BRH_Plubic.GoodDoctor
 
             //Otherwise return the Remote Address
             return Request.ServerVariables["REMOTE_ADDR"];
+        }
+
+        public string Department(string id)
+        {
+            string result = "";
+            sql = "SELECT * FROM `doctor_location` where dl_active='yes' and dl_id='" + id + "'; ";
+            dt = new DataTable();
+            dt = cl_Sql.select(sql);
+            if (dt.Rows.Count > 0)
+            {
+                result = dt.Rows[0]["dl_name"].ToString();
+            }
+
+            return result;
         }
 
         public string CheckQueueByIP(string dept, string IP)

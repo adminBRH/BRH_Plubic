@@ -186,6 +186,16 @@ namespace BRH_Plubic.GoodDoctor
             CB_Active.Checked = true;
 
             string deptid = DD_Department.SelectedValue.ToString();
+
+            if (deptid == "")
+            {
+                a_linkscore.Attributes.Remove("href");
+            }
+            else
+            {
+                a_linkscore.Attributes.Add("href", "../GoodDoctor/?location=" + deptid);
+            }
+
             if (deptid == "")
             {
                 a_addDoctor.Visible = false;
@@ -197,7 +207,14 @@ namespace BRH_Plubic.GoodDoctor
                 div_cbActive.Visible = true;
                 iframe_queue.Src = "../Queue/myWebForm.aspx?dept=" + deptid;
             }
+
             DoctorList(deptid,"yes");
+        }
+
+        protected void btn_loadQueue_ServerClick(object sender, EventArgs e)
+        {
+            string deptid = DD_Department.SelectedValue.ToString();
+            iframe_queue.Src = "../Queue/myWebForm.aspx?dept=" + deptid;
         }
 
         protected void btn_updateManual_ServerClick(object sender, EventArgs e)
@@ -425,7 +442,7 @@ namespace BRH_Plubic.GoodDoctor
             string drid = txt_doctorid.Value.ToString().Trim();
             string druser = txt_doctoruser.Value.ToString().Trim();
             string fname = txt_fname.Value.ToString().Trim();
-            string lname = txt_fname.Value.ToString().Trim();
+            string lname = txt_lname.Value.ToString().Trim();
             string fname_eg = txt_fname_eg.Value.ToString().Trim();
             string lname_eg = txt_lname_eg.Value.ToString().Trim();
             string name_eg = fname_eg + " " + lname_eg;

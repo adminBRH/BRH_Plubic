@@ -420,6 +420,15 @@ namespace BRH_Plubic.GoodDoctor
         protected global::System.Web.UI.HtmlControls.HtmlButton btn_adddoctor;
 
         /// <summary>
+        /// a_linkscore control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor a_linkscore;
+
+        /// <summary>
         /// UpdatePanel_Queue control.
         /// </summary>
         /// <remarks>
@@ -427,6 +436,15 @@ namespace BRH_Plubic.GoodDoctor
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel UpdatePanel_Queue;
+
+        /// <summary>
+        /// btn_loadQueue control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor btn_loadQueue;
 
         /// <summary>
         /// iframe_queue control.

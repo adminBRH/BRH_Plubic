@@ -134,6 +134,7 @@ namespace BRH_Plubic.Queue
                     div_queue.Visible = true;
                     lbl_queue.Text = Queue.ToString();
                     //scModal = "fn_AlertModal('Success','Success !!','',0); windowPopup('/Queue/Generate.aspx?dept=" + dept + "','Generate Queue', 10, 10);";
+                    lbl_script.Text = "<script>fn_reloadQueue();</script>";
                     scModal = "fn_AlertModal('Success','Success !!','Default?dept=" + dept + "',2000);";
                 }
                 else

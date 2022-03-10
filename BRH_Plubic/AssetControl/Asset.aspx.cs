@@ -748,7 +748,7 @@ namespace BRH_Plubic.AssetControl
             {
                 token = "KvQLv7ml6usGawbF7ljp5GxZDyxo2LbGzdaVL09E8h6";
             }
-            string msg = txt;
+            string msg = txt.Replace("&","%26");
 
             try
             {

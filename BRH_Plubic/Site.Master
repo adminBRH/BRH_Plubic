@@ -571,12 +571,26 @@
                 <strong style="font-size:xx-large;">Doctor Rating </strong><span class="ti-2x ti-star"></span>
             </div>
             <div id="div_Menu_DoctorRating" class="col-12 mx-auto mt-3" hidden="hidden">
+                <div class="btn-outline-info border-0 text-right" onclick="fn_goto('dashboard_beauty')" style="font-size:x-large;">
+                    Beauty <span class="ti-layout-grid3"></span>
+                </div><br />
                 <div class="btn-outline-info border-0 text-right" onclick="fn_goto('dashboard_dental')" style="font-size:x-large;">
                     Dental <span class="ti-layout-grid3"></span>
-                </div>
-                <br />
+                </div><br />
+                <div class="btn-outline-info border-0 text-right" onclick="fn_goto('dashboard_ent')" style="font-size:x-large;">
+                    ENT <span class="ti-layout-grid3"></span>
+                </div><br />
+                <div class="btn-outline-info border-0 text-right" onclick="fn_goto('dashboard_eye')" style="font-size:x-large;">
+                    EYE <span class="ti-layout-grid3"></span>
+                </div><br />
                 <div class="btn-outline-info border-0 text-right" onclick="fn_goto('dashboard_med')" style="font-size:x-large;">
                     MED <span class="ti-layout-grid3"></span>
+                </div><br />
+                <div class="btn-outline-info border-0 text-right" onclick="fn_goto('dashboard_obg')" style="font-size:x-large;">
+                    Obstetrics <span class="ti-layout-grid3"></span>
+                </div><br />
+                <div class="btn-outline-info border-0 text-right" onclick="fn_goto('dashboard_ped')" style="font-size:x-large;">
+                    Pediatric <span class="ti-layout-grid3"></span>
                 </div>
             </div>
             <br />
@@ -713,11 +727,26 @@
             case 'GoodDoctor':
                 location.href = "../GoodDoctor/Manage.aspx";
                 break;
+            case 'dashboard_beauty':
+                location.href = "../GoodDoctor/DashBoard?location=3005";
+                break;
             case 'dashboard_dental':
                 location.href = "../GoodDoctor/DashBoard?location=42";
                 break;
+            case 'dashboard_ent':
+                location.href = "../GoodDoctor/DashBoard?location=46";
+                break;
+            case 'dashboard_eye':
+                location.href = "../GoodDoctor/DashBoard?location=50";
+                break;
             case 'dashboard_med':
                 location.href = "../GoodDoctor/DashBoard?location=67";
+                break;
+            case 'dashboard_obg':
+                location.href = "../GoodDoctor/DashBoard?location=3018";
+                break;
+            case 'dashboard_ped':
+                location.href = "../GoodDoctor/DashBoard?location=79";
                 break;
             case 'rehab_book':
                 location.href = "../Rehab/Default.aspx";
@@ -988,7 +1017,15 @@
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div class="row col-10 mx-auto my-auto text-right">
+
+        <div class="col-12 mx-auto text-center" style="background-color:white; border-top-left-radius: 20px; border-top-right-radius: 20px;">
+            <!-- Copyright removal is not prohibited! -->
+            <small><b>COPYRIGHT © 2020. ALL RIGHTS RESERVED. Power by: Healthcare information officer</b></small>
+        </div>
+    </div>
+
+    <div class="row col-12 mx-auto">
+        <div class="col-10 mx-auto my-auto text-right">
             <img src="../images/logo_network.png" alt="Network logos" class="img-fluid">
         </div>
         <div class="row col-2 mx-auto">
@@ -1002,12 +1039,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 mx-auto text-center" style="background-color:white; border-top-left-radius: 20px; border-top-right-radius: 20px;">
-            <!-- Copyright removal is not prohibited! -->
-            <small><b>COPYRIGHT © 2020. ALL RIGHTS RESERVED. Power by : BRH Informatics And Development Product</b></small>
-        </div>
     </div>
-
 
     <!-- Modal Login ----------------------------------------------------------------------------- -->
     <div class="modal fade bd-example-modal-lg" id="modal_login" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">

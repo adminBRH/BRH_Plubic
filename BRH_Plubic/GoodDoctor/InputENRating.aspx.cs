@@ -32,6 +32,10 @@ namespace BRH_Plubic.GoodDoctor
                         lbl_alert.Text = "Data invalid !!";
                         lbl_script.Text = "<script>CloseWindow(3);</script>";
                     }
+                    else
+                    {
+                        Doctor(Request.QueryString["sc"].ToString());
+                    }
                 }
                 else
                 {
@@ -58,6 +62,17 @@ namespace BRH_Plubic.GoodDoctor
 
             //Otherwise return the Remote Address
             return Request.ServerVariables["REMOTE_ADDR"];
+        }
+
+        private void Doctor(string sc)
+        {
+            sql = "select dr_forename,dr_surname from doctor where dr_id in (select ds_drid from `doctor_schedule` WHERE ds_id='" + sc + "'); ";
+            dt = new DataTable();
+            dt = cl_Sql.select(sql);
+            if (dt.Rows.Count > 0)
+            {
+                lbl_doctor.Text = dt.Rows[0]["dr_forename"].ToString() + " " + dt.Rows[0]["dr_surname"].ToString();
+            }
         }
 
         protected void btn_submit_ServerClick(object sender, EventArgs e)
@@ -103,7 +118,7 @@ namespace BRH_Plubic.GoodDoctor
 
                             alert = "Success";
                             lbl_alert.ForeColor = System.Drawing.Color.Green;
-                            lbl_script.Text = "<script>CloseWindow(3);</script>";
+                            lbl_script.Text = "<script>CloseWindow(2);</script>";
                         }
                         else
                         {
