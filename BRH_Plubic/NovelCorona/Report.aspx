@@ -341,7 +341,7 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                ผลการตรวจ SARS-CoV-2 Antibody
+                                                ผลการตรวจ ATK <!--SARS-CoV-2 Antibody-->
                                                 <script> fn_table_show('<%# Eval("ncc_antibody_array") %>'); </script>
                                             </td>
                                         </tr>

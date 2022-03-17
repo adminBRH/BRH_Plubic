@@ -62,13 +62,43 @@ namespace BRH_Plubic.NovelCorona
                 }
                 else
                 {
-                    Response.Write("<script>alert('กรุณา login ก่อนเข้าใช้งาน !!'); window.location.href='../default.aspx';</script>");
+                    // Open for user self input
+                    DateTime DateNow = DateTime.Now;
+                    string id = Request.QueryString["nc"].ToString();
+                    if (id == "staff")
+                    {
+                        txt_B.Attributes.Add("min", (DateNow.Year + 443).ToString());
+                        txt_B.Attributes.Add("max", (DateNow.Year + 543).ToString());
+                        if (!IsPostBack)
+                        {
+                            txt_B.Value = (DateNow.Year + 543).ToString();
+                        }
+                        
+                        div_1.Visible = true;
+                        div_2.Visible = true;
+                        div_3.Visible = true;
+                        btn_submit_1.Visible = false;
+
+                        btn_submit_4.Visible = true;
+                    }
+                    else
+                    {
+                        if (!IsPostBack)
+                        {
+                            StaffDetails(id);
+                        }
+                    }
+                    //----------------------------------
+
+                    //Response.Write("<script>alert('กรุณา login ก่อนเข้าใช้งาน !!'); window.location.href='../default.aspx';</script>");
                 }
             }
             else
             {
                 if (!IsPostBack)
                 {
+                    Response.Redirect("Default?nc=staff");
+
                     DateTime DateNow = DateTime.Now;
                     txt_B.Attributes.Add("min", (DateNow.Year + 443).ToString());
                     txt_B.Attributes.Add("max", (DateNow.Year + 543).ToString());
@@ -1005,10 +1035,16 @@ namespace BRH_Plubic.NovelCorona
             if (rd_pt_status_3.Checked) { pt_status = rd_pt_status_3.Value.ToString(); }
             if (rd_pt_status_4.Checked) { pt_status = rd_pt_status_4.Value.ToString(); }
             if (rd_pt_status_5.Checked) { pt_status = rd_pt_status_5.Value.ToString(); }
+
             string pt_status_4 = txt_pt_status_4.Value.ToString().Trim();
             string pt_status_5 = txt_pt_status_5.Value.ToString().Trim();
+
+            string user = "customer";
+            if (Session["userid"] != null)
+            {
+                user = Session["userid"].ToString();
+            }
             
-            string user = Session["userid"].ToString();
             sql = "INSERT INTO novelcorona_clinic " +
                 "\n(ncc_user, " +
                 "ncc_ncid, " +
@@ -1068,7 +1104,8 @@ namespace BRH_Plubic.NovelCorona
                 "\nVALUES('" + user + "', " + id + ", " + whenSick + ", " + firstVisit + ", '" + firstHospital + "', '" + firstHospital_province + "', '" + currenHospital + "', '" + currenHospital_province + "', '" + sick + "', '" + temperature + "', '" + O2sat + "', '" + respirator + "', '" + symptom_1 + "', '" + symptom_2 + "', '" + symptom_3 + "', '" + symptom_4 + "', '" + symptom_5 + "', '" + symptom_6 + "', '" + symptom_7 + "', '" + symptom_8 + "', '" + symptom_9 + "', '" + symptom_10 + "', '" + symptom_11 + "', '" + symptom_11_location + "', '" + symptomOther + "', '" + xray + "', " + xrayDate + ", '" + xrayResult + "', " + cbc_date + ", '" + cbc_hb + "', '" + cbc_hct + "', '" + cbc_wbc + "', '" + pc_x + "', '" + pc_n + "', '" + pc_l + "', '" + pc_al + "', '" + pc_mn + "', '" + influenza_test + "', '" + influenza + "', '" + flu_A + "', '" + flu_B + "', '" + influenza_type + "', " + influenza_date + ", '" + pcr_ar + "', '" + antibody_ar + "', '" + opd + "', '" + admit + "', " + admit_date + ", '" + diagnosis + "', '" + antiviral + "', " + antiviral_date + ", '" + anti_re + "','" + anti_fa + "','" + anti_lori + "','" + anti_da + "','" + anti_ri + "','" + anti_chhy + "','" + anti_other + "', '" + pt_status + "', '" + pt_status_4 + "', '" + pt_status_5 + "'); ";
             if (cl_Sql.Modify(sql))
             {
-                sql = "update novelcorona set nc_staffcheck = 'yes' where nc_id = '" + id + "'; ";
+                string staffcheck = "yes";
+                sql = "update novelcorona set nc_staffcheck = '" + staffcheck + "' where nc_id = '" + id + "'; ";
                 if (cl_Sql.Modify(sql))
                 {
                     sql = "select * from novelcorona where nc_id='" + id + "' ";
@@ -1616,9 +1653,11 @@ namespace BRH_Plubic.NovelCorona
         {
             string scModal = "";
 
+            string linkback = "Default?nc=staff";
+
             if (txt_step.Value.ToString() == null)
             {
-                scModal = "fn_AlertModal('Warning','ทำไม่ถูกขั้นตอนกรุณาเริ่มกรอกใหม่อีกครั้ง !!','Default?nc=staff',3000);";
+                scModal = "fn_AlertModal('Warning','ทำไม่ถูกขั้นตอนกรุณาเริ่มกรอกใหม่อีกครั้ง !!','" + linkback + "',3000);";
             }
             else
             {
@@ -1666,7 +1705,7 @@ namespace BRH_Plubic.NovelCorona
                     }
                     else if (result == "KeyExpire")
                     {
-                        scModal = "fn_AlertModal('Warning','ทำไม่ถูกขั้นตอนกรุณาเริ่มกรอกใหม่อีกครั้ง !!','Default?nc=staff',3000);";
+                        scModal = "fn_AlertModal('Warning','ทำไม่ถูกขั้นตอนกรุณาเริ่มกรอกใหม่อีกครั้ง !!','" + linkback + "',3000);";
                     }
                     else if (result == "Nodata")
                     {
@@ -1697,7 +1736,23 @@ namespace BRH_Plubic.NovelCorona
 
                         txt_step.Value = "";
 
-                        scModal = "fn_AlertModal('Success','Success !!','Report.aspx?nc=" + id + "&key=" + keyReport + "',2000);";
+                        string status = "customer";
+                        if (Session["status"] != null)
+                        {
+                            status = Session["status"].ToString();
+                        }
+                        if (status == "admin" || status == "novelcovid")
+                        {
+                            scModal = "fn_AlertModal('Success','Success !!','Report.aspx?nc=" + id + "&key=" + keyReport + "',2000);";
+                        }
+                        else
+                        {
+                            div_1.Visible = false;
+                            div_2.Visible = false;
+                            div_3.Visible = false;
+                            div_result.Visible = true;
+                            scModal = "fn_AlertModal('Success','Success !!','',0);";
+                        }
                     }
                     else if (result == "Notsave")
                     {
