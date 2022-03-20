@@ -330,6 +330,24 @@ namespace BRH_Plubic.NovelCorona
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_2;
 
         /// <summary>
+        /// cb_ail_no control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton cb_ail_no;
+
+        /// <summary>
+        /// cb_ail_yes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton cb_ail_yes;
+
+        /// <summary>
         /// date_whenSick control.
         /// </summary>
         /// <remarks>
@@ -418,6 +436,15 @@ namespace BRH_Plubic.NovelCorona
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_respirator;
+
+        /// <summary>
+        /// div_symptom control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_symptom;
 
         /// <summary>
         /// cb_symptom_1 control.
@@ -735,6 +762,15 @@ namespace BRH_Plubic.NovelCorona
         protected global::System.Web.UI.HtmlControls.HtmlInputText txtH_pcr;
 
         /// <summary>
+        /// div_antibody control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_antibody;
+
+        /// <summary>
         /// cb_antibody_no control.
         /// </summary>
         /// <remarks>
@@ -760,6 +796,15 @@ namespace BRH_Plubic.NovelCorona
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputText txtH_antibody;
+
+        /// <summary>
+        /// lbl_sc_table control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_sc_table;
 
         /// <summary>
         /// cb_opd control.
@@ -1075,6 +1120,60 @@ namespace BRH_Plubic.NovelCorona
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputText txt_locationVac_2;
+
+        /// <summary>
+        /// date_Vac_3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl date_Vac_3;
+
+        /// <summary>
+        /// txt_nameVac_3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_nameVac_3;
+
+        /// <summary>
+        /// txt_locationVac_3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_locationVac_3;
+
+        /// <summary>
+        /// date_Vac_4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl date_Vac_4;
+
+        /// <summary>
+        /// txt_nameVac_4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_nameVac_4;
+
+        /// <summary>
+        /// txt_locationVac_4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_locationVac_4;
 
         /// <summary>
         /// txt_yes_4 control.

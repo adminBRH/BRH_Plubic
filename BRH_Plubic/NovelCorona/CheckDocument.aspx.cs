@@ -30,7 +30,7 @@ namespace BRH_Plubic.NovelCorona
                     {
                         DateSelect();
                         string DateNow = DD_Date.SelectedValue.ToString();
-                        Report(DateNow);
+                        Report(DateNow,"no");
                     }
                 }
                 else
@@ -72,14 +72,32 @@ namespace BRH_Plubic.NovelCorona
             DD_Date.DataBind();
         }
 
-        protected void Report(string date)
+        protected void Report(string date, string status)
         {
             date = DateTime.Parse(date).ToString("yyyy-MM-dd");
+
+            string wh = "";
+            if (status == "print")
+            {
+                wh = "\nand nc_staffcheck='yes' and ncc_reporter<>'' ";
+            }
+            else if (status == "yes")
+            {
+                wh = "\nand nc_staffcheck='" + status + "' and ncc_reporter is null ";
+            }
+            else if (status == "no")
+            {
+                wh = "\nand nc_staffcheck='" + status + "' ";
+            }
+            else
+            {
+                wh = "";
+            }
 
             sql = "select * from novelcorona as nc " +
                 "\nleft join novelcorona_clinic as ncc on ncc.ncc_ncid=nc.nc_id " +
                 "\nwhere nc_active = 'yes' " +
-                "\nand convert(nc_datetime, date) = '" + date + "' " +
+                "\nand convert(nc_datetime, date) = '" + date + "' " + wh +
                 "\norder by nc_staffcheck, nc_id desc ";
             dt = new DataTable();
             dt = cl_Sql.select(sql);
@@ -178,10 +196,31 @@ namespace BRH_Plubic.NovelCorona
             /* Verifies that the control is rendered */
         }
 
-        protected void DD_Date_SelectedIndexChanged(object sender, EventArgs e)
+        public void Refresh()
         {
             string DateNow = DD_Date.SelectedValue.ToString();
-            Report(DateNow);
+            string status = dd_status.SelectedValue.ToString();
+            Report(DateNow, status);
+        }
+
+        protected void DD_Date_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Refresh();
+        }
+
+        protected void dd_status_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Refresh();
+        }
+
+        protected void btn_refresh_ServerClick(object sender, EventArgs e)
+        {
+            Refresh();
+        }
+
+        protected void btn_delete_ServerClick(object sender, EventArgs e)
+        {
+
         }
     }
 }

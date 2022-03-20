@@ -51,6 +51,24 @@ namespace BRH_Plubic.NovelCorona
         protected global::System.Web.UI.WebControls.DropDownList DD_Date;
 
         /// <summary>
+        /// btn_refresh control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor btn_refresh;
+
+        /// <summary>
+        /// dd_status control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList dd_status;
+
+        /// <summary>
         /// LV_Report control.
         /// </summary>
         /// <remarks>
@@ -67,5 +85,14 @@ namespace BRH_Plubic.NovelCorona
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView GridView1;
+
+        /// <summary>
+        /// btn_delete control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton btn_delete;
     }
 }

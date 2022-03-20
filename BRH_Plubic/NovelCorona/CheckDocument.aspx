@@ -11,6 +11,13 @@
     .SelectDetail:hover{
         background-color: burlywood;
     }
+    .DeleteDetail {
+        font-size: large; 
+        cursor: pointer;
+    }
+    .DeleteDetail:hover{
+        background-color: mediumvioletred;
+    }
 </style>
 <script>
     function fn_status(val) {
@@ -56,10 +63,21 @@
         <button id="btn_Export" class="btnShadow btn-outline-primary" runat="server" onserverclick="btn_Export_ServerClick" style="font-size: xx-large; border-radius: 10px;">Export <i class="ti-export"></i></button>
     </div>
 
-    <div class="col-lg-10 col-sm-12 mx-auto my-3">
-        <div class="col-12 mx-auto">
+    <div class="row col-lg-10 col-sm-12 mx-auto my-3">
+        <div class="col-4 mx-auto text-right">
             <asp:DropDownList ID="DD_Date" CssClass="btn btn-outline-info" OnSelectedIndexChanged="DD_Date_SelectedIndexChanged" AutoPostBack="true" runat="server">
                 <asp:ListItem Text="" Value=""></asp:ListItem>
+            </asp:DropDownList>
+        </div>
+        <div class="col-4 mx-auto text-center">
+            <a id="btn_refresh" runat="server" onserverclick="btn_refresh_ServerClick" style="cursor:pointer;"><i class="ti ti-2x ti-reload"></i></a>
+        </div>
+        <div class="col-4 mx-auto">
+            <asp:DropDownList ID="dd_status" CssClass="btn btn-outline-info" OnSelectedIndexChanged="dd_status_SelectedIndexChanged" AutoPostBack="true" runat="server">
+                <asp:ListItem Text="ตรวจสอบ : no" Value="no"></asp:ListItem>
+                <asp:ListItem Text="ตรวจสอบ : yes" Value="yes"></asp:ListItem>
+                <asp:ListItem Text="Print" Value="print"></asp:ListItem>
+                <asp:ListItem Text="ทุกสถานะ" Value=""></asp:ListItem>
             </asp:DropDownList>
         </div>
         <div class="col-12 mx-auto">
@@ -76,25 +94,30 @@
                     <div class="col-12 mx-auto  bg-info" style="border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;">&nbsp;</div>
                 </LayoutTemplate>
                 <ItemTemplate>
-                    <div class="card col-12 mx-auto my-1 SelectDetail">
-                        <div class="row col-12 mx-auto my-2" onclick="fn_link('<%# Eval("nc_staffcheck") %>','<%# Eval("nc_id") %>','<%# Eval("nc_key") %>')">
-                            <div class="col-2 mx-auto my-auto text-center"><%# Eval("nc_id") %></div>
-                            <div class="col-10 mx-auto">
-                                <div class="row col-12 mx-auto">
-                                    <div class="col-4 mx-auto">
-                                        <%# Eval("nc_datetime", "{0:dd/MMM/yyyy}") %>
-                                    </div>
-                                    <div class="col-3 mx-auto">
-                                        <%# Eval("nc_fname") %> <%# Eval("nc_lname") %>
-                                    </div>
-                                    <div class="col-3 mx-auto">
-                                        Tel: <%# Eval("nc_adr_mobile") %>
-                                    </div>
-                                    <div class="col-2 mx-auto">
-                                         <script> fn_status('<%# Eval("ncc_reporter") %>'); </script> : <%# Eval("nc_staffcheck") %>
+                    <div class="row col-12 mx-auto my-auto">
+                        <div class="card col-11 mx-auto my-auto SelectDetail">
+                            <div class="row col-12 mx-auto my-2" onclick="fn_link('<%# Eval("nc_staffcheck") %>','<%# Eval("nc_id") %>','<%# Eval("nc_key") %>')">
+                                <div class="col-2 mx-auto my-auto text-center"><%# Eval("nc_id") %></div>
+                                <div class="col-10 mx-auto my-auto">
+                                    <div class="row col-12 mx-auto my-auto">
+                                        <div class="col-4 mx-auto my-auto">
+                                            <%# Eval("nc_datetime", "{0:dd/MMM/yyyy}") %>
+                                        </div>
+                                        <div class="col-3 mx-auto my-auto">
+                                            <%# Eval("nc_fname") %> <%# Eval("nc_lname") %>
+                                        </div>
+                                        <div class="col-3 mx-auto my-auto">
+                                            Tel: <%# Eval("nc_adr_mobile") %>
+                                        </div>
+                                        <div class="col-2 mx-auto my-auto">
+                                                <script> fn_status('<%# Eval("ncc_reporter") %>'); </script> : <%# Eval("nc_staffcheck") %>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="card col-1 mx-auto my-1 DeleteDetail text-center">
+                            <a id="btn_del" class="mx-auto my-auto"><i class="ti ti-2x ti-trash"></i></a>
                         </div>
                     </div>
                 </ItemTemplate>
@@ -105,5 +128,14 @@
     <div class="col-12 mx-auto" hidden="hidden">
         <asp:GridView ID="GridView1" runat="server"></asp:GridView>
     </div>
+
+    <div hidden="hidden">
+        <button id="btn_delete" onserverclick="btn_delete_ServerClick" runat="server"></button>
+    </div>
+    <script>
+        function fn_del() {
+
+        }
+    </script>
 
 </asp:Content>

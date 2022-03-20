@@ -445,6 +445,20 @@
                                                 สถานที่ได้รับ <span class="DotUnder">&nbsp;&nbsp;&nbsp;<%# Eval("nc_covidvaccine2_location") %>&nbsp;&nbsp;&nbsp;</span> 
                                             </td>
                                         </tr>
+                                        <tr>
+                                            <td>
+                                                ครั้งที่ 3 วันที่ได้รับ <span class="DotUnder">&nbsp;&nbsp;&nbsp;<script> fn_THdate('<%# Eval("nc_covidvaccine3_date", "{0:yyyy-MM-dd}") %>'); </script>&nbsp;&nbsp;&nbsp;</span> 
+                                                ชื่อวัคซีน <span class="DotUnder">&nbsp;&nbsp;&nbsp;<%# Eval("nc_covidvaccine3_name") %>&nbsp;&nbsp;&nbsp;</span> 
+                                                สถานที่ได้รับ <span class="DotUnder">&nbsp;&nbsp;&nbsp;<%# Eval("nc_covidvaccine3_location") %>&nbsp;&nbsp;&nbsp;</span> 
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                ครั้งที่ 4 วันที่ได้รับ <span class="DotUnder">&nbsp;&nbsp;&nbsp;<script> fn_THdate('<%# Eval("nc_covidvaccine4_date", "{0:yyyy-MM-dd}") %>'); </script>&nbsp;&nbsp;&nbsp;</span> 
+                                                ชื่อวัคซีน <span class="DotUnder">&nbsp;&nbsp;&nbsp;<%# Eval("nc_covidvaccine4_name") %>&nbsp;&nbsp;&nbsp;</span> 
+                                                สถานที่ได้รับ <span class="DotUnder">&nbsp;&nbsp;&nbsp;<%# Eval("nc_covidvaccine4_location") %>&nbsp;&nbsp;&nbsp;</span> 
+                                            </td>
+                                        </tr>
                                     </table>
                                 </td>
                             </tr>

@@ -33,7 +33,7 @@
 
             <!-- DIV 1 ---------------------------------------------- -->
             <div id="div_1" class="row col-12 mx-auto my-5" runat="server" visible="true">
-                <div class="col-12 mx-auto text-left my-2">
+                <div class="col-12 mx-auto text-left my-2 h4">
                     1. ข้อมูลทั่วไป
                 </div>
                 <div class="col-6 mx-auto text-center my-2">
@@ -216,10 +216,10 @@
                     2. ข้อมูลทางคลินิก
                 </div>
                 <div class="col-12 mx-auto">
-                    <input type="radio" id="cb_ail_no" name="cb_ail" value="no" onclick="fn_hideAil()" checked />ไม่มี อาการเจ็บป่วย
+                    <input type="radio" id="cb_ail_no" name="cb_ail" value="no" onclick="fn_hideAil()" runat="server" />ไม่มี อาการเจ็บป่วย
                 </div>
                 <div class="col-12 mx-auto">
-                    <input type="radio" id="cb_ail_yes" name="cb_ail" value="yes"" onclick="fn_hideAil()" />มี อาการเจ็บป่วย
+                    <input type="radio" id="cb_ail_yes" name="cb_ail" value="yes" onclick="fn_hideAil()" runat="server" />มี อาการเจ็บป่วย
                 </div>
                 <div id="div_2_ail_1" class="row col-12 mx-auto my-2">
                     <div class="row col-12 mx-auto my-2">
@@ -245,7 +245,7 @@
                                 <input type="text" id="txt_O2sat" class="col-2 form-control ml-2" value="" placeholder="O2 Sat" runat="server" /><span class="my-auto">%</span>
                                 <input type="checkbox" id="cb_respirator" class="my-auto ml-5" value="yes" runat="server" /><span class="my-auto">ใส่เครื่องช่วยหายใจ</span>
                             </div>
-                            <div class="row col-12 mx-auto">
+                            <div id="div_symptom" class="row col-12 mx-auto" runat="server">
                                 <div class="col-3 mx-auto text-left">
                                     <input type="checkbox" id="cb_symptom_1" value="ไอ" runat="server" />ไอ
                                 </div>
@@ -294,6 +294,7 @@
                                             txtsymptom11.setAttribute('hidden', 'hidden');
                                         }
                                     }
+                                    fn_symptom11();
                                 </script>
 
                                 <div class="col-2">
@@ -314,6 +315,7 @@
                                             txtsymptomOther.setAttribute('hidden', 'hidden');
                                         }
                                     }
+                                    fn_symptomOther();
                                 </script>
                             </div>
                         </div>
@@ -344,6 +346,7 @@
                                     resultXray.value = "";
                                 }
                             }
+                            fn_xray();
                         </script>
                     </div>
                     <div class="col-12 mx-auto my-2">
@@ -423,7 +426,7 @@
                                 <input type="checkbox" id="cb_flu_A" value="Flu A" runat="server" /> Flu A
                             </div>
                             <div class="col-lg-2 col-sm-3 mx-auto my-auto text-center">
-                                <input type="checkbox" id="cb_flu_B" value="Flu A" runat="server" /> Flu B
+                                <input type="checkbox" id="cb_flu_B" value="Flu B" runat="server" /> Flu B
                             </div>
                         </div>
                     </div>
@@ -510,12 +513,13 @@
                                     table.removeAttribute('hidden');
                                 }
                             }
+                            fn_pcr_no();
                         </script>
                     </div>
                 </div>
 
                 <div class="col-12 mx-auto">
-                    <div class="row col-12 mx-auto my-2">
+                    <div id="div_antibody" class="row col-12 mx-auto my-2" runat="server">
                         <div class="col-lg-4 col-sm-6 mx-auto">
                             ผลการตรวจ ATK <!--SARS-CoV-2 Antibody-->
                         </div>
@@ -601,7 +605,7 @@
                                 table.removeAttribute('hidden');
                             }
                         }
-
+                        fn_antibody_no();
                         
                         function fn_table_show(name, ar) {
                             var html = '';
@@ -667,6 +671,7 @@
                             lblPcr.innerHTML = fn_table_show('pcr',pcr_txt.value);
                         }
                     </script>
+                    <asp:Label ID="lbl_sc_table" Text="" runat="server"></asp:Label>
                 </div>
 
                 <div id="div_2_ail_2" class="row col-12 mx-auto my-2">
@@ -739,6 +744,7 @@
                                         divAntiviral.setAttribute('hidden','hidden');
                                     }
                                 }
+                                fn_antiviral();
                             </script>
                         </div>
                     </div>
@@ -774,11 +780,11 @@
                                 <input type="radio" id="rd_pt_status_2" name="rd_pt_status" value="ยังรักษาอยู่" runat="server" onclick="fn_PTstatus()" /> ยังรักษาอยู่ 
                                 <input type="radio" id="rd_pt_status_3" name="rd_pt_status" value="เสียชีวิต" runat="server" onclick="fn_PTstatus()" /> เสียชีวิต 
                                 <input type="radio" id="rd_pt_status_4" name="rd_pt_status" value="ส่งตัว" runat="server" onclick="fn_PTstatus()" /> ส่งตัวไป รพ. 
-                                <input type="radio" id="rd_pt_status_5" name="rd_pt_status" value="อื่นๆ" runat="server" onclick="fn_PTstatus()" checked /> อื่นๆ 
+                                <input type="radio" id="rd_pt_status_5" name="rd_pt_status" value="อื่นๆ" runat="server" onclick="fn_PTstatus()" /> อื่นๆ 
                             </div>
                             <div class="col-12 mx-auto my-auto">
                                 <input type="text" id="txt_pt_status_4" value="" class="form-control" placeholder="ชื่อโรงพยาบาล" runat="server" hidden="hidden" />
-                                <input type="text" id="txt_pt_status_5" value="ไม่มีอาการเจ็บป่วย" class="form-control" placeholder="โปรดระบุ" runat="server" />
+                                <input type="text" id="txt_pt_status_5" value="" class="form-control" placeholder="โปรดระบุ" runat="server" />
                             </div>
                             <script>
                                 function fn_PTstatus() {
@@ -802,6 +808,7 @@
                                         txtptStstaus5.value = "";
                                     }
                                 }
+                                fn_PTstatus();
                             </script>
                         </div>
                     </div>
@@ -814,7 +821,7 @@
                 function fn_hideAil() {
                     var div1 = document.getElementById('div_2_ail_1');
                     var div2 = document.getElementById('div_2_ail_2');
-                    var ail = document.getElementById('cb_ail_yes');
+                    var ail = document.getElementById('<%= cb_ail_yes.ClientID %>');
                     if (ail.checked) {
                         div1.removeAttribute('hidden');
                         div2.removeAttribute('hidden');
@@ -873,6 +880,12 @@
                 </div>
                 <div class="row col-12 mx-auto">
                     ครั้งที่ 2 วันที่ได้รับ <input type="date" id="date_Vac_2" class="col-3 form-control" value="" runat="server" /> <input type="text" id="txt_nameVac_2" class="col-3 form-control" placeholder="ชื่อวัคซีน" value="" runat="server" /> <input type="text" id="txt_locationVac_2" class="col-3 form-control" placeholder="สถานที่ได้รับ" value="" runat="server" />
+                </div>
+                <div class="row col-12 mx-auto">
+                    ครั้งที่ 3 วันที่ได้รับ <input type="date" id="date_Vac_3" class="col-3 form-control" value="" runat="server" /> <input type="text" id="txt_nameVac_3" class="col-3 form-control" placeholder="ชื่อวัคซีน" value="" runat="server" /> <input type="text" id="txt_locationVac_3" class="col-3 form-control" placeholder="สถานที่ได้รับ" value="" runat="server" />
+                </div>
+                <div class="row col-12 mx-auto">
+                    ครั้งที่ 4 วันที่ได้รับ <input type="date" id="date_Vac_4" class="col-3 form-control" value="" runat="server" /> <input type="text" id="txt_nameVac_4" class="col-3 form-control" placeholder="ชื่อวัคซีน" value="" runat="server" /> <input type="text" id="txt_locationVac_4" class="col-3 form-control" placeholder="สถานที่ได้รับ" value="" runat="server" />
                 </div>
                 <hr class="col-10 mx-auto mb-5 bg-gradient-mix" />
                 <div class="col-12 mx-auto">

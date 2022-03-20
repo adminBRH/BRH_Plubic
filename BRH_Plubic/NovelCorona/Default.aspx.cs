@@ -73,7 +73,7 @@ namespace BRH_Plubic.NovelCorona
                         {
                             txt_B.Value = (DateNow.Year + 543).ToString();
                         }
-                        
+
                         div_1.Visible = true;
                         div_2.Visible = true;
                         div_3.Visible = true;
@@ -102,14 +102,16 @@ namespace BRH_Plubic.NovelCorona
                     DateTime DateNow = DateTime.Now;
                     txt_B.Attributes.Add("min", (DateNow.Year + 443).ToString());
                     txt_B.Attributes.Add("max", (DateNow.Year + 543).ToString());
-                    //txt_B.Value = (DateNow.Year + 543).ToString();
+                    txt_B.Value = (DateNow.Year + 543).ToString();
                 }
             }
         }
 
         protected void StaffDetails(string id)
         {
-            sql = "select * from novelcorona where nc_id='" + id + "'; ";
+            sql = "select * from novelcorona as a " +
+                "\nleft join novelcorona_clinic as b on b.ncc_ncid=a.nc_id " +
+                "\nwhere a.nc_id='" + id + "'; ";
             dt = new DataTable();
             dt = cl_Sql.select(sql);
             if (dt.Rows.Count > 0)
@@ -136,8 +138,19 @@ namespace BRH_Plubic.NovelCorona
             }
         }
 
+        public string setDate(string date)
+        {
+            string result = "";
+            if (date != "")
+            {
+                result = DateTime.Parse(date).ToString("yyyy-MM-dd");
+            }
+            return result;
+        }
+
         private void SelectData(DataTable dt)
         {
+            // Div 1 --------------------------------------------------------- Start
             txt_fname.Value = dt.Rows[0]["nc_fname"].ToString();
             txt_lname.Value = dt.Rows[0]["nc_lname"].ToString();
 
@@ -197,7 +210,241 @@ namespace BRH_Plubic.NovelCorona
             txt_morchana_mobile.Value = dt.Rows[0]["nc_telmorchana"].ToString();
             txt_congenitalDisease.Value = dt.Rows[0]["nc_congenitaldisease"].ToString();
             txtH_smoking.Value = dt.Rows[0]["nc_smoking"].ToString();
+            // Div 1 --------------------------------------------------------- End 
 
+            // Div 2 --------------------------------------------------------- Start
+            if (dt.Rows[0]["ncc_whensick"].ToString() != "")
+            {
+                cb_ail_yes.Checked = true;
+            }
+            else
+            {
+                cb_ail_no.Checked = true;
+            }
+            date_whenSick.Value = setDate(dt.Rows[0]["ncc_whensick"].ToString());
+            date_firstVisit.Value = setDate(dt.Rows[0]["ncc_firstvisit"].ToString());
+            txt_firstHospital.Value = dt.Rows[0]["ncc_firsthospital"].ToString();
+            txt_firstHospital_province.Value = dt.Rows[0]["ncc_firsthospital"].ToString();
+            txt_firstHospital_province.Value = dt.Rows[0]["ncc_firsthospital_province"].ToString();
+            txt_currenHospital.Value = dt.Rows[0]["ncc_currenhospital"].ToString();
+            txt_currenHospital_province.Value = dt.Rows[0]["ncc_currenhospital_province"].ToString();
+            if (dt.Rows[0]["ncc_sick"].ToString() == "yes")
+            {
+                cb_sickyes.Checked = true;
+            }
+            txt_temperature.Value = dt.Rows[0]["ncc_temperature"].ToString();
+            txt_O2sat.Value = dt.Rows[0]["ncc_o2sat"].ToString();
+            if (dt.Rows[0]["ncc_respirator"].ToString() == "yes")
+            {
+                cb_respirator.Checked = true;
+            }
+            if (dt.Rows[0]["ncc_symptom_1"].ToString() != "")
+            {
+                cb_symptom_1.Checked = true;
+            } 
+            if (dt.Rows[0]["ncc_symptom_2"].ToString() != "")
+            {
+                cb_symptom_2.Checked = true;
+            }
+            if (dt.Rows[0]["ncc_symptom_3"].ToString() != "")
+            {
+                cb_symptom_3.Checked = true;
+            }
+            if (dt.Rows[0]["ncc_symptom_4"].ToString() != "")
+            {
+                cb_symptom_4.Checked = true;
+            }
+            if (dt.Rows[0]["ncc_symptom_5"].ToString() != "")
+            {
+                cb_symptom_5.Checked = true;
+            } 
+            if (dt.Rows[0]["ncc_symptom_6"].ToString() != "")
+            {
+                cb_symptom_6.Checked = true;
+            } 
+            if (dt.Rows[0]["ncc_symptom_7"].ToString() != "")
+            {
+                cb_symptom_7.Checked = true;
+            } 
+            if (dt.Rows[0]["ncc_symptom_8"].ToString() != "")
+            {
+                cb_symptom_8.Checked = true;
+            } 
+            if (dt.Rows[0]["ncc_symptom_9"].ToString() != "")
+            {
+                cb_symptom_9.Checked = true;
+            }
+            if (dt.Rows[0]["ncc_symptom_10"].ToString() != "")
+            {
+                cb_symptom_10.Checked = true;
+            } 
+            if (dt.Rows[0]["ncc_symptom_11"].ToString() != "")
+            {
+                cb_symptom_11.Checked = true;
+                txt_symptom_11.Value = dt.Rows[0]["ncc_symptom_11_location"].ToString();
+            }
+            string symptonOther = dt.Rows[0]["ncc_symptomother"].ToString();
+            if (symptonOther != "")
+            {
+                cb_symptom_other.Checked = true;
+                txt_symptomOther.Value = symptonOther;
+            }
+            string xray = dt.Rows[0]["ncc_xray"].ToString();
+            if (xray == "ทำ")
+            {
+                rd_xray_yes.Checked = true;
+            }
+            else if (xray == "ไม่ได้ทำ")
+            {
+                rd_xray_no.Checked = true;
+            }
+            else { }
+            date_xray.Value = setDate(dt.Rows[0]["ncc_xraydate"].ToString());
+            txt_xray_result.Value = dt.Rows[0]["ncc_xrayresult"].ToString();
+            date_cbc.Value = setDate(dt.Rows[0]["ncc_cbc_date"].ToString());
+            txt_cbc_hb.Value = dt.Rows[0]["ncc_cbc_hb"].ToString();
+            txt_cbc_hct.Value = dt.Rows[0]["ncc_cbc_hct"].ToString();
+            txt_cbc_wbc.Value = dt.Rows[0]["ncc_cbc_wbc"].ToString();
+            txt_pc_x.Value = dt.Rows[0]["ncc_pc_x"].ToString();
+            txt_pc_n.Value = dt.Rows[0]["ncc_pc_n"].ToString();
+            txt_pc_l.Value = dt.Rows[0]["ncc_pc_l"].ToString();
+            txt_pc_al.Value = dt.Rows[0]["ncc_pc_al"].ToString();
+            txt_pc_mn.Value = dt.Rows[0]["ncc_pc_mn"].ToString();
+            txt_influenza.Value = dt.Rows[0]["ncc_influenza_test"].ToString();
+            string influenzaNP = dt.Rows[0]["ncc_influenza"].ToString();
+            if (influenzaNP == "Negative")
+            {
+                rd_Influenza_N.Checked = true;
+            } else if (influenzaNP == "Positive")
+            {
+                rd_Influenza_P.Checked = true;
+            }
+            else { }
+            if (dt.Rows[0]["ncc_flu_a"].ToString() != "")
+            {
+                cb_flu_A.Checked = true;
+            }
+            if (dt.Rows[0]["ncc_flu_b"].ToString() != "")
+            {
+                cb_flu_B.Checked = true;
+            }
+
+            string sc_table = "";
+            // SARS -----
+            string ARpcr = dt.Rows[0]["ncc_pcr_array"].ToString();
+            if (ARpcr != "")
+            {
+                if (ARpcr == "no")
+                {
+                    cb_pcr_no.Checked = true;
+                }
+                else
+                {
+                    txtH_pcr.Value = ARpcr;
+                    sc_table += "<script>lblPcr.innerHTML = fn_table_show('pcr','" + ARpcr + "');</script> ";
+                }
+            }
+            // SARS -----
+            // ATK ------
+            string ARanti = dt.Rows[0]["ncc_antibody_array"].ToString();
+            if (ARanti != "")
+            {
+                if (ARanti == "no")
+                {
+                    cb_antibody_no.Checked = true;
+                }
+                else
+                {
+                    txtH_antibody.Value = ARanti;
+                    sc_table += "<script>lblAnti.innerHTML = fn_table_show('antibody','" + ARanti + "');</script> ";
+                }
+            }
+            // ATK ------
+
+            lbl_sc_table.Text = sc_table;
+
+            if (dt.Rows[0]["ncc_opd"].ToString() != "")
+            {
+                cb_opd.Checked = true;
+            }
+            if (dt.Rows[0]["ncc_admit"].ToString() != "")
+            {
+                cb_admit.Checked = true;
+            }
+            date_admit.Value = setDate(dt.Rows[0]["ncc_admit_date"].ToString());
+            txt_diagnosis.Value = dt.Rows[0]["ncc_diagnosis"].ToString();
+            string antiviral = dt.Rows[0]["ncc_antiviral"].ToString();
+            if (antiviral == "yes")
+            {
+                rd_antiviral_yes.Checked = true;
+                date_antiviral.Value = setDate(dt.Rows[0]["ncc_antiviral_date"].ToString());
+            }
+            else if (antiviral == "no")
+            {
+                rd_antiviral_yes.Checked = true;
+            } else { }
+            if (dt.Rows[0]["ncc_re"].ToString() != "")
+            {
+                cb_re.Checked = true;
+            }
+            if (dt.Rows[0]["ncc_fa"].ToString() != "")
+            {
+                cb_fa.Checked = true;
+            }
+            if (dt.Rows[0]["ncc_lori"].ToString() != "")
+            {
+                cb_lori.Checked = true;
+            }
+            if (dt.Rows[0]["ncc_da"].ToString() != "")
+            {
+                cb_da.Checked = true;
+            }
+            if (dt.Rows[0]["ncc_ri"].ToString() != "")
+            {
+                cb_ri.Checked = true;
+            }
+            if (dt.Rows[0]["ncc_chhy"].ToString() != "")
+            {
+                cb_chhy.Checked = true;
+            }
+            string antiOther = dt.Rows[0]["ncc_anti_other"].ToString();
+            if (antiOther != "")
+            {
+                cb_other.Checked = true;
+                txt_cb_other.Value = antiOther;
+            }
+            string pt_status = dt.Rows[0]["ncc_pt_status"].ToString();
+            if (pt_status == "หาย")
+            {
+                rd_pt_status_1.Checked = true;
+            }
+            else if (pt_status == "ยังรักษาอยู่")
+            {
+                rd_pt_status_2.Checked = true;
+            }
+            else if (pt_status == "เสียชีวิต")
+            {
+                rd_pt_status_3.Checked = true;
+            }
+            else
+            {
+                string pt_status4 = dt.Rows[0]["ncc_pt_status_4"].ToString();
+                if (pt_status4 != "")
+                {
+                    txt_pt_status_4.Value = pt_status4;
+                    rd_pt_status_4.Checked = true;
+                }
+                string pt_status5 = dt.Rows[0]["ncc_pt_status_5"].ToString();
+                if (pt_status5 != "")
+                {
+                    txt_pt_status_5.Value = pt_status5;
+                    rd_pt_status_5.Checked = true;
+                }
+            }
+
+            // Div 2 --------------------------------------------------------- End
+
+            // Div 3 --------------------------------------------------------- Start 
             txtH_VacCovid.Value = dt.Rows[0]["nc_covidvaccine"].ToString();
             txtH_VacCovidBook.Value = dt.Rows[0]["nc_covidvaccine_book"].ToString();
             string Vacdate1 = dt.Rows[0]["nc_covidvaccine1_date"].ToString();
@@ -214,38 +461,20 @@ namespace BRH_Plubic.NovelCorona
             }
             txt_nameVac_2.Value = dt.Rows[0]["nc_covidvaccine2_name"].ToString();
             txt_locationVac_2.Value = dt.Rows[0]["nc_covidvaccine2_location"].ToString();
-
-            //string rd_1 = dt.Rows[0]["nc_rh_1"].ToString();
-            //if (rd_1 == "no")
-            //{
-            //    rd_no_1.Checked = true;
-            //}
-            //else
-            //{
-            //    rd_yes_1.Checked = true;
-            //}
-
-            //string rd_2 = dt.Rows[0]["nc_rh_2"].ToString();
-            //if (rd_2 == "no")
-            //{
-            //    rd_no_2.Checked = true;
-            //}
-            //else
-            //{
-            //    rd_yes_2.Checked = true;
-            //    txt_yes_2.Value = dt.Rows[0]["nc_rh_2"].ToString();
-            //}
-
-            //string rd_3 = dt.Rows[0]["nc_rh_3"].ToString();
-            //if (rd_3 == "no")
-            //{
-            //    rd_no_3.Checked = true;
-            //}
-            //else
-            //{
-            //    rd_yes_3.Checked = true;
-            //    txt_yes_3.Value = dt.Rows[0]["nc_rh_3"].ToString();
-            //}
+            string Vacdate3 = dt.Rows[0]["nc_covidvaccine3_date"].ToString();
+            if (Vacdate3 != "")
+            {
+                date_Vac_3.Value = DateTime.Parse(Vacdate3).ToString("yyyy-MM-dd");
+            }
+            txt_nameVac_3.Value = dt.Rows[0]["nc_covidvaccine3_name"].ToString();
+            txt_locationVac_3.Value = dt.Rows[0]["nc_covidvaccine3_location"].ToString();
+            string Vacdate4 = dt.Rows[0]["nc_covidvaccine4_date"].ToString();
+            if (Vacdate4 != "")
+            {
+                date_Vac_4.Value = DateTime.Parse(Vacdate4).ToString("yyyy-MM-dd");
+            }
+            txt_nameVac_4.Value = dt.Rows[0]["nc_covidvaccine4_name"].ToString();
+            txt_locationVac_4.Value = dt.Rows[0]["nc_covidvaccine4_location"].ToString();
 
             string rd_4 = dt.Rows[0]["nc_rh_4"].ToString();
             if (rd_4 == "yes")
@@ -317,7 +546,7 @@ namespace BRH_Plubic.NovelCorona
             }
 
             string rd_10 = dt.Rows[0]["nc_rh_10"].ToString();
-            if (rd_10 == "yes")
+            if (rd_10 != "no")
             {
                 rd_yes_10.Checked = true;
                 txt_yes_10.Value = dt.Rows[0]["nc_rh_10"].ToString();
@@ -338,7 +567,7 @@ namespace BRH_Plubic.NovelCorona
             }
 
             string rd_12 = dt.Rows[0]["nc_rh_12"].ToString();
-            if (rd_12 == "yes")
+            if (rd_12 != "no")
             {
                 rd_yes_12.Checked = true;
                 txt_yes_12.Value = dt.Rows[0]["nc_rh_12"].ToString();
@@ -361,6 +590,7 @@ namespace BRH_Plubic.NovelCorona
             txt_other.Value = dt.Rows[0]["nc_rh_other"].ToString();
 
             txt_History.Value = dt.Rows[0]["nc_history"].ToString();
+            // Div 3 --------------------------------------------------------- End 
         }
 
         public Boolean checkValueNull(string val)
@@ -881,10 +1111,18 @@ namespace BRH_Plubic.NovelCorona
             string result = "alert";
             string key = "key";
 
+            string next = "yes";
+
             string whenSick = "NULL";
-            if (date_whenSick.Value.ToString() != "")
+            if (date_whenSick.Value.ToString() == "")
+            {
+                next = "no";
+                date_whenSick.Attributes.Add("style", styleRequired);
+            }
+            else
             {
                 whenSick = "'" + DateTime.Parse(date_whenSick.Value.ToString()).ToString("yyyy-MM-dd") + "'";
+                date_whenSick.Attributes.Remove("style");
             }
             string firstVisit = "NULL";
             if (date_firstVisit.Value.ToString() != "")
@@ -902,31 +1140,45 @@ namespace BRH_Plubic.NovelCorona
             }
             string temperature = txt_temperature.Value.ToString().Trim();
             string O2sat = txt_O2sat.Value.ToString().Trim();
+            string symptom = "no";
             string respirator = "no";
             if (cb_respirator.Checked)
             {
+                symptom = "yes";
                 respirator = cb_respirator.Value.ToString();
             }
-            string symptom_1 = ""; if (cb_symptom_1.Checked) { symptom_1 = cb_symptom_1.Value.ToString(); }
-            string symptom_2 = ""; if (cb_symptom_2.Checked) { symptom_2 = cb_symptom_2.Value.ToString(); }
-            string symptom_3 = ""; if (cb_symptom_3.Checked) { symptom_3 = cb_symptom_3.Value.ToString(); }
-            string symptom_4 = ""; if (cb_symptom_4.Checked) { symptom_4 = cb_symptom_4.Value.ToString(); }
-            string symptom_5 = ""; if (cb_symptom_5.Checked) { symptom_5 = cb_symptom_5.Value.ToString(); }
-            string symptom_6 = ""; if (cb_symptom_6.Checked) { symptom_6 = cb_symptom_6.Value.ToString(); }
-            string symptom_7 = ""; if (cb_symptom_7.Checked) { symptom_7 = cb_symptom_7.Value.ToString(); }
-            string symptom_8 = ""; if (cb_symptom_8.Checked) { symptom_8 = cb_symptom_8.Value.ToString(); }
-            string symptom_9 = ""; if (cb_symptom_9.Checked) { symptom_9 = cb_symptom_9.Value.ToString(); }
-            string symptom_10 = ""; if (cb_symptom_10.Checked) { symptom_10 = cb_symptom_10.Value.ToString(); }
+            string symptom_1 = ""; if (cb_symptom_1.Checked) { symptom_1 = cb_symptom_1.Value.ToString(); symptom = "yes"; }
+            string symptom_2 = ""; if (cb_symptom_2.Checked) { symptom_2 = cb_symptom_2.Value.ToString(); symptom = "yes"; }
+            string symptom_3 = ""; if (cb_symptom_3.Checked) { symptom_3 = cb_symptom_3.Value.ToString(); symptom = "yes"; }
+            string symptom_4 = ""; if (cb_symptom_4.Checked) { symptom_4 = cb_symptom_4.Value.ToString(); symptom = "yes"; }
+            string symptom_5 = ""; if (cb_symptom_5.Checked) { symptom_5 = cb_symptom_5.Value.ToString(); symptom = "yes"; }
+            string symptom_6 = ""; if (cb_symptom_6.Checked) { symptom_6 = cb_symptom_6.Value.ToString(); symptom = "yes"; }
+            string symptom_7 = ""; if (cb_symptom_7.Checked) { symptom_7 = cb_symptom_7.Value.ToString(); symptom = "yes"; }
+            string symptom_8 = ""; if (cb_symptom_8.Checked) { symptom_8 = cb_symptom_8.Value.ToString(); symptom = "yes"; }
+            string symptom_9 = ""; if (cb_symptom_9.Checked) { symptom_9 = cb_symptom_9.Value.ToString(); symptom = "yes"; }
+            string symptom_10 = ""; if (cb_symptom_10.Checked) { symptom_10 = cb_symptom_10.Value.ToString(); symptom = "yes"; }
             string symptom_11 = "";
             string symptom_11_location = "";
             if (cb_symptom_11.Checked) 
-            { 
+            {
+                symptom = "yes";
                 symptom_11 = cb_symptom_11.Value.ToString(); 
                 symptom_11_location = txt_symptom_11.Value.ToString().Trim(); 
             }
             //cb_symptom_8 >> ใส่เครื่องช่วยหายใจ
             //cb_symptom_9 >> อื่นๆ
             string symptomOther = txt_symptomOther.Value.ToString().Trim();
+            if (symptomOther != "") { symptom = "yes"; }
+            if (symptom == "no")
+            {
+                next = "no";
+                div_symptom.Attributes.Add("style", styleRequired);
+            }
+            else
+            {
+                div_symptom.Attributes.Remove("style");
+            }
+
             string xray = "";
             if (rd_xray_no.Checked)
             {
@@ -983,6 +1235,8 @@ namespace BRH_Plubic.NovelCorona
             //    influenza_date = "'" + DateTime.Parse(date_influenza.Value.ToString()).ToString("yyyy-MM-dd") + "'";
             //}
 
+            if (cb_ail_no.Checked) { next = "yes"; }
+
             string pcr_ar = txtH_pcr.Value.ToString().Trim();
             if (cb_pcr_no.Checked)
             {
@@ -992,6 +1246,18 @@ namespace BRH_Plubic.NovelCorona
             if (cb_antibody_no.Checked)
             {
                 antibody_ar = cb_antibody_no.Value.ToString();
+            }
+            else
+            {
+                if (antibody_ar == "")
+                {
+                    next = "no";
+                    div_antibody.Attributes.Add("style", styleRequired);
+                }
+                else
+                {
+                    div_antibody.Attributes.Remove("style");
+                }
             }
 
             string opd = ""; if (cb_opd.Checked) { opd = cb_opd.Value.ToString(); }
@@ -1044,77 +1310,162 @@ namespace BRH_Plubic.NovelCorona
             {
                 user = Session["userid"].ToString();
             }
-            
-            sql = "INSERT INTO novelcorona_clinic " +
-                "\n(ncc_user, " +
-                "ncc_ncid, " +
-                "ncc_whensick, " +
-                "ncc_firstvisit, " +
-                "ncc_firsthospital, " +
-                "ncc_firsthospital_province, " +
-                "ncc_currenhospital, " +
-                "ncc_currenhospital_province, " +
-                "ncc_sick, " +
-                "ncc_temperature, " +
-                "ncc_o2sat, " +
-                "ncc_respirator, " +
-                "ncc_symptom_1, " +
-                "ncc_symptom_2, " +
-                "ncc_symptom_3, " +
-                "ncc_symptom_4, " +
-                "ncc_symptom_5, " +
-                "ncc_symptom_6, " +
-                "ncc_symptom_7, " +
-                "ncc_symptom_8, " +
-                "ncc_symptom_9, " +
-                "ncc_symptom_10, " +
-                "ncc_symptom_11, " +
-                "ncc_symptom_11_location, " +
-                "ncc_symptomother, " +
-                "ncc_xray, " +
-                "ncc_xraydate, " +
-                "ncc_xrayresult, " +
-                "ncc_cbc_date, " +
-                "ncc_cbc_hb, " +
-                "ncc_cbc_hct, " +
-                "ncc_cbc_wbc, " +
-                "ncc_pc_x, " +
-                "ncc_pc_n, " +
-                "ncc_pc_l, " +
-                "ncc_pc_al, " +
-                "ncc_pc_mn, " +
-                "ncc_influenza_test, " +
-                "ncc_influenza, " +
-                "ncc_flu_a, " +
-                "ncc_flu_b, " +
-                "ncc_influenza_type, " +
-                "ncc_influenza_date, " +
-                "ncc_pcr_array, " +
-                "ncc_antibody_array, " +
-                "ncc_opd, " +
-                "ncc_admit, " +
-                "ncc_admit_date, " +
-                "ncc_diagnosis, " +
-                "ncc_antiviral, " +
-                "ncc_antiviral_date, " +
-                "ncc_re, ncc_fa, ncc_lori, ncc_da, ncc_ri, ncc_chhy, ncc_anti_other, " +
-                "ncc_pt_status, " +
-                "ncc_pt_status_4, " +
-                "ncc_pt_status_5) " +
-                "\nVALUES('" + user + "', " + id + ", " + whenSick + ", " + firstVisit + ", '" + firstHospital + "', '" + firstHospital_province + "', '" + currenHospital + "', '" + currenHospital_province + "', '" + sick + "', '" + temperature + "', '" + O2sat + "', '" + respirator + "', '" + symptom_1 + "', '" + symptom_2 + "', '" + symptom_3 + "', '" + symptom_4 + "', '" + symptom_5 + "', '" + symptom_6 + "', '" + symptom_7 + "', '" + symptom_8 + "', '" + symptom_9 + "', '" + symptom_10 + "', '" + symptom_11 + "', '" + symptom_11_location + "', '" + symptomOther + "', '" + xray + "', " + xrayDate + ", '" + xrayResult + "', " + cbc_date + ", '" + cbc_hb + "', '" + cbc_hct + "', '" + cbc_wbc + "', '" + pc_x + "', '" + pc_n + "', '" + pc_l + "', '" + pc_al + "', '" + pc_mn + "', '" + influenza_test + "', '" + influenza + "', '" + flu_A + "', '" + flu_B + "', '" + influenza_type + "', " + influenza_date + ", '" + pcr_ar + "', '" + antibody_ar + "', '" + opd + "', '" + admit + "', " + admit_date + ", '" + diagnosis + "', '" + antiviral + "', " + antiviral_date + ", '" + anti_re + "','" + anti_fa + "','" + anti_lori + "','" + anti_da + "','" + anti_ri + "','" + anti_chhy + "','" + anti_other + "', '" + pt_status + "', '" + pt_status_4 + "', '" + pt_status_5 + "'); ";
-            if (cl_Sql.Modify(sql))
+
+            if (next == "yes")
             {
-                string staffcheck = "yes";
-                sql = "update novelcorona set nc_staffcheck = '" + staffcheck + "' where nc_id = '" + id + "'; ";
+                sql = "select ncc_id from novelcorona_clinic where ncc_ncid='" + id + "'; ";
+                dt = new DataTable();
+                dt = cl_Sql.select(sql);
+                if (dt.Rows.Count > 0)
+                {
+                    string ncc_id = dt.Rows[0]["ncc_id"].ToString();
+                    sql = "update novelcorona_clinic set " +
+                    "\nncc_user='" + user + "', " +
+                    "ncc_whensick=" + whenSick + ", " +
+                    "ncc_firstvisit=" + firstVisit + ", " +
+                    "ncc_firsthospital='" + firstHospital + "', " +
+                    "ncc_firsthospital_province='" + firstHospital_province + "', " +
+                    "ncc_currenhospital='" + currenHospital + "', " +
+                    "ncc_currenhospital_province='" + currenHospital_province + "', " +
+                    "ncc_sick='" + sick + "', " +
+                    "ncc_temperature='" + temperature + "', " +
+                    "ncc_o2sat='" + O2sat + "', " +
+                    "ncc_respirator='" + respirator + "', " +
+                    "ncc_symptom_1='" + symptom_1 + "', " +
+                    "ncc_symptom_2='" + symptom_2 + "', " +
+                    "ncc_symptom_3='" + symptom_3 + "', " +
+                    "ncc_symptom_4='" + symptom_4 + "', " +
+                    "ncc_symptom_5='" + symptom_5 + "', " +
+                    "ncc_symptom_6='" + symptom_6 + "', " +
+                    "ncc_symptom_7='" + symptom_7 + "', " +
+                    "ncc_symptom_8='" + symptom_8 + "', " +
+                    "ncc_symptom_9='" + symptom_9 + "', " +
+                    "ncc_symptom_10='" + symptom_10 + "', " +
+                    "ncc_symptom_11='" + symptom_11 + "', " +
+                    "ncc_symptom_11_location='" + symptom_11_location + "', " +
+                    "ncc_symptomother='" + symptomOther + "', " +
+                    "ncc_xray='" + xray + "', " +
+                    "ncc_xraydate=" + xrayDate + ", " +
+                    "ncc_xrayresult='" + xrayResult + "', " +
+                    "ncc_cbc_date=" + cbc_date + ", " +
+                    "ncc_cbc_hb='" + cbc_hb + "', " +
+                    "ncc_cbc_hct='" + cbc_hct + "', " +
+                    "ncc_cbc_wbc='" + cbc_wbc + "', " +
+                    "ncc_pc_x='" + pc_x + "', " +
+                    "ncc_pc_n='" + pc_n + "', " +
+                    "ncc_pc_l='" + pc_l + "', " +
+                    "ncc_pc_al='" + pc_al + "', " +
+                    "ncc_pc_mn='" + pc_mn + "', " +
+                    "ncc_influenza_test='" + influenza_test + "', " +
+                    "ncc_influenza='" + influenza + "', " +
+                    "ncc_flu_a='" + flu_A + "', " +
+                    "ncc_flu_b='" + flu_B + "', " +
+                    "ncc_influenza_type='" + influenza_type + "', " +
+                    "ncc_influenza_date=" + influenza_date + ", " +
+                    "ncc_pcr_array='" + pcr_ar + "', " +
+                    "ncc_antibody_array='" + antibody_ar + "', " +
+                    "ncc_opd='" + opd + "', " +
+                    "ncc_admit='" + admit + "', " +
+                    "ncc_admit_date=" + admit_date + ", " +
+                    "ncc_diagnosis='" + diagnosis + "', " +
+                    "ncc_antiviral='" + antiviral + "', " +
+                    "ncc_antiviral_date=" + antiviral_date + ", " +
+                    "ncc_re='" + anti_re + "', ncc_fa='" + anti_fa + "', ncc_lori='" + anti_lori + "', ncc_da='" + anti_da + "', ncc_ri='" + anti_ri + "', ncc_chhy='" + anti_chhy + "', ncc_anti_other='" + anti_other + "', " +
+                    "ncc_pt_status='" + pt_status + "', " +
+                    "ncc_pt_status_4='" + pt_status_4 + "', " +
+                    "ncc_pt_status_5='" + pt_status_5 + "' " +
+                    "\nwhere ncc_id='" + ncc_id + "'; ";
+                }
+                else
+                {
+                    sql = "INSERT INTO novelcorona_clinic " +
+                        "\n(ncc_user, " +
+                        "ncc_ncid, " +
+                        "ncc_whensick, " +
+                        "ncc_firstvisit, " +
+                        "ncc_firsthospital, " +
+                        "ncc_firsthospital_province, " +
+                        "ncc_currenhospital, " +
+                        "ncc_currenhospital_province, " +
+                        "ncc_sick, " +
+                        "ncc_temperature, " +
+                        "ncc_o2sat, " +
+                        "ncc_respirator, " +
+                        "ncc_symptom_1, " +
+                        "ncc_symptom_2, " +
+                        "ncc_symptom_3, " +
+                        "ncc_symptom_4, " +
+                        "ncc_symptom_5, " +
+                        "ncc_symptom_6, " +
+                        "ncc_symptom_7, " +
+                        "ncc_symptom_8, " +
+                        "ncc_symptom_9, " +
+                        "ncc_symptom_10, " +
+                        "ncc_symptom_11, " +
+                        "ncc_symptom_11_location, " +
+                        "ncc_symptomother, " +
+                        "ncc_xray, " +
+                        "ncc_xraydate, " +
+                        "ncc_xrayresult, " +
+                        "ncc_cbc_date, " +
+                        "ncc_cbc_hb, " +
+                        "ncc_cbc_hct, " +
+                        "ncc_cbc_wbc, " +
+                        "ncc_pc_x, " +
+                        "ncc_pc_n, " +
+                        "ncc_pc_l, " +
+                        "ncc_pc_al, " +
+                        "ncc_pc_mn, " +
+                        "ncc_influenza_test, " +
+                        "ncc_influenza, " +
+                        "ncc_flu_a, " +
+                        "ncc_flu_b, " +
+                        "ncc_influenza_type, " +
+                        "ncc_influenza_date, " +
+                        "ncc_pcr_array, " +
+                        "ncc_antibody_array, " +
+                        "ncc_opd, " +
+                        "ncc_admit, " +
+                        "ncc_admit_date, " +
+                        "ncc_diagnosis, " +
+                        "ncc_antiviral, " +
+                        "ncc_antiviral_date, " +
+                        "ncc_re, ncc_fa, ncc_lori, ncc_da, ncc_ri, ncc_chhy, ncc_anti_other, " +
+                        "ncc_pt_status, " +
+                        "ncc_pt_status_4, " +
+                        "ncc_pt_status_5) " +
+                        "\nVALUES('" + user + "', " + id + ", " + whenSick + ", " + firstVisit + ", '" + firstHospital + "', '" + firstHospital_province + "', '" + currenHospital + "', '" + currenHospital_province + "', '" + sick + "', '" + temperature + "', '" + O2sat + "', '" + respirator + "', '" + symptom_1 + "', '" + symptom_2 + "', '" + symptom_3 + "', '" + symptom_4 + "', '" + symptom_5 + "', '" + symptom_6 + "', '" + symptom_7 + "', '" + symptom_8 + "', '" + symptom_9 + "', '" + symptom_10 + "', '" + symptom_11 + "', '" + symptom_11_location + "', '" + symptomOther + "', '" + xray + "', " + xrayDate + ", '" + xrayResult + "', " + cbc_date + ", '" + cbc_hb + "', '" + cbc_hct + "', '" + cbc_wbc + "', '" + pc_x + "', '" + pc_n + "', '" + pc_l + "', '" + pc_al + "', '" + pc_mn + "', '" + influenza_test + "', '" + influenza + "', '" + flu_A + "', '" + flu_B + "', '" + influenza_type + "', " + influenza_date + ", '" + pcr_ar + "', '" + antibody_ar + "', '" + opd + "', '" + admit + "', " + admit_date + ", '" + diagnosis + "', '" + antiviral + "', " + antiviral_date + ", '" + anti_re + "','" + anti_fa + "','" + anti_lori + "','" + anti_da + "','" + anti_ri + "','" + anti_chhy + "','" + anti_other + "', '" + pt_status + "', '" + pt_status_4 + "', '" + pt_status_5 + "'); ";
+                }
+
                 if (cl_Sql.Modify(sql))
                 {
-                    sql = "select * from novelcorona where nc_id='" + id + "' ";
-                    dt = new DataTable();
-                    dt = cl_Sql.select(sql);
-                    if (dt.Rows.Count > 0)
+                    string staffcheck = "no";
+                    if(Session["status"] != null)
                     {
-                        key = dt.Rows[0]["nc_key"].ToString();
-                        result = "Success";
+                        string status = Session["status"].ToString();
+                        if (status == "admin" || status == "novelcovid")
+                        {
+                            staffcheck = "yes";
+                        }
+                    }
+                    sql = "update novelcorona set nc_staffcheck = '" + staffcheck + "' where nc_id = '" + id + "'; ";
+                    if (cl_Sql.Modify(sql))
+                    {
+                        sql = "select * from novelcorona where nc_id='" + id + "' ";
+                        dt = new DataTable();
+                        dt = cl_Sql.select(sql);
+                        if (dt.Rows.Count > 0)
+                        {
+                            key = dt.Rows[0]["nc_key"].ToString();
+                            result = "Success";
+
+                            sql = "update novelcorona set nc_active='yes' where nc_id = '" + id + "'; ";
+                            cl_Sql.Modify(sql);
+                        }
+                    }
+                    else
+                    {
+                        result = "Notsave";
                     }
                 }
                 else
@@ -1124,7 +1475,10 @@ namespace BRH_Plubic.NovelCorona
             }
             else
             {
-                result = "Notsave";
+                result = "Missing";
+
+                sql = "update novelcorona set nc_active='no' where nc_id = '" + id + "'; ";
+                cl_Sql.Modify(sql);
             }
 
             return key + "_" + result;
@@ -1533,6 +1887,14 @@ namespace BRH_Plubic.NovelCorona
             string VacCovid2_name = txt_nameVac_2.Value.ToString().Trim();
             string VacCovid2_location = txt_locationVac_2.Value.ToString().Trim();
 
+            string VacCovid3_date = date_Vac_3.Value.ToString();
+            string VacCovid3_name = txt_nameVac_3.Value.ToString().Trim();
+            string VacCovid3_location = txt_locationVac_3.Value.ToString().Trim();
+
+            string VacCovid4_date = date_Vac_4.Value.ToString();
+            string VacCovid4_name = txt_nameVac_4.Value.ToString().Trim();
+            string VacCovid4_location = txt_locationVac_4.Value.ToString().Trim();
+
             string RH_Other = txt_other.Value.ToString().Trim();
 
             string history = txt_History.Value.ToString().Trim();
@@ -1589,7 +1951,19 @@ namespace BRH_Plubic.NovelCorona
                         sql = sql + "nc_covidvaccine2_date=convert('" + date_Vac_2.Value.ToString() + "', date), ";
                     }
                     sql = sql + "nc_covidvaccine2_name='" + VacCovid2_name + "', " +
-                        "nc_covidvaccine2_location='" + VacCovid2_location + "', " +
+                        "nc_covidvaccine2_location='" + VacCovid2_location + "', ";
+                    if (date_Vac_3.Value.ToString() != "")
+                    {
+                        sql = sql + "nc_covidvaccine3_date=convert('" + date_Vac_3.Value.ToString() + "', date), ";
+                    }
+                    sql = sql + "nc_covidvaccine3_name='" + VacCovid3_name + "', " +
+                        "nc_covidvaccine3_location='" + VacCovid3_location + "', ";
+                    if (date_Vac_4.Value.ToString() != "")
+                    {
+                        sql = sql + "nc_covidvaccine4_date=convert('" + date_Vac_4.Value.ToString() + "', date), ";
+                    }
+                    sql = sql + "nc_covidvaccine4_name='" + VacCovid4_name + "', " +
+                        "nc_covidvaccine4_location='" + VacCovid4_location + "', " +
                         "nc_rh_1='" + RH_1 + "', " +
                         "nc_rh_2='" + RH_2 + "', " +
                         "nc_rh_3='" + RH_3 + "', " +
@@ -1753,6 +2127,10 @@ namespace BRH_Plubic.NovelCorona
                             div_result.Visible = true;
                             scModal = "fn_AlertModal('Success','Success !!','',0);";
                         }
+                    }
+                    else if (result == "Missing")
+                    {
+                        scModal = "fn_AlertModal('Info','กรุณากรอกข้อมูลทางคลีนิก ในส่วนที่จำเป็นให้ครบถ้วน !!','',0);";
                     }
                     else if (result == "Notsave")
                     {
