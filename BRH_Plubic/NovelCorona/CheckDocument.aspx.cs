@@ -114,12 +114,14 @@ namespace BRH_Plubic.NovelCorona
             LV_Report.DataBind();
         }
 
-        protected void Grid1()
+        protected void Grid1(string date)
         {
+            date = DateTime.Parse(date).ToString("yyyy-MM-dd");
             sql = "select * from novelcorona as nc " +
                 "\nleft join novelcorona_clinic as ncc on ncc.ncc_ncid=nc.nc_id " +
-                "\nwhere nc_active = 'yes' " +
-                "\norder by nc_id desc ";
+                "\nwhere nc.nc_active = 'yes' " +
+                "\nand convert(nc.nc_datetime, date) = convert('" + date +"', date) " +
+                "\norder by nc.nc_id desc ";
             dt = new DataTable();
             dt = cl_Sql.select(sql);
             if (dt.Rows.Count > 0)
@@ -132,8 +134,8 @@ namespace BRH_Plubic.NovelCorona
 
         protected void btn_Export_ServerClick(object sender, EventArgs e)
         {
-            string DateTimes = "";
-            DateTimes = DateTime.Now.ToString("yyyyMMdd");
+            string DateTimes = DD_Date.SelectedValue.ToString();
+            DateTimes = DateTime.Parse(DateTimes).ToString("yyyyMMdd");
 
             string FileName = "BRH_NovelCorona_" + DateTimes + ".xls";
 
@@ -154,10 +156,11 @@ namespace BRH_Plubic.NovelCorona
                 //To Export all pages
                 GridView1.AllowPaging = false;
 
-                Response.Write("<center><h3>Novel Corona 2019 Report</h3>");
+                Response.Write("<h3>Novel Corona 2019 Report</h3>");
                 Response.Write("<h5>Novel Corona 2019 report</h5>");
 
-                Grid1();
+                string date = DD_Date.SelectedValue.ToString();
+                Grid1(date);
 
                 //GridView1.HeaderRow.BackColor = Color.Black; // ตัวหนังสือ
                 foreach (TableCell cell in GridView1.HeaderRow.Cells)
@@ -220,7 +223,12 @@ namespace BRH_Plubic.NovelCorona
 
         protected void btn_delete_ServerClick(object sender, EventArgs e)
         {
-
+            string id = txtH_id.Value.ToString();
+            sql = "update novelcorona set nc_active='no' where nc_id='" + id + "'; ";
+            if (cl_Sql.Modify(sql))
+            {
+                Refresh();
+            }
         }
     }
 }

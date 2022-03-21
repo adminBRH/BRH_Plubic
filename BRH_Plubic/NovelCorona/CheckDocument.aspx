@@ -117,24 +117,45 @@
                             </div>
                         </div>
                         <div class="card col-1 mx-auto my-1 DeleteDetail text-center">
-                            <a id="btn_del" class="mx-auto my-auto"><i class="ti ti-2x ti-trash"></i></a>
+                            <a id="btn_del" class="mx-auto my-auto" onclick="fn_del('<%# Eval("nc_id") %>')"><i class="ti ti-2x ti-trash"></i></a>
                         </div>
                     </div>
                 </ItemTemplate>
             </asp:ListView>
         </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="ModalDelete" tabindex="-1" role="dialog" aria-labelledby="ModalDeleteTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="ModalDeleteTitle">ยืนยันการลบข้อมูล</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body h3">
+              คุณต้องการลบเอกสารเลขที่ <asp:Label ID="lbl_id" Text="" runat="server"></asp:Label><br />ใช่หรือไม่ ?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">ไม่</button>
+            <button type="button" id="btn_delete" class="btn btn-danger" onserverclick="btn_delete_ServerClick" runat="server">ใช่</button>
+          </div>
+        </div>
+      </div>
+    </div>
     
     <div class="col-12 mx-auto" hidden="hidden">
         <asp:GridView ID="GridView1" runat="server"></asp:GridView>
     </div>
 
-    <div hidden="hidden">
-        <button id="btn_delete" onserverclick="btn_delete_ServerClick" runat="server"></button>
-    </div>
+    <input id="txtH_id" value="" runat="server" hidden="hidden"/>
     <script>
-        function fn_del() {
-
+        function fn_del(id) {
+            document.getElementById('<%= lbl_id.ClientID %>').innerHTML = id;
+            document.getElementById('<%= txtH_id.ClientID %>').value = id;
+            $('#ModalDelete').modal('show');
         }
     </script>
 

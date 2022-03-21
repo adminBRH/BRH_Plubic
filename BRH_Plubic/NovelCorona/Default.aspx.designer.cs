@@ -402,6 +402,15 @@ namespace BRH_Plubic.NovelCorona
         protected global::System.Web.UI.HtmlControls.HtmlInputText txt_currenHospital_province;
 
         /// <summary>
+        /// div_symptom control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_symptom;
+
+        /// <summary>
         /// cb_sickyes control.
         /// </summary>
         /// <remarks>
@@ -436,15 +445,6 @@ namespace BRH_Plubic.NovelCorona
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_respirator;
-
-        /// <summary>
-        /// div_symptom control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_symptom;
 
         /// <summary>
         /// cb_symptom_1 control.

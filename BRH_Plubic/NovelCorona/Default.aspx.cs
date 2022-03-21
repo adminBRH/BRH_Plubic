@@ -71,7 +71,10 @@ namespace BRH_Plubic.NovelCorona
                         txt_B.Attributes.Add("max", (DateNow.Year + 543).ToString());
                         if (!IsPostBack)
                         {
-                            txt_B.Value = (DateNow.Year + 543).ToString();
+                            if (txt_B.Value == "")
+                            {
+                                txt_B.Value = (DateNow.Year + 543).ToString();
+                            }
                         }
 
                         div_1.Visible = true;
@@ -95,15 +98,15 @@ namespace BRH_Plubic.NovelCorona
             }
             else
             {
-                if (!IsPostBack)
-                {
-                    Response.Redirect("Default?nc=staff");
+                Response.Redirect("Default?nc=staff");
 
-                    DateTime DateNow = DateTime.Now;
-                    txt_B.Attributes.Add("min", (DateNow.Year + 443).ToString());
-                    txt_B.Attributes.Add("max", (DateNow.Year + 543).ToString());
-                    txt_B.Value = (DateNow.Year + 543).ToString();
-                }
+                //if (!IsPostBack)
+                //{
+                //    DateTime DateNow = DateTime.Now;
+                //    txt_B.Attributes.Add("min", (DateNow.Year + 443).ToString());
+                //    txt_B.Attributes.Add("max", (DateNow.Year + 543).ToString());
+                //    txt_B.Value = (DateNow.Year + 543).ToString();
+                //}
             }
         }
 
@@ -1169,6 +1172,7 @@ namespace BRH_Plubic.NovelCorona
             //cb_symptom_9 >> อื่นๆ
             string symptomOther = txt_symptomOther.Value.ToString().Trim();
             if (symptomOther != "") { symptom = "yes"; }
+
             if (symptom == "no")
             {
                 next = "no";
@@ -1235,13 +1239,15 @@ namespace BRH_Plubic.NovelCorona
             //    influenza_date = "'" + DateTime.Parse(date_influenza.Value.ToString()).ToString("yyyy-MM-dd") + "'";
             //}
 
-            if (cb_ail_no.Checked) { next = "yes"; }
+            if (cb_ail_no.Checked) { next = "yes"; } // ไม่มีอาการเจ็บป่วย >> ไม่ต้องเช็ค >> บังคับกรอกแค่ ATK
 
             string pcr_ar = txtH_pcr.Value.ToString().Trim();
             if (cb_pcr_no.Checked)
             {
                 pcr_ar = cb_pcr_no.Value.ToString();
             }
+
+            // เปลี่ยนจาก Antibody ไปเป็น >>> ATK
             string antibody_ar = txtH_antibody.Value.ToString().Trim();
             if (cb_antibody_no.Checked)
             {
@@ -2130,7 +2136,7 @@ namespace BRH_Plubic.NovelCorona
                     }
                     else if (result == "Missing")
                     {
-                        scModal = "fn_AlertModal('Info','กรุณากรอกข้อมูลทางคลีนิก ในส่วนที่จำเป็นให้ครบถ้วน !!','',0);";
+                        scModal = "fn_AlertModal('Info','กรุณากรอกข้อมูลทางคลินิก ในส่วนที่จำเป็นให้ครบถ้วน !!','',0);";
                     }
                     else if (result == "Notsave")
                     {

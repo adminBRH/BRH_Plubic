@@ -33,7 +33,7 @@
 
             <!-- DIV 1 ---------------------------------------------- -->
             <div id="div_1" class="row col-12 mx-auto my-5" runat="server" visible="true">
-                <div class="col-12 mx-auto text-left my-2 h4">
+                <div class="col-12 mx-auto text-left my-2">
                     1. ข้อมูลทั่วไป
                 </div>
                 <div class="col-6 mx-auto text-center my-2">
@@ -111,7 +111,7 @@
                         } else {
                             divpregnant.setAttribute('hidden', 'hidden');
                             document.getElementById('<%= num_pregnan.ClientID %>').value = '';
-                                document.getElementById('<%= num_pregnanweek.ClientID %>').value = '';
+                            document.getElementById('<%= num_pregnanweek.ClientID %>').value = '';
                         }
                     }
                 </script>
@@ -162,7 +162,7 @@
                                 }
                                 else {
                                     var txtOther = document.getElementById('<%= txt_baan_2.ClientID %>').value = "";
-                                    divBaan.setAttribute('hidden','hidden');
+                                    divBaan.setAttribute('hidden', 'hidden');
                                 }
                             }
                         </script>
@@ -216,310 +216,310 @@
                     2. ข้อมูลทางคลินิก
                 </div>
                 <div class="col-12 mx-auto">
-                    <input type="radio" id="cb_ail_no" name="cb_ail" value="no" onclick="fn_hideAil()" runat="server" />ไม่มี อาการเจ็บป่วย
+                    <input type="radio" id="cb_ail_no" name="cb_ail" value="no" onclick="fn_hideAil()" checked runat="server" />ไม่มี อาการเจ็บป่วย
                 </div>
                 <div class="col-12 mx-auto">
                     <input type="radio" id="cb_ail_yes" name="cb_ail" value="yes" onclick="fn_hideAil()" runat="server" />มี อาการเจ็บป่วย
                 </div>
-                <div id="div_2_ail_1" class="row col-12 mx-auto my-2">
-                    <div class="row col-12 mx-auto my-2">
-                        <div class="col-2 mx-auto my-auto text-right">วันที่เริ่มป่วย</div>
-                        <div class="col-3 mx-auto my-auto text-left"><input type="date" id="date_whenSick" class="form-control" value="" runat="server" /></div>
-                        <div class="col-4 mx-auto my-auto text-right">วันที่เข้ารับการรักษาครั้งแรก</div>
-                        <div class="col-3 mx-auto my-auto text-left"><input type="date" id="date_firstVisit" class="form-control" value="" runat="server" /></div>
-                    </div>
-                    <div class="row col-12 mx-auto my-2">
-                        <div class="col-8 mx-auto"><input type="text" id="txt_firstHospital" class="form-control" value="" placeholder="ชื่อสถานพยาบาลที่เข้ารับการรักษาครั้งแรก" runat="server" /></div>
-                        <div class="col-4 mx-auto"><input type="text" id="txt_firstHospital_province" class="form-control" value="" placeholder="จังหวัด" runat="server" /></div>
-                    </div>
-                    <div class="row col-12 mx-auto my-2">
-                        <div class="col-8 mx-auto"><input type="text" id="txt_currenHospital" class="form-control" value="" placeholder="ชื่อสถานพยาบาลที่เข้ารับการรักษาในปัจจุบัน" runat="server" /></div>
-                        <div class="col-4 mx-auto"><input type="text" id="txt_currenHospital_province" class="form-control" value="" placeholder="จังหวัด" runat="server" /></div>
-                    </div>
-                    <div class="col-12 mx-auto my-2">
-                        <div class="row col-12 mx-auto">
-                            <div class="col-12">อาการและอาการแสดงในวันพบผู้ป่วย : <input type="checkbox" name="cb_sick" id="cb_sickyes" class="col-6 mx-auto" value="yes" runat="server" />ไข้</div>
-                            <div class="row col-12">
-                                <span class="my-auto">อุณหภูมิร่างกายแรกรับ</span>
-                                <input type="text" id="txt_temperature" class="col-2 form-control ml-2" value="" placeholder="องศาเซลเซียส" runat="server" />
-                                <input type="text" id="txt_O2sat" class="col-2 form-control ml-2" value="" placeholder="O2 Sat" runat="server" /><span class="my-auto">%</span>
-                                <input type="checkbox" id="cb_respirator" class="my-auto ml-5" value="yes" runat="server" /><span class="my-auto">ใส่เครื่องช่วยหายใจ</span>
-                            </div>
-                            <div id="div_symptom" class="row col-12 mx-auto" runat="server">
-                                <div class="col-3 mx-auto text-left">
-                                    <input type="checkbox" id="cb_symptom_1" value="ไอ" runat="server" />ไอ
-                                </div>
-                                <div class="col-3 mx-auto text-left">
-                                    <input type="checkbox" id="cb_symptom_2" value="เจ็บคอ" runat="server" />เจ็บคอ
-                                </div>
-                                <div class="col-3 mx-auto text-left">
-                                    <input type="checkbox" id="cb_symptom_3" value="ปวดกล้ามเนื้อ" runat="server" />ปวดกล้ามเนื้อ
-                                </div>
-                                <div class="col-3 mx-auto text-left">
-                                    <input type="checkbox" id="cb_symptom_4" value="มีน้ำมูก" runat="server" />มีน้ำมูก
-                                </div>
-
-                                <div class="col-3 mx-auto text-left">
-                                    <input type="checkbox" id="cb_symptom_5" value="หายใจลำบาก" runat="server" />หายใจลำบาก
-                                </div>
-                                <div class="col-3 mx-auto text-left">
-                                    <input type="checkbox" id="cb_symptom_6" value="ปวดศีรษะ" runat="server" />ปวดศีรษะ
-                                </div>
-                                <div class="col-3 mx-auto text-left">
-                                    <input type="checkbox" id="cb_symptom_7" value="ถ่ายเหลว" runat="server" />ถ่ายเหลว
-                                </div>
-                                <div class="col-3 mx-auto text-left">
-                                    <input type="checkbox" id="cb_symptom_8" value="จมูกไม่ได้กลิ่น" runat="server" />จมูกไม่ได้กลิ่น
-                                </div>
-
-                                <div class="col-3 mx-auto text-left">
-                                    <input type="checkbox" id="cb_symptom_9" value="ลิ้นไม่รับรส" runat="server" />ลิ้นไม่รับรส
-                                </div>
-                                <div class="col-3 mx-auto text-left">
-                                    <input type="checkbox" id="cb_symptom_10" value="ตาแดง" runat="server" />ตาแดง
-                                </div>
-                                <div class="row col-6 mx-auto text-left">
-                                    <input type="checkbox" id="cb_symptom_11" value="ผื่น" runat="server" onclick="fn_symptom11()" />ผื่น
-                                    <input type="text" id="txt_symptom_11" value="" class="col-10 form-control" placeholder="ตำแหน่ง" runat="server" hidden="hidden" />
-                                </div>
-                                <script>
-                                    function fn_symptom11() {
-                                        var txtsymptom11 = document.getElementById('<%= txt_symptom_11.ClientID %>');
-                                        var cbsymptom11 = document.getElementById('<%= cb_symptom_11.ClientID %>');
-                                        if (cbsymptom11.checked) {
-                                            txtsymptom11.removeAttribute('hidden');
-                                        }
-                                        else {
-                                            txtsymptom11.value = "";
-                                            txtsymptom11.setAttribute('hidden', 'hidden');
-                                        }
-                                    }
-                                    fn_symptom11();
-                                </script>
-
-                                <div class="col-2">
-                                    <input type="checkbox" id="cb_symptom_other" value="อื่นๆ" runat="server" onclick="fn_symptomOther()" /><span class="my-auto">อื่นๆ</span>
-                                </div>
-                                <div class="col-10">
-                                    <input type="text" id="txt_symptomOther" class="form-control" value="" placeholder="ระบุ" runat="server" hidden="hidden" />
-                                </div>
-                                <script>
-                                    function fn_symptomOther() {
-                                        var txtsymptomOther = document.getElementById('<%= txt_symptomOther.ClientID %>');
-                                        var cbsymptom_other = document.getElementById('<%= cb_symptom_other.ClientID %>');
-                                        if (cbsymptom_other.checked) {
-                                            txtsymptomOther.removeAttribute('hidden');
-                                        }
-                                        else {
-                                            txtsymptomOther.value = "";
-                                            txtsymptomOther.setAttribute('hidden', 'hidden');
-                                        }
-                                    }
-                                    fn_symptomOther();
-                                </script>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row col-12 mx-auto my-2">
-                        <div class="row col-lg-4 col-sm-6 mx-auto text-left">
-                            <div class="col-auto">เอ็กซเรย์ปอด (ครั้งแรก)</div>
-                            <div class="col-auto"><input type="radio" id="rd_xray_no" value="ไม่ได้ทำ" runat="server" onclick="fn_xray()" />ไม่ได้ทำ</div>
-                            <div class="col-auto"><input type="radio" id="rd_xray_yes" value="ทำ" runat="server" onclick="fn_xray()" />ทำ</div>
-                        </div>
-                        <div class="row col-lg-8 col-sm-6 mx-auto">
-                            <div class="col-6"><input type="date" id="date_xray" value="" class="form-control my-auto" runat="server" hidden="hidden" /></div>
-                            <div class="col-6"><input type="text" id="txt_xray_result" class="form-control my-auto" value="" placeholder="ระบุผล" runat="server" hidden="hidden" /></div>
-                        </div>
-                        <script>
-                            function fn_xray() {
-                                var rdXray = document.getElementById('<%= rd_xray_yes.ClientID %>');
-                                var dateXray = document.getElementById('<%= date_xray.ClientID %>');
-                                var resultXray = document.getElementById('<%= txt_xray_result.ClientID %>');
-                                if (rdXray.checked) {
-                                    dateXray.removeAttribute('hidden');
-                                    resultXray.removeAttribute('hidden');
-                                }
-                                else {
-                                    dateXray.setAttribute('hidden', 'hidden');
-                                    dateXray.value = "";
-                                    resultXray.setAttribute('hidden', 'hidden');
-                                    resultXray.value = "";
-                                }
-                            }
-                            fn_xray();
-                        </script>
-                    </div>
-                    <div class="col-12 mx-auto my-2">
-                        <div class="row col-12 mx-auto">
-                            <div class="col-lg-2 col-sm-3 mx-auto my-auto text-left">
-                                CBC (ครั้งแรก) 
-                            </div>
-                            <div class="col-lg-4 col-sm-3 mx-auto text-left">
-                                <input type="date" id="date_cbc" class="form-control" value="" runat="server" />
-                            </div>
-                            <div class="col-2 mx-auto text-left">
-                                <input type="text" id="txt_cbc_hb" class="form-control" value="" placeholder="ผล Hb" runat="server" />
-                            </div>
-                            <div class="col-2 mx-auto text-left">
-                                <input type="text" id="txt_cbc_hct" class="form-control" value="" placeholder="mg% Hct" runat="server" />
-                            </div>
-                            <div class="col-2 mx-auto text-left">
-                                <input type="text" id="txt_cbc_wbc" class="form-control" value="" placeholder="% WBC" runat="server" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 mx-auto my-2">
-                        <div class="row col-12 mx-auto">
-                            <div class="col-3 mx-auto my-auto">
-                                Platelet count
-                            </div>
-                            <div class="row col-3 mx-auto my-auto">
-                                <div class="col-6 mx-auto my-auto">
-                                    <input type="text" id="txt_pc_x" class="form-control" value="" runat="server" />
-                                </div>
-                                <div class="col-6 mx-auto my-auto text-left">
-                                    x10<sup>3</sup>
-                                </div>
-                            </div>
-                            <div class="row col-3 mx-auto my-auto">
-                                <div class="col-3 mx-auto my-auto text-right">N</div>
-                                <div class="col-6 mx-auto">
-                                    <input type="text" id="txt_pc_n" class="form-control" value="" runat="server" />
-                                </div>
-                                <div class="col-3 mx-auto my-auto text-left">%</div>
-                            </div>
-                            <div class="row col-3 mx-auto my-auto">
-                                <div class="col-3 mx-auto my-auto text-right">L</div>
-                                <div class="col-6 mx-auto">
-                                    <input type="text" id="txt_pc_l" class="form-control" value="" runat="server" />
-                                </div>
-                                <div class="col-3 mx-auto my-auto text-left">%</div>
-                            </div>
-                            <div class="row col-6 mx-auto my-1">
-                                <div class="col-6 mx-auto my-auto text-right">Atyp lymph</div>
-                                <div class="col-3 mx-auto">
-                                    <input type="text" id="txt_pc_al" class="form-control" value="" runat="server" />
-                                </div>
-                                <div class="col-3 mx-auto my-auto text-left">%</div>
-                            </div>
-                            <div class="row col-6 mx-auto my-1">
-                                <div class="col-6 mx-auto my-auto text-right">Mono</div>
-                                <div class="col-3 mx-auto">
-                                    <input type="text" id="txt_pc_mn" class="form-control" value="" runat="server" />
-                                </div>
-                                <div class="col-3 mx-auto my-auto text-left">%</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 mx-auto my-2">
-                        <div class="row col-12 mx-auto">
-                            <div class="col-12 mx-auto">
-                                ผลการตรวจ Influenza test (ถ้ามี)
-                            </div>
-                            <div class="row col-lg-4 col-sm-12 mx-auto mb-sm-2">
-                                <input type="text" id="txt_influenza" class="form-control" value="" placeholder="วิธีการตรวจ" runat="server" />
-                            </div>
-                            <div class="col-lg-4 col-sm-6 mx-auto my-auto text-center">
-                                <input type="radio" id="rd_Influenza_N" name="rd_Influenza" value="Negative" runat="server" /> Negative / <input type="radio" id="rd_Influenza_P" name="rd_Influenza" value="Positive" runat="server" /> Positive
-                            </div>
-                            <div class="col-lg-2 col-sm-3 mx-auto my-auto text-center">
-                                <input type="checkbox" id="cb_flu_A" value="Flu A" runat="server" /> Flu A
-                            </div>
-                            <div class="col-lg-2 col-sm-3 mx-auto my-auto text-center">
-                                <input type="checkbox" id="cb_flu_B" value="Flu B" runat="server" /> Flu B
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row col-12 mx-auto my-2">
-                        <div class="col-lg-4 col-sm-6 mx-auto">
-                            ผลการตรวจ SARS-CoV-2 PCR
-                        </div>
-                        <div class="col-lg-8 col-sm-6 mx-auto text-left">
-                            <input type="checkbox" id="cb_pcr_no" value="no" onclick="fn_pcr_no()" runat="server" /> ไม่เคยรับการตรวจ
-                        </div>
-                        <table id="table_pcr" style="width: 100%" border="1">
-                            <tr>
-                                <td style="width: 10%" class="text-center">ครั้งที่</td>
-                                <td style="width: 20%" class="text-center">วันที่เก็บ</td>
-                                <td style="width: 20%" class="text-center">ชนิดตัวอย่าง</td>
-                                <td style="width: 20%" class="text-center">สถานที่ส่งตรวจ</td>
-                                <td style="width: 30%" class="text-center">ผลตรวจ</td>
-                            </tr>
-                            <tr id="tr_pcr">
-                                <td colspan="5">
-                                    <table style="width: 100%">
-                                        <asp:Label ID="lbl_PCR_table" Text="" runat="server"></asp:Label>
-                                    </table>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a id="btn_pcr_add" class="col-12 btn btn-outline-info" onclick="fn_pcr_add()"><i class="ti ti-save"></i></a>
-                                </td>
-                                <td>
-                                    <input type="date" id="date_pcr" value="" class="form-control" />
-                                </td>
-                                <td>
-                                    <input type="text" id="txt_pcr_ex" value="" class="form-control" />
-                                </td>
-                                <td>
-                                    <input type="text" id="txt_pcr_location" value="" class="form-control" />
-                                </td>
-                                <td>
-                                    <div class="row col-12 mx-auto">
-                                        <div class="col-lg-6 col-sm-12 mx-auto">
-                                            <input type="radio" id="rd_pcr_y" name="rd_pcr" value="Detected" /> <!--Detected-->บวก
-                                        </div>
-                                        <div class="col-lg-6 col-sm-12 mx-auto">
-                                            <input type="radio" id="rd_pcr_n" name="rd_pcr" value="Not detected" /> <!--Not detected-->ลบ
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                        <div hidden="hidden">
-                            <input type="text" id="txtH_pcr" value="" runat="server" />
-                        </div>
-                        <script>
-                            var pcr_txt = document.getElementById('<%= txtH_pcr.ClientID %>');
-                            var lblPcr = document.getElementById('<%= lbl_PCR_table.ClientID %>');
-
-                            function fn_pcr_add() {
-                                var pcr_date = document.getElementById('date_pcr');
-                                var pcr_ex = document.getElementById('txt_pcr_ex');
-                                var pcr_location = document.getElementById('txt_pcr_location');
-                                var pcr_yn = '';
-                                var pcr_y = document.getElementById('rd_pcr_y');
-                                var pcr_n = document.getElementById('rd_pcr_n');
-                                if (pcr_y.checked) {
-                                    pcr_yn = pcr_y.value;
-                                } else {
-                                    pcr_yn = pcr_n.value;
-                                }
-                                var pcr_ar = pcr_txt.value;
-                                if (pcr_ar != '') { pcr_ar = pcr_ar + '|'; }
-                                pcr_ar = pcr_ar + pcr_date.value + ',' + pcr_ex.value + ',' + pcr_location.value + ',' + pcr_yn;
-                                pcr_txt.value = pcr_ar;
-
-                                lblPcr.innerHTML = fn_table_show('pcr',pcr_txt.value);
-                            }
-
-                            function fn_pcr_no() {
-                                var cb_no = document.getElementById('<%= cb_pcr_no.ClientID %>');
-                                var table = document.getElementById('table_pcr');
-                                if (cb_no.checked) {
-                                    table.setAttribute('hidden', 'hidden');
-                                } else {
-                                    table.removeAttribute('hidden');
-                                }
-                            }
-                            fn_pcr_no();
-                        </script>
-                    </div>
+                <div class="col-12 mx-auto"></div>
+                <div class="row col-12 mx-auto my-2">
+                    <div class="col-2 mx-auto my-auto text-right">วันที่เริ่มป่วย</div>
+                    <div class="col-3 mx-auto my-auto text-left"><input type="date" id="date_whenSick" class="form-control" value="" runat="server" /></div>
+                    <div class="col-4 mx-auto my-auto text-right">วันที่เข้ารับการรักษาครั้งแรก</div>
+                    <div class="col-3 mx-auto my-auto text-left"><input type="date" id="date_firstVisit" class="form-control" value="" runat="server" /></div>
                 </div>
+                <div class="row col-12 mx-auto my-2">
+                    <div class="col-8 mx-auto"><input type="text" id="txt_firstHospital" class="form-control" value="" placeholder="ชื่อสถานพยาบาลที่เข้ารับการรักษาครั้งแรก" runat="server" /></div>
+                    <div class="col-4 mx-auto"><input type="text" id="txt_firstHospital_province" class="form-control" value="" placeholder="จังหวัด" runat="server" /></div>
+                </div>
+                <div class="row col-12 mx-auto my-2">
+                    <div class="col-8 mx-auto"><input type="text" id="txt_currenHospital" class="form-control" value="" placeholder="ชื่อสถานพยาบาลที่เข้ารับการรักษาในปัจจุบัน" runat="server" /></div>
+                    <div class="col-4 mx-auto"><input type="text" id="txt_currenHospital_province" class="form-control" value="" placeholder="จังหวัด" runat="server" /></div>
+                </div>
+                <div class="row col-12 mx-auto my-2">
 
-                <div class="col-12 mx-auto">
-                    <div id="div_antibody" class="row col-12 mx-auto my-2" runat="server">
+                    <div id="div_2_ail_1" class="row col-12 mx-auto">
+                        <div class="col-12 mx-auto my-2">
+                            <div id="div_symptom" class="row col-12 mx-auto" runat="server">
+                                <div class="col-12">อาการและอาการแสดงในวันพบผู้ป่วย : <input type="checkbox" name="cb_sick" id="cb_sickyes" class="col-6 mx-auto" value="yes" runat="server" />ไข้</div>
+                                <div class="row col-12">
+                                    <span class="my-auto">อุณหภูมิร่างกายแรกรับ</span>
+                                    <input type="text" id="txt_temperature" class="col-2 form-control ml-2" value="" placeholder="องศาเซลเซียส" runat="server" />
+                                    <input type="text" id="txt_O2sat" class="col-2 form-control ml-2" value="" placeholder="O2 Sat" runat="server" /><span class="my-auto">%</span>
+                                    <input type="checkbox" id="cb_respirator" class="my-auto ml-5" value="yes" runat="server" /><span class="my-auto">ใส่เครื่องช่วยหายใจ</span>
+                                </div>
+                                <div class="row col-12 mx-auto">
+                                    <div class="col-3 mx-auto text-left">
+                                        <input type="checkbox" id="cb_symptom_1" value="ไอ" runat="server" />ไอ
+                                    </div>
+                                    <div class="col-3 mx-auto text-left">
+                                        <input type="checkbox" id="cb_symptom_2" value="เจ็บคอ" runat="server" />เจ็บคอ
+                                    </div>
+                                    <div class="col-3 mx-auto text-left">
+                                        <input type="checkbox" id="cb_symptom_3" value="ปวดกล้ามเนื้อ" runat="server" />ปวดกล้ามเนื้อ
+                                    </div>
+                                    <div class="col-3 mx-auto text-left">
+                                        <input type="checkbox" id="cb_symptom_4" value="มีน้ำมูก" runat="server" />มีน้ำมูก
+                                    </div>
+
+                                    <div class="col-3 mx-auto text-left">
+                                        <input type="checkbox" id="cb_symptom_5" value="หายใจลำบาก" runat="server" />หายใจลำบาก
+                                    </div>
+                                    <div class="col-3 mx-auto text-left">
+                                        <input type="checkbox" id="cb_symptom_6" value="ปวดศีรษะ" runat="server" />ปวดศีรษะ
+                                    </div>
+                                    <div class="col-3 mx-auto text-left">
+                                        <input type="checkbox" id="cb_symptom_7" value="ถ่ายเหลว" runat="server" />ถ่ายเหลว
+                                    </div>
+                                    <div class="col-3 mx-auto text-left">
+                                        <input type="checkbox" id="cb_symptom_8" value="จมูกไม่ได้กลิ่น" runat="server" />จมูกไม่ได้กลิ่น
+                                    </div>
+
+                                    <div class="col-3 mx-auto text-left">
+                                        <input type="checkbox" id="cb_symptom_9" value="ลิ้นไม่รับรส" runat="server" />ลิ้นไม่รับรส
+                                    </div>
+                                    <div class="col-3 mx-auto text-left">
+                                        <input type="checkbox" id="cb_symptom_10" value="ตาแดง" runat="server" />ตาแดง
+                                    </div>
+                                    <div class="row col-6 mx-auto text-left">
+                                        <input type="checkbox" id="cb_symptom_11" value="ผื่น" runat="server" onclick="fn_symptom11()" />ผื่น
+                                        <input type="text" id="txt_symptom_11" value="" class="col-10 form-control" placeholder="ตำแหน่ง" runat="server" hidden="hidden" />
+                                    </div>
+                                    <script>
+                                        function fn_symptom11() {
+                                            var txtsymptom11 = document.getElementById('<%= txt_symptom_11.ClientID %>');
+                                            var cbsymptom11 = document.getElementById('<%= cb_symptom_11.ClientID %>');
+                                            if (cbsymptom11.checked) {
+                                                txtsymptom11.removeAttribute('hidden');
+                                            }
+                                            else {
+                                                txtsymptom11.value = "";
+                                                txtsymptom11.setAttribute('hidden', 'hidden');
+                                            }
+                                        }
+                                    </script>
+
+                                    <div class="col-2">
+                                        <input type="checkbox" id="cb_symptom_other" value="อื่นๆ" runat="server" onclick="fn_symptomOther()" /><span class="my-auto">อื่นๆ</span>
+                                    </div>
+                                    <div class="col-10">
+                                        <input type="text" id="txt_symptomOther" class="form-control" value="" placeholder="ระบุ" runat="server" hidden="hidden" />
+                                    </div>
+                                    <script>
+                                        function fn_symptomOther() {
+                                            var txtsymptomOther = document.getElementById('<%= txt_symptomOther.ClientID %>');
+                                            var cbsymptom_other = document.getElementById('<%= cb_symptom_other.ClientID %>');
+                                            if (cbsymptom_other.checked) {
+                                                txtsymptomOther.removeAttribute('hidden');
+                                            }
+                                            else {
+                                                txtsymptomOther.value = "";
+                                                txtsymptomOther.setAttribute('hidden', 'hidden');
+                                            }
+                                        }
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row col-12 mx-auto my-2">
+                            <div class="row col-lg-4 col-sm-6 mx-auto text-left">
+                                <div class="col-auto">เอ็กซเรย์ปอด (ครั้งแรก)</div>
+                                <div class="col-auto"><input type="radio" id="rd_xray_no" value="ไม่ได้ทำ" runat="server" onclick="fn_xray()" />ไม่ได้ทำ</div>
+                                <div class="col-auto"><input type="radio" id="rd_xray_yes" value="ทำ" runat="server" onclick="fn_xray()" />ทำ</div>
+                            </div>
+                            <div class="row col-lg-8 col-sm-6 mx-auto">
+                                <div class="col-6"><input type="date" id="date_xray" value="" class="form-control my-auto" runat="server" hidden="hidden" /></div>
+                                <div class="col-6"><input type="text" id="txt_xray_result" class="form-control my-auto" value="" placeholder="ระบุผล" runat="server" hidden="hidden" /></div>
+                            </div>
+                            <script>
+                                function fn_xray() {
+                                    var rdXray = document.getElementById('<%= rd_xray_yes.ClientID %>');
+                                    var dateXray = document.getElementById('<%= date_xray.ClientID %>');
+                                    var resultXray = document.getElementById('<%= txt_xray_result.ClientID %>');
+                                    if (rdXray.checked) {
+                                        dateXray.removeAttribute('hidden');
+                                        resultXray.removeAttribute('hidden');
+                                    }
+                                    else {
+                                        dateXray.setAttribute('hidden', 'hidden');
+                                        dateXray.value = "";
+                                        resultXray.setAttribute('hidden', 'hidden');
+                                        resultXray.value = "";
+                                    }
+                                }
+                            </script>
+                        </div>
+                        <div class="col-12 mx-auto my-2">
+                            <div class="row col-12 mx-auto">
+                                <div class="col-lg-2 col-sm-3 mx-auto my-auto text-left">
+                                    CBC (ครั้งแรก) 
+                                </div>
+                                <div class="col-lg-4 col-sm-3 mx-auto text-left">
+                                    <input type="date" id="date_cbc" class="form-control" value="" runat="server" />
+                                </div>
+                                <div class="col-2 mx-auto text-left">
+                                    <input type="text" id="txt_cbc_hb" class="form-control" value="" placeholder="ผล Hb" runat="server" />
+                                </div>
+                                <div class="col-2 mx-auto text-left">
+                                    <input type="text" id="txt_cbc_hct" class="form-control" value="" placeholder="mg% Hct" runat="server" />
+                                </div>
+                                <div class="col-2 mx-auto text-left">
+                                    <input type="text" id="txt_cbc_wbc" class="form-control" value="" placeholder="% WBC" runat="server" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 mx-auto my-2">
+                            <div class="row col-12 mx-auto">
+                                <div class="col-3 mx-auto my-auto">
+                                    Platelet count
+                                </div>
+                                <div class="row col-3 mx-auto my-auto">
+                                    <div class="col-6 mx-auto my-auto">
+                                        <input type="text" id="txt_pc_x" class="form-control" value="" runat="server" />
+                                    </div>
+                                    <div class="col-6 mx-auto my-auto text-left">
+                                        x10<sup>3</sup>
+                                    </div>
+                                </div>
+                                <div class="row col-3 mx-auto my-auto">
+                                    <div class="col-3 mx-auto my-auto text-right">N</div>
+                                    <div class="col-6 mx-auto">
+                                        <input type="text" id="txt_pc_n" class="form-control" value="" runat="server" />
+                                    </div>
+                                    <div class="col-3 mx-auto my-auto text-left">%</div>
+                                </div>
+                                <div class="row col-3 mx-auto my-auto">
+                                    <div class="col-3 mx-auto my-auto text-right">L</div>
+                                    <div class="col-6 mx-auto">
+                                        <input type="text" id="txt_pc_l" class="form-control" value="" runat="server" />
+                                    </div>
+                                    <div class="col-3 mx-auto my-auto text-left">%</div>
+                                </div>
+                                <div class="row col-6 mx-auto my-1">
+                                    <div class="col-6 mx-auto my-auto text-right">Atyp lymph</div>
+                                    <div class="col-3 mx-auto">
+                                        <input type="text" id="txt_pc_al" class="form-control" value="" runat="server" />
+                                    </div>
+                                    <div class="col-3 mx-auto my-auto text-left">%</div>
+                                </div>
+                                <div class="row col-6 mx-auto my-1">
+                                    <div class="col-6 mx-auto my-auto text-right">Mono</div>
+                                    <div class="col-3 mx-auto">
+                                        <input type="text" id="txt_pc_mn" class="form-control" value="" runat="server" />
+                                    </div>
+                                    <div class="col-3 mx-auto my-auto text-left">%</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 mx-auto my-2">
+                            <div class="row col-12 mx-auto">
+                                <div class="col-12 mx-auto">
+                                    ผลการตรวจ Influenza test (ถ้ามี)
+                                </div>
+                                <div class="row col-lg-4 col-sm-12 mx-auto mb-sm-2">
+                                    <input type="text" id="txt_influenza" class="form-control" value="" placeholder="วิธีการตรวจ" runat="server" />
+                                </div>
+                                <div class="col-lg-4 col-sm-6 mx-auto my-auto text-center">
+                                    <input type="radio" id="rd_Influenza_N" name="rd_Influenza" value="Negative" runat="server" /> Negative / <input type="radio" id="rd_Influenza_P" name="rd_Influenza" value="Positive" runat="server" /> Positive
+                                </div>
+                                <div class="col-lg-2 col-sm-3 mx-auto my-auto text-center">
+                                    <input type="checkbox" id="cb_flu_A" value="Flu A" runat="server" /> Flu A
+                                </div>
+                                <div class="col-lg-2 col-sm-3 mx-auto my-auto text-center">
+                                    <input type="checkbox" id="cb_flu_B" value="Flu A" runat="server" /> Flu B
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row col-12 mx-auto my-2">
+                            <div class="col-lg-4 col-sm-6 mx-auto">
+                                ผลการตรวจ SARS-CoV-2 PCR
+                            </div>
+                            <div class="col-lg-8 col-sm-6 mx-auto text-left">
+                                <input type="checkbox" id="cb_pcr_no" value="no" onclick="fn_pcr_no()" runat="server" /> ไม่เคยรับการตรวจ
+                            </div>
+                            <table id="table_pcr" style="width: 100%" border="1">
+                                <tr>
+                                    <td style="width: 10%" class="text-center">ครั้งที่</td>
+                                    <td style="width: 20%" class="text-center">วันที่เก็บ</td>
+                                    <td style="width: 20%" class="text-center">ชนิดตัวอย่าง</td>
+                                    <td style="width: 20%" class="text-center">สถานที่ส่งตรวจ</td>
+                                    <td style="width: 30%" class="text-center">ผลตรวจ</td>
+                                </tr>
+                                <tr id="tr_pcr">
+                                    <td colspan="5">
+                                        <table style="width: 100%">
+                                            <asp:Label ID="lbl_PCR_table" Text="" runat="server"></asp:Label>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a id="btn_pcr_add" class="col-12 btn btn-outline-info" onclick="fn_pcr_add()">+</a>
+                                    </td>
+                                    <td>
+                                        <input type="date" id="date_pcr" value="" class="form-control" />
+                                    </td>
+                                    <td>
+                                        <input type="text" id="txt_pcr_ex" value="" class="form-control" />
+                                    </td>
+                                    <td>
+                                        <input type="text" id="txt_pcr_location" value="" class="form-control" />
+                                    </td>
+                                    <td>
+                                        <div class="row col-12 mx-auto">
+                                            <div class="col-lg-6 col-sm-12 mx-auto">
+                                                <input type="radio" id="rd_pcr_y" name="rd_pcr" value="Detected" /> บวก
+                                            </div>
+                                            <div class="col-lg-6 col-sm-12 mx-auto">
+                                                <input type="radio" id="rd_pcr_n" name="rd_pcr" value="Not detected" /> ลบ
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div hidden="hidden">
+                                <input type="text" id="txtH_pcr" value="" runat="server" />
+                            </div>
+                            <script>
+                                var pcr_txt = document.getElementById('<%= txtH_pcr.ClientID %>');
+                                var lblPcr = document.getElementById('<%= lbl_PCR_table.ClientID %>');
+
+                                function fn_pcr_add() {
+                                    var pcr_date = document.getElementById('date_pcr');
+                                    var pcr_ex = document.getElementById('txt_pcr_ex');
+                                    var pcr_location = document.getElementById('txt_pcr_location');
+                                    var pcr_yn = '';
+                                    var pcr_y = document.getElementById('rd_pcr_y');
+                                    var pcr_n = document.getElementById('rd_pcr_n');
+                                    if (pcr_y.checked) {
+                                        pcr_yn = pcr_y.value;
+                                    } else {
+                                        pcr_yn = pcr_n.value;
+                                    }
+                                    var pcr_ar = pcr_txt.value;
+                                    if (pcr_ar != '') { pcr_ar = pcr_ar + '|'; }
+                                    pcr_ar = pcr_ar + pcr_date.value + ',' + pcr_ex.value + ',' + pcr_location.value + ',' + pcr_yn;
+                                    pcr_txt.value = pcr_ar;
+
+                                    lblPcr.innerHTML = fn_table_show('pcr', pcr_txt.value);
+                                }
+
+                                function fn_pcr_no() {
+                                    var cb_no = document.getElementById('<%= cb_pcr_no.ClientID %>');
+                                    var table = document.getElementById('table_pcr');
+                                    if (cb_no.checked) {
+                                        table.setAttribute('hidden', 'hidden');
+                                    } else {
+                                        table.removeAttribute('hidden');
+                                    }
+                                }
+                            </script>
+                        </div>
+                    </div>
+
+                    <!-- ATK -->
+                    <div class="col-12 mx-auto">
+                        <div id="div_antibody" class="row col-12 mx-auto my-2" runat="server">
                         <div class="col-lg-4 col-sm-6 mx-auto">
                             ผลการตรวจ ATK <!--SARS-CoV-2 Antibody-->
                         </div>
@@ -543,7 +543,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <a id="btn_Antibody_add" class="col-12 btn btn-outline-info" onclick="fn_anti_add()"><i class="ti ti-save"></i></a>
+                                    <a id="btn_Antibody_add" class="col-12 btn btn-outline-info" onclick="fn_anti_add()">+เพิ่ม</a>
                                 </td>
                                 <td>
                                     <input type="date" id="date_antibody" value="" class="form-control" />
@@ -558,15 +558,16 @@
                                     <%--<input type="text" id="txt_antibody_result" value="" class="form-control" />--%>
                                     <div class="row col-12 mx-auto">
                                         <div class="col-lg-6 col-sm-12 mx-auto">
-                                            <input type="radio" id="rd_antibody_y" name="rd_antibody" value="Positive" /> <!--Positive-->บวก
+                                            <input type="radio" id="rd_antibody_y" name="rd_antibody" value="Positive" /> บวก
                                         </div>
                                         <div class="col-lg-6 col-sm-12 mx-auto">
-                                            <input type="radio" id="rd_antibody_n" name="rd_antibody" value="Negative" /> <!--Negative-->ลบ
+                                            <input type="radio" id="rd_antibody_n" name="rd_antibody" value="Negative" /> ลบ
                                         </div>
                                     </div>
                                 </td>
                             </tr>
                         </table>
+                    </div>
                     </div>
                     <div hidden="hidden">
                         <input type="text" id="txtH_antibody" value="" runat="server" />
@@ -593,24 +594,31 @@
                             antibody_ar = antibody_ar + antibody_date.value + ',' + antibody_ex.value + ',' + antibody_location.value + ',' + antibody_result;
                             antibody_txt.value = antibody_ar;
 
-                            lblAnti.innerHTML = fn_table_show('antibody',antibody_txt.value);
+                            lblAnti.innerHTML = fn_table_show('antibody', antibody_txt.value);
+                        }
+
+                        function fn_anti_add_auto() {
+                            var antibody_date = document.getElementById('date_antibody');
+                            if (antibody_date.value != '' && lblAnti.innerHTML == '') {
+                                fn_anti_add();
+                            }
                         }
 
                         function fn_antibody_no() {
                             var cb_no = document.getElementById('<%= cb_antibody_no.ClientID %>');
                             var table = document.getElementById('table_antibody');
                             if (cb_no.checked) {
-                                table.setAttribute('hidden','hidden');
+                                table.setAttribute('hidden', 'hidden');
                             } else {
                                 table.removeAttribute('hidden');
                             }
                         }
-                        fn_antibody_no();
-                        
+
+
                         function fn_table_show(name, ar) {
-                            var html = '';
                             if (ar != '') {
                                 var table_ar = ar.split('|');
+                                var html = '';
                                 html = html + '<table style="width: 100%">';
                                 html = html + '<tr>';
                                 html = html + '<td style="width: 10%"></td>';
@@ -622,7 +630,7 @@
                                 for (var i = 0; i < table_ar.length; i++) {
                                     html = html + '<tr>';
                                     var no = i + 1;
-                                    html = html + '<td><div class="row col-12 mx-auto"><a class="col-6 btn btn-outline-info" onclick="fn_del_ar(\'' + name + '\',' + i + ')"><i class="ti ti-trash"></i></a><a class="col-6 mx-auto my-auto">' + no + '</a></div></td>';
+                                    html = html + '<td><a class="col-12 btn btn-outline-info" onclick="fn_del_ar(\'' + name + '\',' + i + ')">' + no + '</a></td>';
                                     var table_val = table_ar[i].split(',');
                                     for (var j = 0; j < table_val.length; j++) {
                                         html = html + '<td>' + table_val[j] + '</td>';
@@ -631,51 +639,44 @@
                                 }
                                 html = html + '</table>';
                                 //alert(html);
+                                return html;
                             }
-                            return html;
                         }
 
                         function fn_del_ar(name, n) {
-                            var num = n + 1;
-                            if(confirm('คุณต้องการลบรายการที่ ' + num + ' ใช่หรือไม่ ?')){
-                                var ar = '';
-                                if (name == 'pcr') {
-                                    ar = pcr_txt.value;
+                            var ar = '';
+                            if (name == 'pcr') {
+                                ar = pcr_txt.value;
+                            }
+                            else {
+                                ar = antibody_txt.value;
+                            }
+                            var val = ar.split('|');//.splice(n, 1);
+                            var NewVal = '';
+                            for (var i = 0; i < val.length; i++) {
+                                if (i != n) {
+                                    if (NewVal != '') { NewVal = NewVal + '|'; }
+                                    NewVal = NewVal + val[i];
                                 }
-                                else {
-                                    ar = antibody_txt.value;
-                                }
-                                var val = ar.split('|');//.splice(n, 1);
-                                var NewVal = '';
-                                for (var i = 0; i < val.length; i++) {
-                                    if (i != n) {
-                                        if (NewVal != '') { NewVal = NewVal + '|'; }
-                                        NewVal = NewVal + val[i];
-                                    }
-                                }
-                                //alert(NewVal);
-                                if (name == 'pcr') {
-                                    pcr_txt.value = NewVal;
-                                    lblPcr.innerHTML = fn_table_show('pcr', NewVal);
-                                } else {
-                                    antibody_txt.value = NewVal;
-                                    lblAnti.innerHTML = fn_table_show('antibody', NewVal);
-                                }
+                            }
+                            //alert(NewVal);
+                            if (name == 'pcr') {
+                                pcr_txt.value = NewVal;
+                                lblPcr.innerHTML = fn_table_show('pcr', NewVal);
+                            } else {
+                                antibody_txt.value = NewVal;
+                                lblAnti.innerHTML = fn_table_show('antibody', NewVal);
                             }
                         }
 
                         if (antibody_txt.value != '') {
-                            lblAnti.innerHTML = fn_table_show('antibody',antibody_txt.value);
+                            lblAnti.innerHTML = fn_table_show('antibody', antibody_txt.value);
                         }
                         if (pcr_txt.value != '') {
-                            lblPcr.innerHTML = fn_table_show('pcr',pcr_txt.value);
+                            lblPcr.innerHTML = fn_table_show('pcr', pcr_txt.value);
                         }
                     </script>
                     <asp:Label ID="lbl_sc_table" Text="" runat="server"></asp:Label>
-                </div>
-
-                <div id="div_2_ail_2" class="row col-12 mx-auto my-2">
-
                     <%--<div class="col-12 mx-auto my-2">
                         <div class="row col-12 mx-auto">
                             <div class="col-6 mx-auto my-auto">
@@ -688,150 +689,150 @@
                             </div>
                         </div>
                     </div>--%>
-                    <div class="col-12 mx-auto my-2">
-                        <div class="row col-12 mx-auto">
-                            <div class="col-lg-3 col-sm-4 mx-auto my-auto">
-                                ประเภทผู้ป่วย<br />
-                                <input type="checkbox" id="cb_opd" value="opd" runat="server" onclick="fn_OI('opd')" /> ผู้ป่วยนอก
-                                <input type="checkbox" id="cb_admit" value="admit" runat="server" onclick="fn_OI('ipd')" /> ผู้ป่วยใน
+
+                    <div id="div_2_ail_2" class="row col-12 mx-auto">
+                        <div class="col-12 mx-auto my-2">
+                            <div class="row col-12 mx-auto">
+                                <div class="col-lg-3 col-sm-4 mx-auto my-auto">
+                                    ประเภทผู้ป่วย<br />
+                                    <input type="checkbox" id="cb_opd" value="opd" runat="server" onclick="fn_OI('opd')" /> ผู้ป่วยนอก
+                                    <input type="checkbox" id="cb_admit" value="admit" runat="server" onclick="fn_OI('ipd')" /> ผู้ป่วยใน
+                                    <script>
+                                        function fn_OI(val) {
+                                            if (val == 'opd') {
+                                                document.getElementById('<%= cb_admit.ClientID %>').checked = false;
+                                            } else {
+                                                document.getElementById('<%= cb_opd.ClientID %>').checked = false;
+                                            }
+                                        }
+                                    </script>
+                                </div>
+                                <div class="row col-4 mx-auto">
+                                    Admit วันที่
+                                    <input type="date" id="date_admit" class="form-control" value="" runat="server" />
+                                </div>
+                                <div class="col-lg-5 col-sm-4 mx-auto my-auto">
+                                    <input type="text" id="txt_diagnosis" class="form-control" value="" placeholder="การวินิจฉัยเบื้องต้น" runat="server" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 mx-auto my-2">
+                            <div class="row col-12 mx-auto">
+                                <div class="col-3 mx-auto">
+                                    การให้ยาต้านไวรัส
+                                </div>
+                                <div class="row col-4 mx-auto">
+                                    <div class="col-6 mx-auto text-center">
+                                        <input type="radio" id="rd_antiviral_no" name="rd_antiviral" value="no" runat="server" onclick="fn_antiviral()" /> ไม่ให้
+                                    </div>
+                                    <div class="col-6 mx-auto text-center">
+                                        <input type="radio" id="rd_antiviral_yes" name="rd_antiviral" value="yes" runat="server" onclick="fn_antiviral()" /> ให้
+                                    </div>
+                                </div>
+                                <div class="row col-5 mx-auto">
+                                    <div id="div_antiviral" class="row col-12 mx-auto" hidden="hidden">
+                                        วันที่ได้รับยา Dose แรก
+                                        <input type="date" id="date_antiviral" class="form-control" value="" runat="server" />
+                                    </div>
+                                </div>
                                 <script>
-                                    function fn_OI(val) {
-                                        if (val == 'opd') {
-                                            document.getElementById('<%= cb_admit.ClientID %>').checked = false;
-                                        } else {
-                                            document.getElementById('<%= cb_opd.ClientID %>').checked = false;
+                                    function fn_antiviral() {
+                                        var rdAntiviral = document.getElementById('<%= rd_antiviral_yes.ClientID %>');
+                                        var divAntiviral = document.getElementById('div_antiviral');
+                                        if (rdAntiviral.checked) {
+                                            divAntiviral.removeAttribute('hidden');
+                                        }
+                                        else {
+                                            document.getElementById('<%= date_antiviral.ClientID %>').value = "";
+                                            divAntiviral.setAttribute('hidden', 'hidden');
                                         }
                                     }
                                 </script>
                             </div>
-                            <div class="row col-4 mx-auto">
-                                Admit วันที่
-                                <input type="date" id="date_admit" class="form-control" value="" runat="server" />
+                        </div>
+                        <div class="row col-12 mx-auto my-2">
+                            <div class="col-3 mx-auto text-left">
+                                <input type="checkbox" id="cb_re" value="Remdesivir" runat="server" />Remdesivir
                             </div>
-                            <div class="col-lg-5 col-sm-4 mx-auto my-auto">
-                                <input type="text" id="txt_diagnosis" class="form-control" value="" placeholder="การวินิจฉัยเบื้องต้น" runat="server" />
+                            <div class="col-3 mx-auto text-left">
+                                <input type="checkbox" id="cb_fa" value="Favipiravir" runat="server" />Favipiravir 
+                            </div>
+                            <div class="col-6 mx-auto text-left">
+                                <input type="checkbox" id="cb_lori" value="Lopinavir/ritonavir" runat="server" />Lopinavir/ritonavir 
+                            </div>
+                            <div class="col-3 mx-auto text-left">
+                                <input type="checkbox" id="cb_da" value="Darunavir" runat="server" />Darunavir  
+                            </div>
+                            <div class="col-3 mx-auto text-left">
+                                <input type="checkbox" id="cb_ri" value="Ritonavir" runat="server" />Ritonavir   
+                            </div>
+                            <div class="col-6 mx-auto text-left">
+                                <input type="checkbox" id="cb_chhy" value="Chloroquine/Hydroxychloroquine" runat="server" />Chloroquine/Hydroxychloroquine   
+                            </div>
+                            <div class="row col-12 mx-auto text-left">
+                                <input type="checkbox" id="cb_other" value="Other" runat="server" />อื่น ๆ  
+                                <input type="text" id="txt_cb_other" class="col-8 form-control" value="" placeholder="ระบุ" runat="server" />
                             </div>
                         </div>
-                    </div>
-                    <div class="col-12 mx-auto my-2">
-                        <div class="row col-12 mx-auto">
-                            <div class="col-3 mx-auto">
-                                การให้ยาต้านไวรัส
-                            </div>
-                            <div class="row col-4 mx-auto">
-                                <div class="col-6 mx-auto text-center">
-                                    <input type="radio" id="rd_antiviral_no" name="rd_antiviral" value="no" runat="server" onclick="fn_antiviral()" /> ไม่ให้
+                        <div class="col-12 mx-auto my-2">
+                            <div class="row col-12 mx-auto">
+                                <div class="col-12 mx-auto">
+                                    สถานะผู้ป่วย : 
+                                    <input type="radio" id="rd_pt_status_1" name="rd_pt_status" value="หาย" runat="server" onclick="fn_PTstatus()" /> หาย 
+                                    <input type="radio" id="rd_pt_status_2" name="rd_pt_status" value="ยังรักษาอยู่" runat="server" onclick="fn_PTstatus()" /> ยังรักษาอยู่ 
+                                    <input type="radio" id="rd_pt_status_3" name="rd_pt_status" value="เสียชีวิต" runat="server" onclick="fn_PTstatus()" /> เสียชีวิต 
+                                    <input type="radio" id="rd_pt_status_4" name="rd_pt_status" value="ส่งตัว" runat="server" onclick="fn_PTstatus()" /> ส่งตัวไป รพ. 
+                                    <input type="radio" id="rd_pt_status_5" name="rd_pt_status" value="อื่นๆ" runat="server" onclick="fn_PTstatus()" /> อื่นๆ 
                                 </div>
-                                <div class="col-6 mx-auto text-center">
-                                    <input type="radio" id="rd_antiviral_yes" name="rd_antiviral" value="yes" runat="server" onclick="fn_antiviral()" /> ให้
+                                <div class="col-12 mx-auto my-auto">
+                                    <input type="text" id="txt_pt_status_4" value="" class="form-control" placeholder="ชื่อโรงพยาบาล" runat="server" hidden="hidden" />
+                                    <input type="text" id="txt_pt_status_5" value="" class="form-control" placeholder="ระบุ" runat="server" hidden="hidden" />
                                 </div>
-                            </div>
-                            <div class="row col-5 mx-auto">
-                                <div id="div_antiviral" class="row col-12 mx-auto" hidden="hidden">
-                                    วันที่ได้รับยา Dose แรก
-                                    <input type="date" id="date_antiviral" class="form-control" value="" runat="server" />
-                                </div>
-                            </div>
-                            <script>
-                                function fn_antiviral() {
-                                    var rdAntiviral = document.getElementById('<%= rd_antiviral_yes.ClientID %>');
-                                    var divAntiviral = document.getElementById('div_antiviral');
-                                    if (rdAntiviral.checked) {
-                                        divAntiviral.removeAttribute('hidden');
-                                    }
-                                    else {
-                                        document.getElementById('<%= date_antiviral.ClientID %>').value = "";
-                                        divAntiviral.setAttribute('hidden','hidden');
-                                    }
-                                }
-                                fn_antiviral();
-                            </script>
-                        </div>
-                    </div>
-                    <div class="row col-12 mx-auto my-2">
-                        <div class="col-3 mx-auto text-left">
-                            <input type="checkbox" id="cb_re" value="Remdesivir" runat="server" />Remdesivir
-                        </div>
-                        <div class="col-3 mx-auto text-left">
-                            <input type="checkbox" id="cb_fa" value="Favipiravir" runat="server" />Favipiravir 
-                        </div>
-                        <div class="col-6 mx-auto text-left">
-                            <input type="checkbox" id="cb_lori" value="Lopinavir/ritonavir" runat="server" />Lopinavir/ritonavir 
-                        </div>
-                        <div class="col-3 mx-auto text-left">
-                            <input type="checkbox" id="cb_da" value="Darunavir" runat="server" />Darunavir  
-                        </div>
-                        <div class="col-3 mx-auto text-left">
-                            <input type="checkbox" id="cb_ri" value="Ritonavir" runat="server" />Ritonavir   
-                        </div>
-                        <div class="col-6 mx-auto text-left">
-                            <input type="checkbox" id="cb_chhy" value="Chloroquine/Hydroxychloroquine" runat="server" />Chloroquine/Hydroxychloroquine   
-                        </div>
-                        <div class="row col-12 mx-auto text-left">
-                            <input type="checkbox" id="cb_other" value="Other" runat="server" />อื่น ๆ  
-                            <input type="text" id="txt_cb_other" class="col-8 form-control" value="" placeholder="ระบุ" runat="server" />
-                        </div>
-                    </div>
-                    <div class="col-12 mx-auto my-2">
-                        <div class="row col-12 mx-auto">
-                            <div class="col-12 mx-auto">
-                                สถานะผู้ป่วย : 
-                                <input type="radio" id="rd_pt_status_1" name="rd_pt_status" value="หาย" runat="server" onclick="fn_PTstatus()" /> หาย 
-                                <input type="radio" id="rd_pt_status_2" name="rd_pt_status" value="ยังรักษาอยู่" runat="server" onclick="fn_PTstatus()" /> ยังรักษาอยู่ 
-                                <input type="radio" id="rd_pt_status_3" name="rd_pt_status" value="เสียชีวิต" runat="server" onclick="fn_PTstatus()" /> เสียชีวิต 
-                                <input type="radio" id="rd_pt_status_4" name="rd_pt_status" value="ส่งตัว" runat="server" onclick="fn_PTstatus()" /> ส่งตัวไป รพ. 
-                                <input type="radio" id="rd_pt_status_5" name="rd_pt_status" value="อื่นๆ" runat="server" onclick="fn_PTstatus()" /> อื่นๆ 
-                            </div>
-                            <div class="col-12 mx-auto my-auto">
-                                <input type="text" id="txt_pt_status_4" value="" class="form-control" placeholder="ชื่อโรงพยาบาล" runat="server" hidden="hidden" />
-                                <input type="text" id="txt_pt_status_5" value="" class="form-control" placeholder="โปรดระบุ" runat="server" />
-                            </div>
-                            <script>
-                                function fn_PTstatus() {
-                                    var rdptStstaus4 = document.getElementById('<%= rd_pt_status_4.ClientID %>');
-                                    var rdptStstaus5 = document.getElementById('<%= rd_pt_status_5.ClientID %>');
-                                    var txtptStstaus4 = document.getElementById('<%= txt_pt_status_4.ClientID %>');
-                                    var txtptStstaus5 = document.getElementById('<%= txt_pt_status_5.ClientID %>');
+                                <script>
+                                    function fn_PTstatus() {
+                                        var rdptStstaus4 = document.getElementById('<%= rd_pt_status_4.ClientID %>');
+                                        var rdptStstaus5 = document.getElementById('<%= rd_pt_status_5.ClientID %>');
+                                        var txtptStstaus4 = document.getElementById('<%= txt_pt_status_4.ClientID %>');
+                                        var txtptStstaus5 = document.getElementById('<%= txt_pt_status_5.ClientID %>');
 
-                                    if (rdptStstaus4.checked) {
-                                        txtptStstaus4.removeAttribute('hidden');
+                                        if (rdptStstaus4.checked) {
+                                            txtptStstaus4.removeAttribute('hidden');
+                                        }
+                                        else {
+                                            txtptStstaus4.setAttribute('hidden', 'hidden');
+                                            txtptStstaus4.value = "";
+                                        }
+                                        if (rdptStstaus5.checked) {
+                                            txtptStstaus5.removeAttribute('hidden');
+                                        }
+                                        else {
+                                            txtptStstaus5.setAttribute('hidden', 'hidden');
+                                            txtptStstaus5.value = "";
+                                        }
                                     }
-                                    else {
-                                        txtptStstaus4.setAttribute('hidden', 'hidden');
-                                        txtptStstaus4.value = "";
-                                    }
-                                    if (rdptStstaus5.checked) {
-                                        txtptStstaus5.removeAttribute('hidden');
-                                    }
-                                    else {
-                                        txtptStstaus5.setAttribute('hidden', 'hidden');
-                                        txtptStstaus5.value = "";
-                                    }
-                                }
-                                fn_PTstatus();
-                            </script>
+                                </script>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <hr class="col-10 mx-auto my-2 bg-gradient-mix" />
-
-            </div>
-            <script>
-                function fn_hideAil() {
-                    var div1 = document.getElementById('div_2_ail_1');
-                    var div2 = document.getElementById('div_2_ail_2');
-                    var ail = document.getElementById('<%= cb_ail_yes.ClientID %>');
-                    if (ail.checked) {
-                        div1.removeAttribute('hidden');
-                        div2.removeAttribute('hidden');
-                    } else {
-                        div1.setAttribute('hidden','hidden');
-                        div2.setAttribute('hidden','hidden');
+                <script>
+                    function fn_hideAil() {
+                        var div1 = document.getElementById('div_2_ail_1');
+                        var div2 = document.getElementById('div_2_ail_2');
+                        var ail = document.getElementById('<%= cb_ail_yes.ClientID %>');
+                        if (ail.checked) {
+                            div1.removeAttribute('hidden');
+                            div2.removeAttribute('hidden');
+                        } else {
+                            div1.setAttribute('hidden', 'hidden');
+                            div2.setAttribute('hidden', 'hidden');
+                        }
                     }
-                }
-                fn_hideAil();
-            </script>
+                    fn_hideAil();
+                </script>
+            </div>
 
             <!-- DIV 3 ---------------------------------------------- -->
             <div id="div_3" class="row col-12 mx-auto my-5" runat="server" visible="false">
@@ -907,6 +908,8 @@
                     </div>
                     <script>
                         function fn_radio4() {
+                            fn_anti_add_auto();
+
                             var txt4 = document.getElementById('<%= txt_yes_4.ClientID %>');
                             var rd4 = document.getElementById('<%= rd_yes_4.ClientID %>');
                             if (rd4.checked) {
