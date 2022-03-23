@@ -1068,6 +1068,15 @@ namespace BRH_Plubic.NovelCorona
         protected global::System.Web.UI.HtmlControls.HtmlInputText txtH_VacCovidBook;
 
         /// <summary>
+        /// div_vac control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_vac;
+
+        /// <summary>
         /// date_Vac1 control.
         /// </summary>
         /// <remarks>
@@ -1543,6 +1552,15 @@ namespace BRH_Plubic.NovelCorona
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlButton btn_submit_4;
+
+        /// <summary>
+        /// btnH_submit4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor btnH_submit4;
 
         /// <summary>
         /// div_result control.

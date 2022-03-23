@@ -48,6 +48,24 @@
             }
             document.write(html);
         }
+        function fn_CB_null(val) {
+            var html = '';
+            if (val == '') {
+                html = '<i class="ti-check-box"></i>';
+            } else {
+                html = '<i class="ti-control-stop"></i>';
+            }
+            document.write(html);
+        }
+        function fn_CB_notnull(val) {
+            var html = '';
+            if (val != '') {
+                html = '<i class="ti-check-box"></i>';
+            } else {
+                html = '<i class="ti-control-stop"></i>';
+            }
+            document.write(html);
+        }
     </script>
 </head>
 <body>
@@ -179,6 +197,12 @@
                                 <td>&nbsp;</td>
                                 <td>
                                     <table width="100%" class="textDetail">
+                                        <tr>
+                                            <td>
+                                                <script> fn_CB_null('<%# Eval("ncc_whensick") %>'); </script> ไม่มี อาการเจ็บป่วย &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <script> fn_CB_notnull('<%# Eval("ncc_whensick") %>'); </script> มี อาการเจ็บป่วย
+                                            </td>
+                                        </tr>
                                         <tr>
                                             <td>
                                                 วันที่เริ่มป่วย (วัน/เดือน/ปี) <span class="DotUnder">&nbsp;&nbsp;&nbsp;<script>fn_THdate('<%# Eval("ncc_whensick", "{0:yyyy-MM-dd}") %>');</script>&nbsp;&nbsp;&nbsp;</span>
@@ -473,9 +497,9 @@
                                             var html = '';
                                             if (val == 'no') {
                                                 html = '<i class="ti-check-box"></i> ไม่ใช่ <i class="ti-control-stop"></i> ใช่';
-                                            } else {
+                                            } else if (val == 'yes') {
                                                 html = '<i class="ti-control-stop"></i> ไม่ใช่ <i class="ti-check-box"></i> ใช่';
-                                            }
+                                            } else {}
                                             document.write(html);
                                         }
                                         function fn_RHval(val) {
@@ -488,7 +512,7 @@
                                     </script>
                                     <table width="100%" class="textDetail">
                                         <!-- ------------------------------------------------------------------------------------------- -->
-                                        <tr>
+                                        <%--<tr>
                                             <td width="87%">
                                                 <ul>
                                                   <li>ช่วง 14 วันก่อนป่วยได้อาศัยอยู่หรือเดินทางมาจากพื้นที่ที่มีการระบาด ระบุ
@@ -523,9 +547,9 @@
                                                     }
                                                 </script>
                                             </td>
-                                        </tr>
+                                        </tr>--%>
                                         <!-- ------------------------------------------------------------------------------------------- -->
-                                        <tr>
+                                        <%--<tr>
                                             <td>
                                                 <ul>
                                                   <li>ช่วง 14 วันก่อนป่วยได้เข้ารับการรักษาหรือเยี่ยมผู้ป่วยในโรงพยาบาลของพื้นที่ที่มีการระบาด</li>
@@ -534,9 +558,9 @@
                                             <td>
                                                 <script> fn_CheckBox('<%# Eval("nc_rh_6") %>'); </script>
                                             </td>
-                                        </tr>
+                                        </tr>--%>
                                         <!-- ------------------------------------------------------------------------------------------- -->
-                                        <tr>
+                                        <%--<tr>
                                             <td>
                                                 <ul>
                                                   <li>ช่วง 14 วันก่อนป่วยได้ดูแลหรือสัมผัสใกล้ชิดกับผู้ป่วยอาการคล้ายไข้หวัดใหญ่หรือปอดอักเสบ</li>
@@ -545,7 +569,7 @@
                                             <td>
                                                 <script> fn_CheckBox('<%# Eval("nc_rh_5") %>'); </script>
                                             </td>
-                                        </tr>
+                                        </tr>--%>
                                         <!-- ------------------------------------------------------------------------------------------- -->
                                         <tr>
                                             <td>
@@ -584,7 +608,7 @@
                                             </td>
                                         </tr>
                                         <!-- ------------------------------------------------------------------------------------------- -->
-                                        <tr>
+                                        <%--<tr>
                                             <td>
                                                 <ul>
                                                   <li>เป็นผู้ป่วยอาการทางเดินหายใจหรือปอดอักเสบเป็นกลุ่มก้อน</li>
@@ -593,9 +617,9 @@
                                             <td>
                                                 <script> fn_CheckBox('<%# Eval("nc_rh_9") %>'); </script>
                                             </td>
-                                        </tr>
+                                        </tr>--%>
                                         <!-- ------------------------------------------------------------------------------------------- -->
-                                        <tr>
+                                        <%--<tr>
                                             <td>
                                                 <ul>
                                                   <li>เป็นผู้ป่วยปอดอักเสบรุนแรงหรือเสียชีวิตที่หาสาเหตุไม่ได้</li>
@@ -604,7 +628,7 @@
                                             <td>
                                                 <script> fn_CheckBox('<%# Eval("nc_rh_13") %>'); </script>
                                             </td>
-                                        </tr>
+                                        </tr>--%>
                                         <!-- ------------------------------------------------------------------------------------------- -->
                                         <tr>
                                             <td>
@@ -645,7 +669,7 @@
                                         <tr>
                                             <td>
                                                 <div class="row col-12 mx-auto mt-5">
-                                                    <div class="col-4 mx-auto">
+                                                    <%--<div class="col-4 mx-auto">
                                                         <b>ผู้รายงาน</b> <span class="DotUnder">&nbsp;&nbsp;&nbsp; <%# Eval("ncc_reporter") %> &nbsp;&nbsp;&nbsp;</span>
                                                     </div>
                                                     <div class="col-4 mx-auto">
@@ -653,6 +677,9 @@
                                                     </div>
                                                     <div class="col-4 mx-auto">
                                                         <b>โทรศัพท์</b> <span class="DotUnder">&nbsp;&nbsp;&nbsp; <%# Eval("ncc_reportertel") %> &nbsp;&nbsp;&nbsp;</span>
+                                                    </div>--%>
+                                                    <div class="col-12 mx-auto">
+                                                        <b>ผู้กรอกข้อมูล</b> <span class="DotUnder">&nbsp;&nbsp;&nbsp; <%# Eval("ncc_reporter") %> &nbsp;&nbsp;&nbsp;</span>
                                                     </div>
                                                 </div>
                                             </td>

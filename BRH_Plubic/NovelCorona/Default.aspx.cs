@@ -20,7 +20,7 @@ namespace BRH_Plubic.NovelCorona
         DataTable dt;
         SQLclass cl_Sql = new SQLclass();
 
-        string styleRequired = "border: groove; border-color: red;";
+        string styleRequired = "border: groove; border-color: red; background-color: lightgoldenrodyellow; color: red;";
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -701,7 +701,7 @@ namespace BRH_Plubic.NovelCorona
             {
                 scModal = "fn_AlertModal('Warning','ไม่สามารถบันทึกข้อมูลได้กรุณาติดต่อเจ้าหน้าที่ !!','',0);";
             }
-            else if (result == "Missing")
+            else if (result == "Missing" || result == "MissingVac")
             {
                 scModal = "fn_AlertModal('Info','กรุณากรอกข้อมูลในส่วนที่จำเป็นให้ครบถ้วน !!','',0);";
             }
@@ -1145,6 +1145,10 @@ namespace BRH_Plubic.NovelCorona
             string O2sat = txt_O2sat.Value.ToString().Trim();
             string symptom = "no";
             string respirator = "no";
+            if (cb_sickyes.Checked)
+            {
+                symptom = "yes";
+            }
             if (cb_respirator.Checked)
             {
                 symptom = "yes";
@@ -1239,8 +1243,6 @@ namespace BRH_Plubic.NovelCorona
             //    influenza_date = "'" + DateTime.Parse(date_influenza.Value.ToString()).ToString("yyyy-MM-dd") + "'";
             //}
 
-            if (cb_ail_no.Checked) { next = "yes"; } // ไม่มีอาการเจ็บป่วย >> ไม่ต้องเช็ค >> บังคับกรอกแค่ ATK
-
             string pcr_ar = txtH_pcr.Value.ToString().Trim();
             if (cb_pcr_no.Checked)
             {
@@ -1316,6 +1318,8 @@ namespace BRH_Plubic.NovelCorona
             {
                 user = Session["userid"].ToString();
             }
+
+            if (cb_ail_no.Checked) { next = "yes"; } // ติ๊ก ไม่มี อาการเจ็บป่วย >> ไม่ต้องเช็ค
 
             if (next == "yes")
             {
@@ -1443,6 +1447,9 @@ namespace BRH_Plubic.NovelCorona
                         "\nVALUES('" + user + "', " + id + ", " + whenSick + ", " + firstVisit + ", '" + firstHospital + "', '" + firstHospital_province + "', '" + currenHospital + "', '" + currenHospital_province + "', '" + sick + "', '" + temperature + "', '" + O2sat + "', '" + respirator + "', '" + symptom_1 + "', '" + symptom_2 + "', '" + symptom_3 + "', '" + symptom_4 + "', '" + symptom_5 + "', '" + symptom_6 + "', '" + symptom_7 + "', '" + symptom_8 + "', '" + symptom_9 + "', '" + symptom_10 + "', '" + symptom_11 + "', '" + symptom_11_location + "', '" + symptomOther + "', '" + xray + "', " + xrayDate + ", '" + xrayResult + "', " + cbc_date + ", '" + cbc_hb + "', '" + cbc_hct + "', '" + cbc_wbc + "', '" + pc_x + "', '" + pc_n + "', '" + pc_l + "', '" + pc_al + "', '" + pc_mn + "', '" + influenza_test + "', '" + influenza + "', '" + flu_A + "', '" + flu_B + "', '" + influenza_type + "', " + influenza_date + ", '" + pcr_ar + "', '" + antibody_ar + "', '" + opd + "', '" + admit + "', " + admit_date + ", '" + diagnosis + "', '" + antiviral + "', " + antiviral_date + ", '" + anti_re + "','" + anti_fa + "','" + anti_lori + "','" + anti_da + "','" + anti_ri + "','" + anti_chhy + "','" + anti_other + "', '" + pt_status + "', '" + pt_status_4 + "', '" + pt_status_5 + "'); ";
                 }
 
+                string reporter = txt_fname.Value.ToString().Trim() + " " + txt_lname.Value.ToString().Trim();
+                sql += "\nupdate novelcorona_clinic set ncc_reporter='" + reporter + "'; "; // ใส่ชื่อลูกค้าเป้นคนกรอกข้อมูล
+
                 if (cl_Sql.Modify(sql))
                 {
                     string staffcheck = "no";
@@ -1454,6 +1461,8 @@ namespace BRH_Plubic.NovelCorona
                             staffcheck = "yes";
                         }
                     }
+                    staffcheck = "yes"; // ผ่านไปเลย พยาบาลไม่ต้องเช็คอีก
+
                     sql = "update novelcorona set nc_staffcheck = '" + staffcheck + "' where nc_id = '" + id + "'; ";
                     if (cl_Sql.Modify(sql))
                     {
@@ -1496,8 +1505,6 @@ namespace BRH_Plubic.NovelCorona
 
             string save = "yes";
 
-            // RH = Risk History ประวัติเสี่ยง
-            // -----------------------------------------------------------------------
             string RH_1 = "";
             //if (rd_no_1.Checked)
             //{
@@ -1587,123 +1594,123 @@ namespace BRH_Plubic.NovelCorona
             //}
             // -----------------------------------------------------------------------
             string RH_4 = "";
-            if (rd_no_4.Checked)
-            {
-                RH_4 = rd_no_4.Value.ToString();
-            }
-            else
-            {
-                if (rd_yes_4.Checked)
-                {
-                    RH_4 = "";
-                    string txt_4 = txt_yes_4.Value.ToString().Trim();
-                    if (checkValueNull(txt_4))
-                    {
-                        save = "no";
-                        txt_yes_4.Attributes.Add("style", styleRequired);
-                    }
-                    else
-                    {
-                        RH_4 = txt_4;
-                        txt_yes_4.Attributes.Remove("style");
-                    }
-                }
-            }
-            if (checkValueNull(RH_4))
-            {
-                save = "no";
-                div_rd_4.Attributes.Add("style", styleRequired);
-            }
-            else
-            {
-                div_rd_4.Attributes.Remove("style");
-            }
+            //if (rd_no_4.Checked)
+            //{
+            //    RH_4 = rd_no_4.Value.ToString();
+            //}
+            //else
+            //{
+            //    if (rd_yes_4.Checked)
+            //    {
+            //        RH_4 = "";
+            //        string txt_4 = txt_yes_4.Value.ToString().Trim();
+            //        if (checkValueNull(txt_4))
+            //        {
+            //            save = "no";
+            //            txt_yes_4.Attributes.Add("style", styleRequired);
+            //        }
+            //        else
+            //        {
+            //            RH_4 = txt_4;
+            //            txt_yes_4.Attributes.Remove("style");
+            //        }
+            //    }
+            //}
+            //if (checkValueNull(RH_4))
+            //{
+            //    save = "no";
+            //    div_rd_4.Attributes.Add("style", styleRequired);
+            //}
+            //else
+            //{
+            //    div_rd_4.Attributes.Remove("style");
+            //}
             // -----------------------------------------------------------------------
             string RH_travel_date = "";
             string RH_travel_airline = "";
             string RH_travel_flight = "";
             string RH_travel_seatnumber = "";
-            if (date_travel.Value.ToString() != "")
-            {
-                RH_travel_date = DateTime.Parse(date_travel.Value.ToString()).ToString("yyyy-MM-dd");
+            //if (date_travel.Value.ToString() != "")
+            //{
+            //    RH_travel_date = DateTime.Parse(date_travel.Value.ToString()).ToString("yyyy-MM-dd");
 
-                RH_travel_airline = txt_travel_airline.Value.ToString().Trim();
-                if (checkValueNull(RH_travel_airline))
-                {
-                    save = "no";
-                    txt_travel_airline.Attributes.Add("style", styleRequired);
-                }
-                else
-                {
-                    txt_travel_airline.Attributes.Remove("style");
-                }
+            //    RH_travel_airline = txt_travel_airline.Value.ToString().Trim();
+            //    if (checkValueNull(RH_travel_airline))
+            //    {
+            //        save = "no";
+            //        txt_travel_airline.Attributes.Add("style", styleRequired);
+            //    }
+            //    else
+            //    {
+            //        txt_travel_airline.Attributes.Remove("style");
+            //    }
 
-                RH_travel_flight = txt_travel_flight.Value.ToString().Trim();
-                if (checkValueNull(RH_travel_flight))
-                {
-                    save = "no";
-                    txt_travel_flight.Attributes.Add("style", styleRequired);
-                }
-                else
-                {
-                    txt_travel_flight.Attributes.Remove("style");
-                }
+            //    RH_travel_flight = txt_travel_flight.Value.ToString().Trim();
+            //    if (checkValueNull(RH_travel_flight))
+            //    {
+            //        save = "no";
+            //        txt_travel_flight.Attributes.Add("style", styleRequired);
+            //    }
+            //    else
+            //    {
+            //        txt_travel_flight.Attributes.Remove("style");
+            //    }
 
-                RH_travel_seatnumber = txt_travel_seatnumber.Value.ToString().Trim();
-                if (checkValueNull(RH_travel_seatnumber))
-                {
-                    save = "no";
-                    txt_travel_seatnumber.Attributes.Add("style", styleRequired);
-                }
-                else
-                {
-                    txt_travel_seatnumber.Attributes.Remove("style");
-                }
-            }
+            //    RH_travel_seatnumber = txt_travel_seatnumber.Value.ToString().Trim();
+            //    if (checkValueNull(RH_travel_seatnumber))
+            //    {
+            //        save = "no";
+            //        txt_travel_seatnumber.Attributes.Add("style", styleRequired);
+            //    }
+            //    else
+            //    {
+            //        txt_travel_seatnumber.Attributes.Remove("style");
+            //    }
+            //}
             // -----------------------------------------------------------------------
             string RH_5 = "";
-            if (rd_no_5.Checked)
-            {
-                RH_5 = rd_no_5.Value.ToString();
-            }
-            else
-            {
-                if (rd_yes_5.Checked)
-                {
-                    RH_5 = rd_yes_5.Value.ToString();
-                }
-            }
-            if (checkValueNull(RH_5))
-            {
-                save = "no";
-                div_rd_5.Attributes.Add("style", styleRequired);
-            }
-            else
-            {
-                div_rd_5.Attributes.Remove("style");
-            }
+            //if (rd_no_5.Checked)
+            //{
+            //    RH_5 = rd_no_5.Value.ToString();
+            //}
+            //else
+            //{
+            //    if (rd_yes_5.Checked)
+            //    {
+            //        RH_5 = rd_yes_5.Value.ToString();
+            //    }
+            //}
+            //if (checkValueNull(RH_5))
+            //{
+            //    save = "no";
+            //    div_rd_5.Attributes.Add("style", styleRequired);
+            //}
+            //else
+            //{
+            //    div_rd_5.Attributes.Remove("style");
+            //}
             // -----------------------------------------------------------------------
             string RH_6 = "";
-            if (rd_no_6.Checked)
-            {
-                RH_6 = rd_no_6.Value.ToString();
-            }
-            else
-            {
-                if (rd_yes_6.Checked)
-                {
-                    RH_6 = rd_yes_6.Value.ToString();
-                }
-            }
-            if (checkValueNull(RH_6))
-            {
-                save = "no";
-                div_rd_6.Attributes.Add("style", styleRequired);
-            }
-            else
-            {
-                div_rd_6.Attributes.Remove("style");
-            }
+            //if (rd_no_6.Checked)
+            //{
+            //    RH_6 = rd_no_6.Value.ToString();
+            //}
+            //else
+            //{
+            //    if (rd_yes_6.Checked)
+            //    {
+            //        RH_6 = rd_yes_6.Value.ToString();
+            //    }
+            //}
+            //if (checkValueNull(RH_6))
+            //{
+            //    save = "no";
+            //    div_rd_6.Attributes.Add("style", styleRequired);
+            //}
+            //else
+            //{
+            //    div_rd_6.Attributes.Remove("style");
+            //}
             // -----------------------------------------------------------------------
             string RH_7 = "";
             //if (rd_no_7.Checked)
@@ -1750,26 +1757,26 @@ namespace BRH_Plubic.NovelCorona
             }
             // -----------------------------------------------------------------------
             string RH_9 = "";
-            if (rd_no_9.Checked)
-            {
-                RH_9 = rd_no_9.Value.ToString();
-            }
-            else
-            {
-                if (rd_yes_9.Checked)
-                {
-                    RH_9 = rd_yes_9.Value.ToString();
-                }
-            }
-            if (checkValueNull(RH_9))
-            {
-                save = "no";
-                div_rd_9.Attributes.Add("style", styleRequired);
-            }
-            else
-            {
-                div_rd_9.Attributes.Remove("style");
-            }
+            //if (rd_no_9.Checked)
+            //{
+            //    RH_9 = rd_no_9.Value.ToString();
+            //}
+            //else
+            //{
+            //    if (rd_yes_9.Checked)
+            //    {
+            //        RH_9 = rd_yes_9.Value.ToString();
+            //    }
+            //}
+            //if (checkValueNull(RH_9))
+            //{
+            //    save = "no";
+            //    div_rd_9.Attributes.Add("style", styleRequired);
+            //}
+            //else
+            //{
+            //    div_rd_9.Attributes.Remove("style");
+            //}
             // -----------------------------------------------------------------------
             string RH_10 = "";
             if (rd_no_10.Checked)
@@ -1860,46 +1867,95 @@ namespace BRH_Plubic.NovelCorona
             }
             // -----------------------------------------------------------------------
             string RH_13 = "";
-            if (rd_no_13.Checked)
-            {
-                RH_13 = rd_no_13.Value.ToString();
-            }
-            else
-            {
-                if (rd_yes_13.Checked)
-                {
-                    RH_13 = rd_yes_13.Value.ToString();
-                }
-            }
-            if (checkValueNull(RH_13))
-            {
-                save = "no";
-                div_rd_13.Attributes.Add("style", styleRequired);
-            }
-            else
-            {
-                div_rd_13.Attributes.Remove("style");
-            }
+            //if (rd_no_13.Checked)
+            //{
+            //    RH_13 = rd_no_13.Value.ToString();
+            //}
+            //else
+            //{
+            //    if (rd_yes_13.Checked)
+            //    {
+            //        RH_13 = rd_yes_13.Value.ToString();
+            //    }
+            //}
+            //if (checkValueNull(RH_13))
+            //{
+            //    save = "no";
+            //    div_rd_13.Attributes.Add("style", styleRequired);
+            //}
+            //else
+            //{
+            //    div_rd_13.Attributes.Remove("style");
+            //}
             // -----------------------------------------------------------------------
 
-            string VacCovid = txtH_VacCovid.Value.ToString().Trim();
-            string VacCovidBook = txtH_VacCovidBook.Value.ToString().Trim();
+            string risk = save;
 
+            string VacCovid = rd_havebeenVac.Value.ToString();
+            if (rd_neverVac.Checked)
+            {
+                VacCovid = rd_neverVac.Value.ToString();
+            }
+            string VacCovidBook = rd_bookVac_yes.Value.ToString();
+            if (rd_bookVac_no.Checked)
+            {
+                VacCovidBook = rd_bookVac_no.Value.ToString();
+            }
+
+            string vac = "no";
+            
             string VacCovid1_date = date_Vac1.Value.ToString();
             string VacCovid1_name = txt_nameVac1.Value.ToString().Trim();
             string VacCovid1_location = txt_locationVac1.Value.ToString().Trim();
+            if (VacCovid1_date != "" && VacCovid1_name != "")
+            {
+                vac = "yes";
+            }
 
             string VacCovid2_date = date_Vac_2.Value.ToString();
             string VacCovid2_name = txt_nameVac_2.Value.ToString().Trim();
             string VacCovid2_location = txt_locationVac_2.Value.ToString().Trim();
+            if (VacCovid2_date != "" && VacCovid2_name != "")
+            {
+                vac = "yes";
+            }
 
             string VacCovid3_date = date_Vac_3.Value.ToString();
             string VacCovid3_name = txt_nameVac_3.Value.ToString().Trim();
             string VacCovid3_location = txt_locationVac_3.Value.ToString().Trim();
+            if (VacCovid3_date != "" && VacCovid3_name != "")
+            {
+                vac = "yes";
+            }
 
             string VacCovid4_date = date_Vac_4.Value.ToString();
             string VacCovid4_name = txt_nameVac_4.Value.ToString().Trim();
             string VacCovid4_location = txt_locationVac_4.Value.ToString().Trim();
+            if (VacCovid4_date != "" && VacCovid4_name != "")
+            {
+                vac = "yes";
+            }
+
+            if (VacCovid == "เคยได้รับ")
+            {
+                if (vac == "yes")
+                {
+                    div_vac.Attributes.Remove("style");
+                }
+                else
+                {
+                    div_vac.Attributes.Add("style", styleRequired);
+                }
+            }
+            else
+            {
+                vac = "yes";
+                if (risk == "no")
+                {
+                    save = "yes";
+                }
+                div_vac.Attributes.Remove("style");
+            }
 
             string RH_Other = txt_other.Value.ToString().Trim();
 
@@ -2007,9 +2063,23 @@ namespace BRH_Plubic.NovelCorona
                             lbl_dateadd.Text = ncDate;
                         }
 
-                        div_3.Visible = false;
-                        btn_submit_3.Visible = false;
-                        result = "Success";
+                        if (vac == "yes")
+                        {
+                            if (risk == "yes")
+                            {
+                                div_3.Visible = false;
+                                btn_submit_3.Visible = false;
+                                result = "Success";
+                            }
+                            else
+                            {
+                                result = "Missing";
+                            }
+                        }
+                        else
+                        {
+                            result = "MissingVac";
+                        }
                     }
                     else
                     {
@@ -2023,7 +2093,14 @@ namespace BRH_Plubic.NovelCorona
             }
             else
             {
-                result = "Missing";
+                if (vac == "no")
+                {
+                    result = "MissingVac";
+                }
+                else
+                {
+                    result = "Missing";
+                }
             }
 
             return result;
@@ -2082,6 +2159,10 @@ namespace BRH_Plubic.NovelCorona
                     else if (result == "Missing")
                     {
                         scModal = "fn_AlertModal('Info','กรุณากรอกข้อมูลประวัติเสี่ยง ในส่วนที่จำเป็นให้ครบถ้วน !!','',0);";
+                    }
+                    else if (result == "MissingVac")
+                    {
+                        scModal = "fn_AlertModal('Info','กรุณากรอกข้อมูลในส่วนข้อ 3 และ 4 ที่จำเป็นให้ครบถ้วน !!','',0);";
                     }
                     else if (result == "KeyExpire")
                     {
