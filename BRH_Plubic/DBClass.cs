@@ -230,28 +230,38 @@ public class SQLclass
 
     public int Date2YearOld(DateTime DOB)
     {
-        int sesult = 0;
+        int result = 0;
 
         int YearNow = DateTime.Now.Year;
         int MonthNow = DateTime.Now.Month;
         int DayNow = DateTime.Now.Day;
 
-        sesult = YearNow - DOB.Year;
+        result = YearNow - DOB.Year;
 
         if (MonthNow < DOB.Month)
         {
-            sesult = sesult - 1;
+            result = result - 1;
         }
         else if (MonthNow == DOB.Month)
         {
             if (DayNow < DOB.Day)
             {
-                sesult = sesult - 1;
+                result = result - 1;
             }
         }
         else { }
 
-        return sesult;
+        return result;
+    }
+
+    public int Year2YearOld(DateTime DOB)
+    {
+        int result = 0;
+
+        int YearNow = DateTime.Now.Year;
+        result = YearNow - DOB.Year;
+
+        return result;
     }
 
     public string TimeAgo(DateTime UpdateDate)
@@ -383,5 +393,5 @@ public class SQLclass
         }
 
         return bl;
-    }
+    } 
 }

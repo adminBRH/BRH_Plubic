@@ -590,8 +590,8 @@ namespace BRH_Plubic.CHK
                     string balanceLess = "0";
                     string balanceMore = "0";
 
-                    sql = "select ifnull(sum(if(convert(bd.bd_value,int) <= bs.bs_age_lessequal,1,0)),0) as 'balanceLess' " +
-                        "\n,ifnull(sum(if (convert(bd.bd_value, int) >= bs.bs_age_moreequal,1,0)),0) as 'balanceMore' " +
+                    sql = "select ifnull(sum(if(convert(bd.bd_value,decimal(11,0)) <= bs.bs_age_lessequal,1,0)),0) as 'balanceLess' " +
+                        "\n,ifnull(sum(if (convert(bd.bd_value, decimal(11,0)) >= bs.bs_age_moreequal,1,0)),0) as 'balanceMore' " +
                         "\nfrom bookingrecord as br " +
                         "\nleft join bookingslot as bs on br.br_bsid = bs.bs_id " +
                         "\nleft join bookingdetail as bd on br.br_id = bd.bd_brid " +
@@ -610,8 +610,15 @@ namespace BRH_Plubic.CHK
 
                         if (dateSync_DOB.Value.ToString() != "")
                         {
-                            DateTime DOB = DateTime.Parse(dateSync_DOB.Value.ToString());
-                            int Age = cl_Sql.Date2YearOld(DOB);
+                            int Age = 0;
+                            if (ageSync.Value == "")
+                            {
+                                Age = cl_Sql.Date2YearOld(DateTime.Parse(dateSync_DOB.Value.ToString()));
+                            }
+                            else
+                            {
+                                Age = cl_Sql.Year2YearOld(DateTime.Parse(dateSync_DOB.Value.ToString()));
+                            }
 
                             if (Age <= int.Parse(AgeLess))
                             {
@@ -1023,6 +1030,7 @@ namespace BRH_Plubic.CHK
             if (dt.Rows.Count > 0)
             {
                 string fullname = dt.Rows[0]["ce_name_th"].ToString();
+                string ce_age = dt.Rows[0]["ce_age"].ToString();
                 string DOB = "";
                 if (dt.Rows[0]["ce_dob"].ToString() != "")
                 {
@@ -1051,7 +1059,24 @@ namespace BRH_Plubic.CHK
                     dateSync_DOB.Value = DOB;
                     if (DOB != "")
                     {
-                        lbl_age.Text = "อายุ " + cl_Sql.Date2YearOld(DateTime.Parse(DOB)).ToString() + " ปี";
+                        string age = "0";
+                        if (ce_age != "")
+                        {
+                            age = cl_Sql.Year2YearOld(DateTime.Parse(DOB)).ToString();
+                            ageSync.Value = age;
+
+                            div_DOB_title.Visible = false;
+                            dateSync_DOB.Attributes.Add("hidden", "hidden");
+                        }
+                        else
+                        {
+                            age = cl_Sql.Date2YearOld(DateTime.Parse(DOB)).ToString();
+                            ageSync.Value = "";
+
+                            div_DOB_title.Visible = true;
+                            dateSync_DOB.Attributes.Remove("hidden");
+                        }
+                        lbl_age.Text = "อายุ " + age + " ปี";
                     }
 
                     if (program != "")
@@ -1327,7 +1352,15 @@ namespace BRH_Plubic.CHK
                                                 {
                                                     //string Sync_DOB = DateTime.Parse(dateSync_DOB.Value.ToString()).ToString("yyyy-MM-dd");
                                                     //sqlSync = sqlSync + "insert into bookingdetail(bd_brid, bd_bfiid, bd_value, bd_column) values(" + replace + ", 0, '" + Sync_DOB + "', 'วันเกิด'); ";
-                                                    int Age = cl_Sql.Date2YearOld(DateTime.Parse(dateSync_DOB.Value.ToString()));
+                                                    int Age = 0;
+                                                    if (ageSync.Value == "")
+                                                    {
+                                                        Age = cl_Sql.Date2YearOld(DateTime.Parse(dateSync_DOB.Value.ToString()));
+                                                    }
+                                                    else
+                                                    {
+                                                        Age = cl_Sql.Year2YearOld(DateTime.Parse(dateSync_DOB.Value.ToString()));
+                                                    }
                                                     sqlSync = sqlSync + "insert into bookingdetail(bd_brid, bd_bfiid, bd_value, bd_column) values(" + replace + ", 0, '" + Age + "', 'อายุ'); ";
                                                 }
 

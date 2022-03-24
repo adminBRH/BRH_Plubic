@@ -43,13 +43,11 @@ namespace BRH_Plubic.AssetControl
 
         public void DDStatus()
         {
-            sql = "select distinct asr_status from asset_repair ";
+            sql = "select distinct asr_status from asset_repair where asr_status != ''; ";
             dt = new DataTable();
             dt = cl_Sql.select(sql);
             if (dt.Rows.Count > 0)
-            {
-
-            }
+            { }
 
             dd_status.DataSource = dt;
             dd_status.DataTextField = "asr_status";

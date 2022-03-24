@@ -996,7 +996,7 @@ namespace BRH_Plubic.NovelCorona
                     int i = 0;
                     while (i == 0)
                     {
-                        sql = "select * from novelcorona where nc_key = '" + key + "'; ";
+                        sql = "select * from novelcorona where convert(nc_datetime,date)=current_date and nc_key = '" + key + "'; ";
                         dt = new DataTable();
                         dt = cl_Sql.select(sql);
                         if (dt.Rows.Count > 0)

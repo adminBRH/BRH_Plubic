@@ -231,6 +231,15 @@ namespace BRH_Plubic.CHK
         protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl dateSync_DOB;
 
         /// <summary>
+        /// ageSync control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl ageSync;
+
+        /// <summary>
         /// lbl_age control.
         /// </summary>
         /// <remarks>

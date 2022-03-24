@@ -30,7 +30,7 @@ namespace BRH_Plubic.NovelCorona
                     {
                         DateSelect();
                         string DateNow = DD_Date.SelectedValue.ToString();
-                        Report(DateNow,"no");
+                        Report(DateNow,"no","");
                     }
                 }
                 else
@@ -46,14 +46,53 @@ namespace BRH_Plubic.NovelCorona
 
         protected void btn_submit_ServerClick(object sender, EventArgs e)
         {
-            string id = txt_docno.Value.ToString().Trim();
-            sql = "select * from novelcorona where nc_id='" + id + "'; ";
-            dt = new DataTable();
-            dt = cl_Sql.select(sql);
-            if (dt.Rows.Count > 0)
+            if (rd_name.Checked)
             {
-                Response.Redirect("Default.aspx?nc=" + id);
+                if (txt_name.Value != "")
+                {
+                    txt_docno.Value = "";
+
+                    string name = txt_name.Value.ToString().Trim();
+                    Report("","no", name);
+
+                    txt_docno.Attributes.Add("hidden","hidden");
+                    rd_docno.Checked = false;
+                    rd_name.Checked = true;
+                    txt_name.Value = name;
+                    txt_name.Attributes.Remove("hidden");
+                    btn_clear.Visible = true;
+                }
             }
+            else
+            {
+                string id = txt_docno.Value.ToString().Trim();
+                rd_name.Checked = false;
+                rd_docno.Checked = true;
+                txt_name.Value = "";
+                txt_name.Attributes.Add("hidden","hidden");
+                txt_docno.Value = id;
+                txt_docno.Attributes.Remove("hidden");
+                sql = "select * from novelcorona where nc_id='" + id + "'; ";
+                dt = new DataTable();
+                dt = cl_Sql.select(sql);
+                if (dt.Rows.Count > 0)
+                {
+                    Response.Redirect("Default.aspx?nc=" + id);
+                }
+            }
+        }
+
+        protected void btn_clear_ServerClick(object sender, EventArgs e)
+        {
+            string DateNow = DD_Date.SelectedValue.ToString();
+            Report(DateNow, "no", "");
+            btn_clear.Visible = false;
+            rd_docno.Checked = true;
+            txt_docno.Attributes.Remove("hidden");
+            txt_docno.Value = "";
+            rd_name.Checked = false;
+            txt_name.Attributes.Add("hidden","hidden");
+            txt_name.Value = "";
         }
 
         protected void DateSelect()
@@ -72,9 +111,12 @@ namespace BRH_Plubic.NovelCorona
             DD_Date.DataBind();
         }
 
-        protected void Report(string date, string status)
+        protected void Report(string date, string status, string name)
         {
-            date = DateTime.Parse(date).ToString("yyyy-MM-dd");
+            if (date != "")
+            {
+                date = DateTime.Parse(date).ToString("yyyy-MM-dd");
+            }
 
             string wh = "";
             if (status == "print")
@@ -97,7 +139,8 @@ namespace BRH_Plubic.NovelCorona
             sql = "select * from novelcorona as nc " +
                 "\nleft join novelcorona_clinic as ncc on ncc.ncc_ncid=nc.nc_id " +
                 "\nwhere nc_active = 'yes' " +
-                "\nand convert(nc_datetime, date) = '" + date + "' " + wh +
+                "\nand concat(nc_fname,' ',nc_lname) like '%" + name + "%' " +
+                "\nand convert(nc_datetime, date) like '%" + date + "%' " + wh +
                 "\norder by nc_staffcheck, nc_id desc ";
             dt = new DataTable();
             dt = cl_Sql.select(sql);
@@ -203,7 +246,8 @@ namespace BRH_Plubic.NovelCorona
         {
             string DateNow = DD_Date.SelectedValue.ToString();
             string status = dd_status.SelectedValue.ToString();
-            Report(DateNow, status);
+            string name = txt_name.Value.ToString().Trim();
+            Report(DateNow, status, name);
         }
 
         protected void DD_Date_SelectedIndexChanged(object sender, EventArgs e)

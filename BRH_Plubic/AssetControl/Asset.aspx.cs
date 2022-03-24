@@ -77,14 +77,15 @@ namespace BRH_Plubic.AssetControl
 
         protected void ListAsset(string search, string searchby, string status, string limit)
         {
-            sql = "select *, null as 'asd_timeago', null as 'asd_performance', null as 'asd_performance_ar' " +
+            sql = "select ad.*,ds.*,ac.*,at.*,st.* " +
+                "\n,null as 'asd_timeago', null as 'asd_performance', null as 'asd_performance_ar' " +
                 "\n,if(ar.asr_status is null,'Finish',ar.asr_status) as 'asr_status', ar.asr_id " +
                 "\nfrom asset_details as ad  " +
                 "\nleft join department_service as ds on ds.ds_id = ad.asd_dept " +
                 "\nleft join asset_cate as ac on ac.asc_id = ad.asd_cate " +
                 "\nleft join asset_type as at on at.ast_id = ad.asd_type " +
                 "\nleft join asset_status as st on st.ass_id = ad.asd_status " +
-                "\nleft join asset_repair as ar on ar.asr_asdid = ad.asd_id " +
+                "\nleft join (select * from asset_repair where asr_status != 'Finish') as ar on ar.asr_asdid = ad.asd_id " +
                 "\nwhere asd_status like '%" + status + "%' ";
             if (searchby == "code")
             {

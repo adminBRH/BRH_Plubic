@@ -95,6 +95,7 @@
                         </div>
                         <div id="div_DOB_detail" class="col-8 mx-auto my-2 text-left" runat="server" visible="false">
                             <input type="date" id="dateSync_DOB" value="" disabled="disabled" runat="server" />
+                            <input type="number" id="ageSync" value="" runat="server" hidden="hidden" />
                             <asp:Label ID="lbl_age" Text="" Font-Size="Large" runat="server"></asp:Label>
                         </div>
                         <div id="div_vaccine" class="col-12 mx-auto text-center" runat="server" visible="false" style="font-size: x-large;">

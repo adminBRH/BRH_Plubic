@@ -18,6 +18,11 @@
     .DeleteDetail:hover{
         background-color: mediumvioletred;
     }
+    input[type=radio]{
+        border: 0px;
+        width: 2em;
+        height: 2em;
+    }
 </style>
 <script>
     function fn_status(val) {
@@ -46,8 +51,15 @@
                 <div class="col-12 mx-auto mt-2 text-center h1">
                     ค้นหารายงานผู้ป่วยโรคปอดอักเสบ<br />จากเชื้อไวรัสโคโรนาสายพันธุ์ใหม่ 2019
                 </div>
+                <div class="col-12 mx-auto my-auto text-left h4">
+                    ค้นหาจาก &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="radio" id="rd_docno" name="rd_search" runat="server" onclick="fn_typeSearch()" checked /> เลขที่เอกสาร &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="radio" id="rd_name" name="rd_search" runat="server" onclick="fn_typeSearch()" /> ชื่อ นามสกุล &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button id="btn_clear" class="btn btn-danger" onserverclick="btn_clear_ServerClick" runat="server" visible="false">ยกเลิกการค้นหา</button>
+                </div>
                 <div class="col-8 mx-auto my-auto text-center">
-                    <input type="text" id="txt_docno" class="form-control" value="" placeholder="กรอกหมายเลข" runat="server" />
+                    <input type="text" id="txt_docno" class="form-control" value="" placeholder="กรอกหมายเลขเอกสาร" runat="server" />
+                    <input type="text" id="txt_name" class="form-control" value="" placeholder="กรอกชื่อหรือนามสกุล" runat="server" hidden="hidden" />
                 </div>
                 <div class="col-4 mx-auto my-auto text-left">
                     <button id="btn_submit" class="btn btn-outline-light" onserverclick="btn_submit_ServerClick" runat="server">Search <i class="ti-search ti-2x"></i></button>
@@ -58,6 +70,22 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function fn_typeSearch() {
+            var rdname = document.getElementById('<%= rd_name.ClientID %>');
+            var txtdocno = document.getElementById('<%= txt_docno.ClientID %>');
+            var txtname = document.getElementById('<%= txt_name.ClientID %>');
+            if (rdname.checked) {
+                txtdocno.setAttribute('hidden', 'hidden');
+                txtname.removeAttribute('hidden');
+            } else {
+                txtdocno.removeAttribute('hidden');
+                txtname.setAttribute('hidden', 'hidden'); 
+            }
+        }
+        fn_typeSearch();
+    </script>
 
     <div class="col-10 mx-auto mt-5 text-right">
         <button id="btn_Export" class="btnShadow btn-outline-primary" runat="server" onserverclick="btn_Export_ServerClick" style="font-size: xx-large; border-radius: 10px;">Export <i class="ti-export"></i></button>
@@ -116,8 +144,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card col-1 mx-auto my-1 DeleteDetail text-center">
-                            <a id="btn_del" class="mx-auto my-auto" onclick="fn_del('<%# Eval("nc_id") %>')"><i class="ti ti-2x ti-trash"></i></a>
+                        <div class="card col-1 mx-auto my-1 DeleteDetail text-center" onclick="fn_del('<%# Eval("nc_id") %>')">
+                            <a id="btn_del" class="mx-auto my-auto"><i class="ti ti-2x ti-trash"></i></a>
                         </div>
                     </div>
                 </ItemTemplate>
