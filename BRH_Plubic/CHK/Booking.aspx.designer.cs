@@ -69,6 +69,24 @@ namespace BRH_Plubic.CHK
         protected global::System.Web.UI.WebControls.Calendar cld_booking;
 
         /// <summary>
+        /// div_bookdate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_bookdate;
+
+        /// <summary>
+        /// lbl_bookDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_bookDate;
+
+        /// <summary>
         /// txtH_bookdate control.
         /// </summary>
         /// <remarks>

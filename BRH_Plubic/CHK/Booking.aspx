@@ -44,13 +44,16 @@
                         <NextPrevStyle Font-Bold="True" Font-Size="X-Large" ForeColor="White"></NextPrevStyle>
                         <OtherMonthDayStyle ForeColor="#999999" />
                     </asp:Calendar>
+                    <div id="div_bookdate" class="col-12 mx-auto my-auto text-center" runat="server" style="font-size: x-large; color: cornflowerblue;">
+                        วันที่คุณเลือกไว้คือ : <asp:Label ID="lbl_bookDate" Text="" runat="server"></asp:Label>
+                    </div>
                     <div class="col-6 mx-auto" hidden="hidden">
-                        <input id="txtH_bookdate" value="" runat="server" />
-                        <input id="txtH_bookTimeStart" value="" runat="server" />
-                        <input id="txtH_bookTimeEnd" value="" runat="server" />
-                        <input id="txtH_TimeSlot" value="" runat="server" />
-                        <input id="txtH_booktime" value="" runat="server" />
-                        <input id="txtH_booktimeID" value="" runat="server" />
+                        <input type="text" id="txtH_bookdate" value="" runat="server" />
+                        <input type="text" id="txtH_bookTimeStart" value="" runat="server" />
+                        <input type="text" id="txtH_bookTimeEnd" value="" runat="server" />
+                        <input type="text" id="txtH_TimeSlot" value="" runat="server" />
+                        <input type="text" id="txtH_booktime" value="" runat="server" />
+                        <input type="text" id="txtH_booktimeID" value="" runat="server" />
                     </div>
                     <div class="row col-11 mx-auto">
                         <!-- ================================= TimeSlot ==================================== -->

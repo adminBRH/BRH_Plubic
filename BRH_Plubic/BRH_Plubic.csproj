@@ -405,6 +405,7 @@
     <Content Include="docs\index.html" />
     <Content Include="docs\js\app.js" />
     <Content Include="docs\js\signature_pad.umd.js" />
+    <Content Include="DragDrop.aspx" />
     <Content Include="EmailAuto.aspx" />
     <Content Include="Employee\Default.aspx" />
     <Content Include="Evaluate360\Default.aspx" />
@@ -1498,6 +1499,13 @@
     </Compile>
     <Compile Include="DentalBook\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DragDrop.aspx.cs">
+      <DependentUpon>DragDrop.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DragDrop.aspx.designer.cs">
+      <DependentUpon>DragDrop.aspx</DependentUpon>
     </Compile>
     <Compile Include="EmailAuto.aspx.cs">
       <DependentUpon>EmailAuto.aspx</DependentUpon>

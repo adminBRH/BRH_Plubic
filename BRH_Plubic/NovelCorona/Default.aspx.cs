@@ -907,15 +907,15 @@ namespace BRH_Plubic.NovelCorona
             }
 
             string adr_moo = txt_adr_moo.Value.ToString().Trim();
-            if (checkValueNull(adr_moo))
-            {
-                save = "no";
-                txt_adr_moo.Attributes.Add("style", styleRequired);
-            }
-            else
-            {
-                txt_adr_moo.Attributes.Remove("style");
-            }
+            //if (checkValueNull(adr_moo))
+            //{
+            //    save = "no";
+            //    txt_adr_moo.Attributes.Add("style", styleRequired);
+            //}
+            //else
+            //{
+            //    txt_adr_moo.Attributes.Remove("style");
+            //}
 
             string adr_baan = txt_adr_baan.Value.ToString().Trim();
             string adr_alley = txt_adr_alley.Value.ToString().Trim();
