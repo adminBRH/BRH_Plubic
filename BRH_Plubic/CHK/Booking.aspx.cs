@@ -26,6 +26,8 @@ namespace BRH_Plubic.CHK
 
         MakeControler MConT = new MakeControler();
 
+        string CheckCode = "";
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Request.QueryString["key"] == null || Request.QueryString["slot"] == null)
@@ -445,9 +447,11 @@ namespace BRH_Plubic.CHK
 
                 if (LockSlot == "no")
                 {
-                    //if (e.Day.IsSelected)
-                    if (E_day == cldSelectDate)
+                    //CheckCode += E_day + " == " + cldSelectDate; // ------------------------------- CheckCode
+                    if (e.Day.IsSelected)
+                    //if (E_day == cldSelectDate)
                     {
+                        //CheckCode += " Yes <br>";
                         e.Cell.Text = e.Day.DayNumberText;
                         string dateSelect = e.Day.Date.ToString("yyyy-MM-dd");
                         txtH_bookdate.Value = dateSelect;
@@ -455,7 +459,7 @@ namespace BRH_Plubic.CHK
                         txtH_bookTimeStart.Value = dateSelect + " " + timeStart;
                         string timeEnd = DateEnd.ToString("HH:mm:ss");
                         txtH_bookTimeEnd.Value = dateSelect + " " + timeEnd;
-
+                        //CheckCode += "St:" + txtH_bookTimeStart.Value + "<br>En:" + txtH_bookTimeEnd.Value + "<br>";
                         txtH_TimeSlot.Value = "yes";
 
                         if (splittimeUnit == "manual")
@@ -468,34 +472,39 @@ namespace BRH_Plubic.CHK
                         }
                         else
                         {
-                            if (splittime == "0")
+                            
+                        }
+
+                        //-----------------------------------
+                        if (splittime == "0")
+                        {
+                            txtH_TimeSlot.Value = "no";
+                            //CheckCode += "e.Day.Select:" + dateSelect + "<br>";
+                            if (CounterBooking(id, dateSelect, "yes"))
                             {
-                                txtH_TimeSlot.Value = "no";
-
-                                if (CounterBooking(id, dateSelect, "yes"))
-                                {
-                                    txtH_booktime.Value = "00:00:00";
-                                }
-                                else
-                                {
-                                    txtH_bookdate.Value = "";
-                                    txtH_booktime.Value = "";
-
-                                    e.Day.IsSelectable = false;
-                                    e.Cell.ForeColor = System.Drawing.Color.LightGray;
-                                    e.Cell.BackColor = System.Drawing.Color.WhiteSmoke;
-                                }
+                                txtH_booktime.Value = "00:00:00";
                             }
                             else
                             {
-                                lbl_bookDate.Text = "วันที่จองคือ : " + cldSelectDate;
+                                txtH_bookdate.Value = "";
+                                txtH_booktime.Value = "";
 
-                                TimeSlot(txtH_bookTimeStart.Value, txtH_bookTimeEnd.Value, splittime, splittimeUnit, breakSt, breakEn, maxqty, startAfterBreak, CloseTime);
+                                e.Day.IsSelectable = false;
+                                e.Cell.ForeColor = System.Drawing.Color.LightGray;
+                                e.Cell.BackColor = System.Drawing.Color.WhiteSmoke;
                             }
                         }
+                        else
+                        {
+                            lbl_bookDate.Text = "วันที่จองคือ : " + cldSelectDate;
+
+                            TimeSlot(txtH_bookTimeStart.Value, txtH_bookTimeEnd.Value, splittime, splittimeUnit, breakSt, breakEn, maxqty, startAfterBreak, CloseTime);
+                        }
+                        //-----------------------------------
                     }
                     else
                     {
+                        //CheckCode += " No <br>";
                         string Limitfull = "";
 
                         if (splittimeUnit == "manual")
@@ -535,6 +544,9 @@ namespace BRH_Plubic.CHK
                             e.Cell.BackColor = System.Drawing.Color.LightGray;
                             e.Cell.Text = e.Day.DayNumberText;
                             e.Cell.Attributes.Add("OnClick", e.SelectUrl);
+                            //e.Cell.Attributes.Add("onclick","alert('"+ e.Day.Date +"')");
+                            e.Cell.Attributes.Add("style","cursor: pointer;");
+                            //CheckCode += e.SelectUrl + "<br>";
                         }
                     }
                 }
@@ -560,6 +572,8 @@ namespace BRH_Plubic.CHK
                 }
                 cld_booking.SelectedDate = DateTime.Parse(bookDate);
             }
+
+            lbl_check.Text = CheckCode;
         }
 
         public Boolean CounterBooking(string slot, string bookDate, string notify)
@@ -610,7 +624,8 @@ namespace BRH_Plubic.CHK
 
             if (CNT >= int.Parse(Qty))
             {
-                alert = "วันที่ " + cl_Sql.DateTH(bookDate) + " เต็มแล้ว !!";
+                //alert = "วันที่ " + cl_Sql.DateTH(bookDate) + " เต็มแล้ว !!";
+                alert = "วันที่เลือก เต็มแล้ว !!";
                 lbl_TimeSlot.ForeColor = System.Drawing.Color.Red;
                 div_submit.Visible = false;
             }
@@ -649,7 +664,7 @@ namespace BRH_Plubic.CHK
                             }
                             else
                             {
-                                Age = cl_Sql.Year2YearOld(DateTime.Parse(dateSync_DOB.Value.ToString()));
+                                Age = int.Parse(ageSync.Value); //cl_Sql.Year2YearOld(DateTime.Parse(dateSync_DOB.Value.ToString()));
                             }
 
                             if (Age <= int.Parse(AgeLess))

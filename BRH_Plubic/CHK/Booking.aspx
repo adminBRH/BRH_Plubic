@@ -296,6 +296,7 @@
     <asp:UpdatePanel ID="UpdatePanel_script" runat="server">
         <ContentTemplate>
             <asp:Label ID="lbl_script" Text="" runat="server"></asp:Label>
+            <asp:Label ID="lbl_check" Text="" runat="server"></asp:Label>
         </ContentTemplate>
     </asp:UpdatePanel>
 
