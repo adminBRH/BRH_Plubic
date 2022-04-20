@@ -410,6 +410,7 @@
     <Content Include="Employee\Default.aspx" />
     <Content Include="Evaluate360\Default.aspx" />
     <Content Include="Evaluate360\Report.aspx" />
+    <Content Include="Evaluate\Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\barcode\free3of9.txt" />
     <Content Include="fonts\barcode\license.txt" />
@@ -427,6 +428,7 @@
     <Content Include="fonts\themify.eot" />
     <Content Include="fonts\themify.ttf" />
     <Content Include="fonts\themify.woff" />
+    <Content Include="GoodDoctor\AutoExport.aspx" />
     <Content Include="GoodDoctor\DashBoard.aspx" />
     <Content Include="GoodDoctor\Default.aspx" />
     <Content Include="GoodDoctor\image\concrete-texture.png" />
@@ -449,6 +451,7 @@
     <Content Include="GoodDoctor\image\doctor_5665.png" />
     <Content Include="GoodDoctor\InputENRating.aspx" />
     <Content Include="GoodDoctor\Manage.aspx" />
+    <Content Include="GoodDoctor\Ranking.aspx" />
     <Content Include="Happymoney\Approve.aspx" />
     <Content Include="Happymoney\approveslip.aspx" />
     <Content Include="Happymoney\Default.aspx" />
@@ -571,6 +574,7 @@
     <Content Include="images\number_1_blue.png" />
     <Content Include="images\number_2_blue.png" />
     <Content Include="images\number_3_blue.png" />
+    <Content Include="images\PR\BRH-WTS-Covid19.jpg" />
     <Content Include="images\PR\COVID.jpg" />
     <Content Include="images\SaveDoc.png" />
     <Content Include="images\ScreenLogin.png" />
@@ -582,6 +586,7 @@
     <Content Include="images\slide\BRH_COVID19_3.jpg" />
     <Content Include="images\slide\BRH_COVID19_3_sm.jpg" />
     <Content Include="images\slide\COVID-Test.jpg" />
+    <Content Include="images\slide\Slide_BRH-WTS-Covid19.jpg" />
     <Content Include="images\Tableau Schedule.jpg" />
     <Content Include="images\TableauLogo.png" />
     <Content Include="images\TableauOnlineSchedule.jpg" />
@@ -1535,6 +1540,13 @@
     <Compile Include="Evaluate360\Report.aspx.designer.cs">
       <DependentUpon>Report.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Evaluate\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Evaluate\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1552,6 +1564,13 @@
     <Compile Include="Function\Customize.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="GoodDoctor\AutoExport.aspx.cs">
+      <DependentUpon>AutoExport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GoodDoctor\AutoExport.aspx.designer.cs">
+      <DependentUpon>AutoExport.aspx</DependentUpon>
     </Compile>
     <Compile Include="GoodDoctor\DashBoard.aspx.cs">
       <DependentUpon>DashBoard.aspx</DependentUpon>
@@ -1580,6 +1599,13 @@
     </Compile>
     <Compile Include="GoodDoctor\Manage.aspx.designer.cs">
       <DependentUpon>Manage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GoodDoctor\Ranking.aspx.cs">
+      <DependentUpon>Ranking.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GoodDoctor\Ranking.aspx.designer.cs">
+      <DependentUpon>Ranking.aspx</DependentUpon>
     </Compile>
     <Compile Include="Happymoney\Approve.aspx.cs">
       <DependentUpon>Approve.aspx</DependentUpon>
@@ -2413,6 +2439,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="ArcusAir\images\barcode\" />
+    <Folder Include="Evaluate\images\" />
     <Folder Include="Happymoney\image\slip\" />
     <Folder Include="images\CardID\" />
     <Folder Include="images\MsTeamAgree\" />

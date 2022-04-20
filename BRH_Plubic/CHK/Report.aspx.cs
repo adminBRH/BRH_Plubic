@@ -31,6 +31,8 @@ namespace BRH_Plubic.CHK
                     if (!IsPostBack)
                     {
                         DropDownSlot("0");
+                        btnExport.Visible = false;
+                        div_detail.Visible = false;
                     }
                 }
                 else
@@ -187,6 +189,13 @@ namespace BRH_Plubic.CHK
                 string text = "";
                 string value = "";
 
+                sql = "select * from bookingdetail as bd " +
+                        "\nleft join bookingforminput as bfi on bfi.bfi_id=bd.bd_bfiid " +
+                        "\nwhere bd_brid in (select br_id from bookingrecord where br_active='yes' and br_bsid = '" + slotID + "') " +
+                        "\norder by bd_id; ";
+                DataTable dtAll = new DataTable();
+                dtAll = cl_Sql.select(sql);
+
                 foreach (DataRow row in result.Rows)
                 {
                     string HTMLDetail = "<table border=\"1\" style=\"width: 100%\">";
@@ -195,12 +204,9 @@ namespace BRH_Plubic.CHK
 
                     string recodeID = row["br_id"].ToString();
 
-                    sql = "select * from bookingdetail as bd " +
-                        "\nleft join bookingforminput as bfi on bfi.bfi_id=bd.bd_bfiid " +
-                        "\nwhere bd_brid = '" + recodeID + "' " +
-                        "\norder by bd_id ";
                     DataTable resultI = new DataTable();
-                    resultI = cl_Sql.select(sql);
+                    resultI = dtAll.Select("bd_brid = '" + recodeID + "'").CopyToDataTable();
+
                     if (resultI.Rows.Count > 0)
                     {
                         string tdHeader = "";
@@ -294,10 +300,12 @@ namespace BRH_Plubic.CHK
                 Slot(slotID);
                 div_detail.Visible = true;
                 ListView_Report(slotID, "", "", "");
+                btnExport.Visible = true;
             }
             else
             {
                 div_detail.Visible = false;
+                btnExport.Visible = false;
             }
         }
 

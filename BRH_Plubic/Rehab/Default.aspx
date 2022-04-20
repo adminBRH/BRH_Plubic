@@ -19,12 +19,12 @@
     </div>
     <div class="col-12 mx-auto text-center" style="font-size: x-large;">
         <label class="switch my-auto">
-            <asp:CheckBox ID="cb_child" Checked="true" OnCheckedChanged="cb_child_CheckedChanged" AutoPostBack="true" runat="server" />
+            <asp:CheckBox ID="cb_child" OnCheckedChanged="cb_child_CheckedChanged" AutoPostBack="true" runat="server" />
             <span class="slider round"></span>
         </label><span>เด็ก</span>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <label class="switch my-auto">
-            <asp:CheckBox ID="cb_adult" OnCheckedChanged="cb_adult_CheckedChanged" AutoPostBack="true" runat="server" />
+            <asp:CheckBox ID="cb_adult" Checked="true" OnCheckedChanged="cb_adult_CheckedChanged" AutoPostBack="true" runat="server" />
             <span class="slider round"></span>
         </label><span class="my-auto">ผู้ใหญ่</span>
     </div>

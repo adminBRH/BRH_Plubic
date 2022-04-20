@@ -13,7 +13,7 @@ namespace BRH_Plubic
         {
             if (Request.QueryString["login"] == null)
             {
-                Response.Redirect("Marketing");
+                //Response.Redirect("Marketing");
             }
         }
     }

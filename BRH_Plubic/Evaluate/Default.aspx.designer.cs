@@ -7,129 +7,138 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BRH_Plubic
+namespace BRH_Plubic.Evaluate
 {
 
 
-    public partial class MeetingRoom
+    public partial class Default
     {
 
         /// <summary>
-        /// lbl_book control.
+        /// ScriptManager_asm control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_book;
+        protected global::System.Web.UI.ScriptManager ScriptManager_asm;
 
         /// <summary>
-        /// div_add control.
+        /// lbl_modal_alert control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_add;
+        protected global::System.Web.UI.WebControls.Label lbl_modal_alert;
 
         /// <summary>
-        /// txt_sj control.
+        /// lbl_subject control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_sj;
+        protected global::System.Web.UI.WebControls.Label lbl_subject;
 
         /// <summary>
-        /// date_start control.
+        /// UpdatePanel_asm control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl date_start;
+        protected global::System.Web.UI.UpdatePanel UpdatePanel_asm;
 
         /// <summary>
-        /// time_start control.
+        /// lbl_head control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl time_start;
+        protected global::System.Web.UI.WebControls.Label lbl_head;
 
         /// <summary>
-        /// date_end control.
+        /// lv_question control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl date_end;
+        protected global::System.Web.UI.WebControls.ListView lv_question;
 
         /// <summary>
-        /// time_end control.
+        /// txt_oldid control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl time_end;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_oldid;
 
         /// <summary>
-        /// CB_room1 control.
+        /// txtH_required control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox CB_room1;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtH_required;
 
         /// <summary>
-        /// CB_room2 control.
+        /// txtH_rd_value control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox CB_room2;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtH_rd_value;
 
         /// <summary>
-        /// CB_room3 control.
+        /// txtH_question control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox CB_room3;
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl txtH_question;
 
         /// <summary>
-        /// CB_room4 control.
+        /// txtH_maxIndex control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox CB_room4;
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl txtH_maxIndex;
 
         /// <summary>
-        /// CB_room5 control.
+        /// lbl_script control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox CB_room5;
+        protected global::System.Web.UI.WebControls.Label lbl_script;
 
         /// <summary>
-        /// txth_room control.
+        /// btn_previous control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txth_room;
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor btn_previous;
+
+        /// <summary>
+        /// btn_next control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor btn_next;
 
         /// <summary>
         /// btn_submit control.
@@ -138,60 +147,24 @@ namespace BRH_Plubic
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_submit;
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor btn_submit;
 
         /// <summary>
-        /// LV_book control.
+        /// lbl_createby control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListView LV_book;
+        protected global::System.Web.UI.WebControls.Label lbl_createby;
 
         /// <summary>
-        /// txt_dateStart control.
+        /// lbl_createtime control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl txt_dateStart;
-
-        /// <summary>
-        /// txt_dateEnd control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl txt_dateEnd;
-
-        /// <summary>
-        /// btn_Search control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton btn_Search;
-
-        /// <summary>
-        /// txt_topic control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_topic;
-
-        /// <summary>
-        /// btn_SearchTopic control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton btn_SearchTopic;
+        protected global::System.Web.UI.WebControls.Label lbl_createtime;
     }
 }

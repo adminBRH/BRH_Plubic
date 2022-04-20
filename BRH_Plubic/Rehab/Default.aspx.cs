@@ -23,7 +23,7 @@ namespace BRH_Plubic.Rehab
             {
                 CLD_book.SelectedDate = DateTime.Now.Date;
                 DateTime date = DateTime.Parse(CLD_book.SelectedDate.ToString());
-                TableDashboard("yes", date);
+                TableDashboard("no", date);
 
                 //SetDOB();
                 ToolList();
@@ -80,6 +80,14 @@ namespace BRH_Plubic.Rehab
             return month;
         }
 
+        protected DataTable rehabTaskdate(string date)
+        {
+            DataTable dtRH = new DataTable();
+            sql = "select * from rehab_taskdates where rhd_active='yes' and rhd_date=convert('" + date + "',date);";
+            dtRH = cl_Sql.select(sql);
+            return dtRH;
+        }
+
         protected void CLD_book_DayRender(object sender, DayRenderEventArgs e)
         {
             string date = e.Day.Date.ToString();
@@ -88,9 +96,15 @@ namespace BRH_Plubic.Rehab
             if (DateTime.Parse(date) >= DateNow)
             {
                 date = DateTime.Parse(date).ToString("yyyy-MM-dd");
-                sql = "select * from rehab_taskdates where rhd_active='yes' and rhd_date=convert('" + date + "',date); ";
-                dt = new DataTable();
-                dt = cl_Sql.select(sql);
+                //sql = "select * from rehab_taskdates where rhd_active='yes' and rhd_date=convert('" + date + "',date); ";
+                //dt = new DataTable();
+                //dt = cl_Sql.select(sql);
+
+                if (dt == null)
+                {
+                    dt = new DataTable();
+                    dt = rehabTaskdate(date);
+                }
                 if (dt.Rows.Count > 0)
                 {
                     e.Day.IsSelectable = true;

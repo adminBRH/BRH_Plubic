@@ -22,24 +22,22 @@ namespace BRH_Plubic
             if (Session["Login"] != null)
             {
                 string status = Session["status"].ToString();
-                if (status == "admin" || status == "hod")
+                if (status == "admin" || status != "")
                 {
-                    Response.Write("<script>function ShowBook() { divAdd.hidden = false; }</script>");
+                    if (!IsPostBack)
+                    {
+                        Showdata("", "", "");
+                    }
                 }
                 else
                 {
-                    Response.Write("<script>function ShowBook() { alert('คุณไม่มีสิทธิ์ ทำการจองห้องประชุม !!'); window.location.href='../Default.aspx'; }</script>");
+                    Response.Redirect("Default?back=MeetingRoom&login=require");
                 }
             }
             else
             {
-                Response.Write("<script>function ShowBook() { alert('กรุณา Login ก่อนทำการจองห้องประชุม !!'); window.location.href='../Default.aspx'; }</script>");
-            }
-
-            if (!IsPostBack)
-            {
-                Showdata("","","");
-            }           
+                Response.Redirect("Default?back=MeetingRoom&login=require");
+            }  
         }
 
         public Boolean Showdata(string dateStart, string dateEnd, string topic)

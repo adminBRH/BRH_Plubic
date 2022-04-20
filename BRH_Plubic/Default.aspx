@@ -151,7 +151,8 @@
 </div>
 
 <div class="col-lg-11 col-sm-12 mx-auto text-center">
-	<img src="images/PR/COVID.jpg" style="width: 100%; border-radius: 20px;" />
+	<img src="images/PR/BRH-WTS-Covid19.jpg" style="width: 100%; border-radius: 20px;" />
+	<%--<img src="images/PR/COVID.jpg" style="width: 100%; border-radius: 20px;" />--%>
 </div>
 	
 </asp:Content>

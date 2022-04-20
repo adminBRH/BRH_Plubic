@@ -1010,6 +1010,8 @@ namespace BRH_Plubic.NovelCorona
                         }
                     }
 
+                    RemoveDuplicateName(fname,lname); // Delete Duplicate Data from User
+
                     sql = "INSERT INTO novelcorona " +
                         "\n(nc_key" +
                         ", nc_fname" +
@@ -1107,6 +1109,19 @@ namespace BRH_Plubic.NovelCorona
             }
 
             return result;
+        }
+
+        protected Boolean RemoveDuplicateName(string fname, string lname)
+        {
+            Boolean bl = false;
+            sql = "update novelcorona set nc_active='no' " +
+                "\nwhere convert(nc_datetime,date)=current_date " +
+                "\nand nc_fname='" + fname + "' and nc_lname='" + lname + "' ";
+            if (cl_Sql.Modify(sql))
+            {
+                bl = true;
+            }
+            return bl;
         }
 
         protected string SaveBlock_2(string id)
@@ -1448,7 +1463,7 @@ namespace BRH_Plubic.NovelCorona
                 }
 
                 string reporter = txt_fname.Value.ToString().Trim() + " " + txt_lname.Value.ToString().Trim();
-                sql += "\nupdate novelcorona_clinic set ncc_reporter='" + reporter + "'; "; // ใส่ชื่อลูกค้าเป้นคนกรอกข้อมูล
+                sql += "\nupdate novelcorona_clinic set ncc_reporter='" + reporter + "' where ncc_ncid='" + id + "' ; "; // ใส่ชื่อลูกค้าเป้นคนกรอกข้อมูล
 
                 if (cl_Sql.Modify(sql))
                 {

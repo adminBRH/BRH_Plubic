@@ -262,7 +262,7 @@
     function SelectTime(id, time) {
         // Set focus button
         var btn = document.getElementById('btn_slot_' + id)
-        btn.setAttribute("class","col-lg-2 col-sm-3 btn btn-success mx-auto my-auto");
+        btn.setAttribute("class", "col-lg-2 col-sm-3 btn btn-success mx-auto my-auto");
 
         // Clear focus button
         var txtH_ID = document.getElementById('<%= txtH_booktimeID.ClientID %>');

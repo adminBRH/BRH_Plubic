@@ -97,6 +97,16 @@
             font-family: 'Libre Barcode 128', cursive;
         }
 
+        .styleLoGo {
+            width:200px;
+            height:80px;
+            margin-bottom: 3px; 
+            background-color: white;
+            border: 0;
+            border-top-right-radius: 20px;
+            border-bottom-left-radius: 20px;
+        }
+
         .modal-xl {
             max-width: 80%;
             /*top: 10%;*/
@@ -408,11 +418,10 @@
 <body data-spy="scroll" data-target="#navbar" data-offset="30">
 <form id="form1" runat="server">
     <!-- Nav Menu -->
-    <div class="fixed-top">
-        <div class="row col-12 mx-auto">
+        <div class="row col-12 mx-auto bg-gradient-blue">
             <div class="col-3 mx-auto text-left">
                 <a class="navbar-brand" href="Default.aspx">
-                    <img src="../images/logo-BRH_200x80px.png" class="" style="width:200px;height:80px;margin-bottom: 3px;" alt="logo BRH">
+                    <img src="../images/logo-BRH_200x80px.png" class="styleLoGo" alt="logo BRH">
                 </a>
             </div>
             <div class="col-6 mx-auto">
@@ -429,8 +438,6 @@
                 </div>
             </div>
         </div>
-        
-    </div>
 
 <!-- Modal -------------------------Menu-------------------------------- -->
 <div class="modal right fade" id="Modal_Menu" tabindex="-1" role="dialog" aria-labelledby="Modal_Menu_Label" aria-hidden="true">
@@ -475,6 +482,10 @@
                 <strong style="font-size:xx-large;">HOME </strong><span class="ti-2x ti-home"></span>
             </div>
             <br />
+            <div class="col-12 rounded btn-outline-primary border-0 text-right" onclick="fn_goto('NovelCovid')">
+                <strong style="font-size:xx-large;">Novel Corona</strong><span class="ti-2x ti-receipt"></span>
+            </div>
+            <br />
             <div id="div_shoping" class="col-12 rounded btn-outline-primary border-0 text-right" onclick="fn_goto('Marketing')" runat="server">
                 <strong style="font-size:xx-large;">Shoping </strong><span class="ti-2x ti-shopping-cart"></span>
             </div>
@@ -488,11 +499,7 @@
                 </div>
             </div>
             <br />
-            <div class="col-12 rounded btn-outline-primary border-0 text-right" onclick="fn_goto('NovelCovid')">
-                <strong style="font-size:xx-large;">Novel Corona</strong><span class="ti-2x ti-receipt"></span>
-            </div>
-            <br />
-            <div class="col-12 rounded btn-outline-primary border-0 text-right" onclick="fn_goto('TimelineCovid')">
+            <%--<div class="col-12 rounded btn-outline-primary border-0 text-right" onclick="fn_goto('TimelineCovid')">
                 <strong style="font-size:xx-large;">Timeline Covid</strong><span class="ti-2x ti-receipt"></span>
             </div>
             <br />
@@ -503,7 +510,7 @@
             <div class="col-12 rounded btn-outline-primary border-0 text-right" onclick="fn_goto('SelfScreeningReport')">
                 <strong style="font-size:xx-large;">Self Screening Report</strong><span class="ti-2x ti-book"></span>
             </div>
-            <br />
+            <br />--%>
             <div class="col-12 rounded btn-outline-primary border-0 text-right" onclick="fn_goto('Arcusair')">
                 <strong style="font-size:xx-large;">Arcus Air </strong><img src="../ArcusAir/images/icon/arcus-white-ico.ico" />
             </div>
@@ -611,10 +618,10 @@
                 </div>
             </div>
             <br />
-            <div class="col-12 rounded btn-outline-primary border-0 text-right" onclick="fn_goto('Happymoney')">
+            <%--<div class="col-12 rounded btn-outline-primary border-0 text-right" onclick="fn_goto('Happymoney')">
                 <strong style="font-size:xx-large;">Happy Money </strong><span class="ti-2x ti-receipt"></span>
             </div>
-            <br />
+            <br />--%>
             <div class="col-12 rounded btn-outline-primary border-0 text-right" onclick="SubMenu('div_Menu_MsTeam')">
                 <strong style="font-size:xx-large;">MS Team Agree </strong><span class="ti-2x ti-headphone-alt"></span>
             </div>
@@ -688,21 +695,21 @@
             case 'Home':
                 location.href = "../Default.aspx";
                 break;
-            case 'Marketing':
-                location.href = "../Marketing/Default.aspx";
-                break;
             case 'NovelCovid':
                 location.href = "../NovelCorona/CheckDocument.aspx";
                 break;
-            case 'TimelineCovid':
-                location.href = "../Covid19/Timelinelist.aspx";
+            case 'Marketing':
+                location.href = "../Marketing/Default.aspx";
                 break;
-            case 'SelfScreeningReport':
-                location.href = "../SelfScreeningReport.aspx";
-                break;
-            case 'MorChanaReport':
-                location.href = "../MorChana/Dashboard.aspx";
-                break;
+            //case 'TimelineCovid':
+            //    location.href = "../Covid19/Timelinelist.aspx";
+            //    break;
+            //case 'SelfScreeningReport':
+            //    location.href = "../SelfScreeningReport.aspx";
+            //    break;
+            //case 'MorChanaReport':
+            //    location.href = "../MorChana/Dashboard.aspx";
+            //    break;
             case 'Marketing_Report':
                 location.href = "../Marketing/Report.aspx";
                 break;
@@ -721,9 +728,9 @@
             case 'Arcusair':
                 location.href = "../ArcusAir";
                 break;
-            case 'Happymoney':
-                location.href = "../Happymoney/Default.aspx";
-                break;
+            //case 'Happymoney':
+            //    location.href = "../Happymoney/Default.aspx";
+            //    break;
             case 'GoodDoctor':
                 location.href = "../GoodDoctor/Manage.aspx";
                 break;
@@ -824,7 +831,7 @@
           <div class="carousel-item active">
             <div class="col-11 text-center mx-auto">
                 <a href="../Default.aspx">
-                <img src="../images/slide/COVID-Test.jpg" width="700" height="200" alt="img1" style="border-radius: 20px;">
+                <img src="../images/slide/Slide_BRH-WTS-Covid19.jpg" width="700" height="200" alt="img1" style="border-radius: 20px;">
                 </a>
                 <div class="carousel-caption d-none d-m">
                   <h5>.</h5>
@@ -994,14 +1001,24 @@
     <asp:ContentPlaceHolder ID="MainContent" runat="server">
     </asp:ContentPlaceHolder>
 <!-- =========================================================== MainContent ========================== -->
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
+
+    <div class="row col-12 mx-auto my-3">
+        <div class="col-10 mx-auto my-auto text-right">
+            <img src="../images/logo_network.png" alt="Network logos" class="img-fluid">
+        </div>
+        <div class="row col-2 mx-auto">
+            <div id="div_login" class="col-12 mx-auto my-auto text-right" runat="server">
+                <%--<a href="#" class="textShadow" data-toggle="modal" data-target=".bd-example-modal-lg" style="font-size:x-large; color: white;"><img src="../images/Lock2.gif" width="42"/>Login</a>--%>
+                <a href="#" class="textShadow" data-toggle="modal" data-target="#modal_login" style="font-size:large; color: white;"><img src="../images/Lock2.gif" width="42"/>Login</a>
+            </div>
+            <div id="div_userlogin" class="row col-12" runat="server">
+                <div class="col-12 mx-auto my-auto text-right">
+                    <i class="ti-2x ti-user"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <p>&nbsp;</p>
 
     <div class="row col-12 mx-auto fixed-bottom DayColor" style="opacity: 0.8;">
@@ -1021,23 +1038,6 @@
         <div class="col-12 mx-auto text-center" style="background-color:white; border-top-left-radius: 20px; border-top-right-radius: 20px;">
             <!-- Copyright removal is not prohibited! -->
             <small><b>COPYRIGHT © 2020. ALL RIGHTS RESERVED. Power by: Healthcare information officer</b></small>
-        </div>
-    </div>
-
-    <div class="row col-12 mx-auto">
-        <div class="col-10 mx-auto my-auto text-right">
-            <img src="../images/logo_network.png" alt="Network logos" class="img-fluid">
-        </div>
-        <div class="row col-2 mx-auto">
-            <div id="div_login" class="col-12 mx-auto my-auto text-right" runat="server">
-                <%--<a href="#" class="textShadow" data-toggle="modal" data-target=".bd-example-modal-lg" style="font-size:x-large; color: white;"><img src="../images/Lock2.gif" width="42"/>Login</a>--%>
-                <a href="#" class="textShadow" data-toggle="modal" data-target="#modal_login" style="font-size:large; color: white;"><img src="../images/Lock2.gif" width="42"/>Login</a>
-            </div>
-            <div id="div_userlogin" class="row col-12" runat="server">
-                <div class="col-12 mx-auto my-auto text-right">
-                    <i class="ti-2x ti-user"></i>
-                </div>
-            </div>
         </div>
     </div>
 

@@ -103,7 +103,7 @@
         <div class="col-4 mx-auto">
             <asp:DropDownList ID="dd_status" CssClass="btn btn-outline-info" OnSelectedIndexChanged="dd_status_SelectedIndexChanged" AutoPostBack="true" runat="server">
                 <asp:ListItem Text="ทุกสถานะ" Value=""></asp:ListItem>
-                <asp:ListItem Text="ตรวจสอบ : no" Value="no"></asp:ListItem>
+                <asp:ListItem Text="ตรวจสอบ : no" Value="no" Selected="True"></asp:ListItem>
                 <asp:ListItem Text="ตรวจสอบ : yes" Value="yes"></asp:ListItem>
                 <asp:ListItem Text="Print" Value="print"></asp:ListItem>
             </asp:DropDownList>

@@ -15,7 +15,7 @@
             </a>
         </div>
     </div>
-    <div id="div_add" class="col-lg-8 col-sm-12 mx-auto h3" hidden="hidden">
+    <div id="div_add" class="col-lg-8 col-sm-12 mx-auto h3" hidden="hidden" runat="server">
         <div class="row col-12 mx-auto mb-5">
             <div class="col-12 mx-auto">
                 <input name="txth_header" type="text" id="txt_sj" placeholder="หัวข้อการประชุม" required="required" value="" class="form-control mb-5" runat="server" />
@@ -317,7 +317,7 @@
 </script>
 
 <script>
-    var divAdd = document.getElementById('div_add');
+    var divAdd = document.getElementById('<%= div_add.ClientID %>');
     var divList = document.getElementById('div_list');
     var linkBook = document.getElementById('<%= lbl_book.ClientID %>');
     function ShowBook() {
@@ -331,7 +331,6 @@
             divList.hidden = false;
             linkBook.innerText = "จองห้องประชุม +";
         }
-            
     }
 </script>
 

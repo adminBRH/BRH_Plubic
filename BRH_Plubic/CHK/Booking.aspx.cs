@@ -39,6 +39,12 @@ namespace BRH_Plubic.CHK
                 string key = Request.QueryString["key"].ToString();
                 string slot = Request.QueryString["slot"].ToString();
 
+                if (!IsPostBack)
+                {
+                    DataState(slot, key);
+                    DataLoad(slot, key);
+                }
+
                 if (Session["status"] == null)
                 {
                     VIPSlot(slot);
@@ -73,6 +79,70 @@ namespace BRH_Plubic.CHK
                     }
                 }
             }
+        }
+
+        private void DataState(string id, string key)
+        {
+            sql = "select * from bookingslot where bs_id='" + id + "' and bs_key='" + key + "' ";
+            dt = new DataTable();
+            dt = cl_Sql.select(sql);
+            //Session["dt_bookingslot"] = dt;
+            ViewState["bookingslot"] = dt;
+
+            sql = "select * from company_employee where ce_active='yes' and ce_cp_id in (select bs_cpid from bookingslot where bs_id = '" + id+ "') ";
+            dt = new DataTable();
+            dt = cl_Sql.select(sql);
+            //Session["dt_company_employee"] = dt;
+            ViewState["company_employee"] = dt;
+
+            sql = "select * from bookingforminput where bfi_bfid in (select bs_bfid from bookingslot where bs_id = '" + id + "') order by bfi_index";
+            dt = new DataTable();
+            dt = cl_Sql.select(sql);
+            //Session["dt_bookingforminput"] = dt;
+            ViewState["bookingforminput"] = dt;
+
+            sql = "select * from bookingslot_manual " +
+                "\nwhere bsm_active='yes' and bsm_bsid='" + id + "' " +
+                "\norder by bsm_time_st ";
+            dt = new DataTable();
+            dt = cl_Sql.select(sql);
+            //Session["dt_bookingslot_manual"] = dt;
+            ViewState["bookingslot_manual"] = dt;
+        }
+
+        private void DataLoad(string id, string key)
+        {
+            sql = "select * from bookingrecord where br_bsid='" + id + "' and br_active='yes' ";
+            dt = new DataTable();
+            dt = cl_Sql.select(sql);
+            //Session["dt_bookingrecord"] = dt;
+            ViewState["bookingrecord"] = dt;
+
+            sql = "select ifnull(sum(if(convert(bd.bd_value,decimal(11,0)) <= bs.bs_age_lessequal,1,0)),0) as 'balanceLess' " +
+                "\n,ifnull(sum(if (convert(bd.bd_value, decimal(11,0)) >= bs.bs_age_moreequal,1,0)),0) as 'balanceMore' " +
+                "\nfrom bookingrecord as br " +
+                "\nleft join bookingslot as bs on br.br_bsid = bs.bs_id " +
+                "\nleft join bookingdetail as bd on br.br_id = bd.bd_brid " +
+                "\nwhere br.br_bsid='" + id + "' and br.br_active='yes' " +
+                "\nand bd.bd_column = 'อายุ' ";
+            dt = new DataTable();
+            dt = cl_Sql.select(sql);
+            //Session["dt_bookingSlotDetail"] = dt;
+            ViewState["bookingSlotDetail"] = dt;
+
+            sql = "select *,convert(br_datetime,date) as 'br_date' from bookingrecord as br " +
+                "\nleft join bookingslot as bs on bs.bs_id=br.br_bsid " +
+                "\nwhere br_active='yes' and br_bsid='" + id + "' ";
+            dt = new DataTable();
+            dt = cl_Sql.select(sql);
+            //Session["dt_bookingRecordSlot"] = dt;
+            ViewState["bookingRecordSlot"] = dt;
+
+            sql = "select * from bookingdetail where bd_bfiid=0 and bd_brid in (select br_id from bookingrecord where br_active='yes' and br_bsid='" + id + "'); ";
+            dt = new DataTable();
+            dt = cl_Sql.select(sql);
+            //Session["dt_bookingdetail_bfiid0"] = dt;
+            ViewState["bookingdetail_bfiid0"] = dt;
         }
 
         protected void VIPSlot(string slot)
@@ -157,7 +227,7 @@ namespace BRH_Plubic.CHK
             return bl;
         }
 
-        public Boolean PrivateKey(string cpid,string id)
+        public Boolean PrivateKey(string cpid, string id)
         {
             Boolean bl = false;
 
@@ -266,7 +336,7 @@ namespace BRH_Plubic.CHK
                             lbl_docno.Text = "Booking number : " + bsid;
                             string bookDateTime = dt.Rows[0]["BookingDateTime"].ToString();
                             string bookDate = DateTime.Parse(bookDateTime).ToString("dd MMM yyyy");
-                            
+
                             string bookTime = DateTime.Parse(bookDateTime).ToString("HH:mm");
                             if (bookTime == "00:00") { bookTime = ""; } else { bookTime = " เวลา " + bookTime + " น."; }
                             string text = "วันที่จอง " + bookDate + " " + bookTime;
@@ -277,7 +347,7 @@ namespace BRH_Plubic.CHK
                                 string empid = Request.QueryString["privateid"].ToString();
                                 int VaccineQTY = 0;
                                 sql = "select ce_vaccine from company_employee " +
-                                    "\nwhere ce_active='yes' and ce_empid='" + empid + "' and ce_cp_id = '" + cpid+ "' ";
+                                    "\nwhere ce_active='yes' and ce_empid='" + empid + "' and ce_cp_id = '" + cpid + "' ";
                                 dt = new DataTable();
                                 dt = cl_Sql.select(sql);
                                 if (dt.Rows.Count > 0)
@@ -341,9 +411,13 @@ namespace BRH_Plubic.CHK
 
             string hiddenDate = "";
 
-            sql = "select * from bookingslot where bs_id='" + id + "' and bs_key='" + key + "' ";
+            //sql = "select * from bookingslot where bs_id='" + id + "' and bs_key='" + key + "' ";
+            //dt = new DataTable();
+            //dt = cl_Sql.select(sql);
+
             dt = new DataTable();
-            dt = cl_Sql.select(sql);
+            dt = ViewState["bookingslot"] as DataTable;
+
             if (dt.Rows.Count > 0)
             {
                 Sync = dt.Rows[0]["bs_sync"].ToString();
@@ -377,7 +451,7 @@ namespace BRH_Plubic.CHK
                 }
                 else
                 {
-                    div_bookdate.Attributes.Add("hidden","hidden");
+                    div_bookdate.Attributes.Add("hidden", "hidden");
                     lbl_bookDate.Text = "";
                 }
 
@@ -472,7 +546,7 @@ namespace BRH_Plubic.CHK
                         }
                         else
                         {
-                            
+
                         }
 
                         //-----------------------------------
@@ -545,7 +619,7 @@ namespace BRH_Plubic.CHK
                             e.Cell.Text = e.Day.DayNumberText;
                             e.Cell.Attributes.Add("OnClick", e.SelectUrl);
                             //e.Cell.Attributes.Add("onclick","alert('"+ e.Day.Date +"')");
-                            e.Cell.Attributes.Add("style","cursor: pointer;");
+                            e.Cell.Attributes.Add("style", "cursor: pointer;");
                             //CheckCode += e.SelectUrl + "<br>";
                         }
                     }
@@ -587,9 +661,13 @@ namespace BRH_Plubic.CHK
             string AgeLess = "";
             string AgeMore = "";
 
-            sql = "select * from bookingslot where bs_id = '" + slot + "' ";
+            //sql = "select * from bookingslot where bs_id = '" + slot + "' ";
+            //dt = new DataTable();
+            //dt = cl_Sql.select(sql);
+
             dt = new DataTable();
-            dt = cl_Sql.select(sql);
+            dt = ViewState["bookingslot"] as DataTable;
+
             if (dt.Rows.Count > 0)
             {
                 AgeLess = dt.Rows[0]["bs_age_lessequal"].ToString();
@@ -601,7 +679,7 @@ namespace BRH_Plubic.CHK
                     Qtyless = dt.Rows[0]["bs_age_lessequalqty"].ToString();
                     Qtymore = dt.Rows[0]["bs_age_moreequalqty"].ToString();
 
-                    Qty = ( int.Parse(Qtyless) + int.Parse(Qtymore) ).ToString();
+                    Qty = (int.Parse(Qtyless) + int.Parse(Qtymore)).ToString();
                 }
                 else
                 {
@@ -610,15 +688,26 @@ namespace BRH_Plubic.CHK
             }
 
             int CNT = 0;
-            sql = "select * from bookingrecord where br_bsid='" + slot + "' and br_datetime like '" + bookDate + "%' and br_active='yes' ";
+            //sql = "select * from bookingrecord where br_bsid='" + slot + "' and br_datetime like '" + bookDate + "%' and br_active='yes' ";
+            //dt = new DataTable();
+            //dt = cl_Sql.select(sql);
+
             dt = new DataTable();
-            dt = cl_Sql.select(sql);
+            dt = ViewState["bookingrecord"] as DataTable;
+            int RowCount = 0;
+            try
+            {
+                dt = dt.Select("br_datetime like '" + bookDate + "%'").CopyToDataTable();
+                RowCount = dt.Rows.Count;
+            }
+            catch { }
+
             string alert = "";
             int balance = 0;
             lbl_TimeSlot.ForeColor = System.Drawing.Color.Blue;
-            if (dt.Rows.Count > 0)
+            if (RowCount > 0)
             {
-                CNT = dt.Rows.Count;
+                CNT = RowCount;
             }
             balance = (int.Parse(Qty) - CNT);
 
@@ -637,20 +726,32 @@ namespace BRH_Plubic.CHK
                     string balanceLess = "0";
                     string balanceMore = "0";
 
-                    sql = "select ifnull(sum(if(convert(bd.bd_value,decimal(11,0)) <= bs.bs_age_lessequal,1,0)),0) as 'balanceLess' " +
-                        "\n,ifnull(sum(if (convert(bd.bd_value, decimal(11,0)) >= bs.bs_age_moreequal,1,0)),0) as 'balanceMore' " +
-                        "\nfrom bookingrecord as br " +
-                        "\nleft join bookingslot as bs on br.br_bsid = bs.bs_id " +
-                        "\nleft join bookingdetail as bd on br.br_id = bd.bd_brid " +
-                        "\nwhere br.br_bsid='" + slot + "' and br.br_datetime like '" + bookDate + "%' and br.br_active='yes' " +
-                        "\nand bd.bd_column = 'อายุ' ";
+
+                    //sql = "select ifnull(sum(if(convert(bd.bd_value,decimal(11,0)) <= bs.bs_age_lessequal,1,0)),0) as 'balanceLess' " +
+                    //    "\n,ifnull(sum(if (convert(bd.bd_value, decimal(11,0)) >= bs.bs_age_moreequal,1,0)),0) as 'balanceMore' " +
+                    //    "\nfrom bookingrecord as br " +
+                    //    "\nleft join bookingslot as bs on br.br_bsid = bs.bs_id " +
+                    //    "\nleft join bookingdetail as bd on br.br_id = bd.bd_brid " +
+                    //    "\nwhere br.br_bsid='" + slot + "' and br.br_datetime like '" + bookDate + "%' and br.br_active='yes' " +
+                    //    "\nand bd.bd_column = 'อายุ' ";
+                    //dt = new DataTable();
+                    //dt = cl_Sql.select(sql);
+
                     dt = new DataTable();
-                    dt = cl_Sql.select(sql);
-                    if (dt.Rows.Count > 0)
+                    dt = ViewState["bookingSlotDetail"] as DataTable;
+                    RowCount = 0;
+                    try
+                    {
+                        dt = dt.Select("br_datetime like '" + bookDate + "%'").CopyToDataTable();
+                        RowCount = dt.Rows.Count;
+                    }
+                    catch { }
+
+                    if (RowCount > 0)
                     {
                         balanceLess = dt.Rows[0]["balanceLess"].ToString();
                         balanceLess = (int.Parse(Qtyless) - int.Parse(balanceLess)).ToString();
-                        
+
                         balanceMore = dt.Rows[0]["balanceMore"].ToString();
                         balanceMore = (int.Parse(Qtymore) - int.Parse(balanceMore)).ToString();
 
@@ -736,9 +837,7 @@ namespace BRH_Plubic.CHK
                 {
                     if (StartDate <= EndDate)
                     {
-                        if (CheckBookSlot(StartDate.ToString("yyyy-MM-dd HH:mm:ss")))
-                        { }
-                        else
+                        if (CheckBookSlot(StartDate.ToString("yyyy-MM-dd HH:mm:ss")) == false)
                         {
                             string hide = "no";
 
@@ -812,13 +911,28 @@ namespace BRH_Plubic.CHK
             Boolean bl = false;
 
             string slot = Request.QueryString["slot"].ToString();
-            sql = "select * from bookingrecord as br " +
-                "\nleft join bookingslot as bs on bs.bs_id=br.br_bsid " +
-                "\nwhere br_active='yes' and br_bsid='" + slot + "' and br_datetime = '" + bookDateTime + "' ";
+
+            //sql = "select * from bookingrecord as br " +
+            //    "\nleft join bookingslot as bs on bs.bs_id=br.br_bsid " +
+            //    "\nwhere br_active='yes' and br_bsid='" + slot + "' and br_datetime = '" + bookDateTime + "' ";
+            //dt = new DataTable();
+            //dt = cl_Sql.select(sql);
+
             dt = new DataTable();
-            dt = cl_Sql.select(sql);
-            if (dt.Rows.Count > 0)
+            dt = ViewState["bookingRecordSlot"] as DataTable;
+            //dt = Session["dt_bookingRecordSlot"] as DataTable;
+
+            int RowCount = 0;
+            try
             {
+                dt = dt.Select("br_datetime = '" + DateTime.Parse(bookDateTime).ToString("yyyy-MM-dd HH:mm:ss") + "'").CopyToDataTable();
+                RowCount = dt.Rows.Count;
+            }
+            catch { }
+
+            if (RowCount > 0)
+            {
+
                 int CNT = int.Parse(dt.Rows[0]["bs_splittimeqty"].ToString());
 
                 string AgeCondition = dt.Rows[0]["bs_age_condition"].ToString();
@@ -872,7 +986,7 @@ namespace BRH_Plubic.CHK
                 }
                 else
                 {
-                    if (dt.Rows.Count >= CNT)
+                    if (RowCount >= CNT)
                     {
                         bl = true;
                     }
@@ -890,11 +1004,15 @@ namespace BRH_Plubic.CHK
             string headSlot = "";
             string barcolor = "bg-gradient-blue";
 
-            sql = "select * from bookingslot_manual " +
-                "\nwhere bsm_active='yes' and bsm_bsid='" + bsid + "' " +
-                "\norder by bsm_time_st ";
+            //sql = "select * from bookingslot_manual " +
+            //    "\nwhere bsm_active='yes' and bsm_bsid='" + bsid + "' " +
+            //    "\norder by bsm_time_st ";
+            //dt = new DataTable();
+            //dt = cl_Sql.select(sql);
+
             dt = new DataTable();
-            dt = cl_Sql.select(sql);
+            dt = ViewState["bookingslot_manual"] as DataTable;
+
             if (dt.Rows.Count > 0)
             {
                 DateTime DateNow = DateTime.Now;
@@ -978,14 +1096,18 @@ namespace BRH_Plubic.CHK
         public Boolean Controler(string formID)
         {
             Boolean bl = false;
+            
+            //sql = "select * from bookingforminput where bfi_bfid = '" + formID + "' order by bfi_index ";
+            //dt = new DataTable();
+            //dt = cl_Sql.select(sql);
 
-            sql = "select * from bookingforminput where bfi_bfid = '" + formID + "' order by bfi_index ";
             dt = new DataTable();
-            dt = cl_Sql.select(sql);
+            dt = ViewState["bookingforminput"] as DataTable;
+
             if (dt.Rows.Count > 0)
             {
                 string HTML = "";
-                for (int i=0; i<dt.Rows.Count; i++)
+                for (int i = 0; i < dt.Rows.Count; i++)
                 {
                     string inputID = dt.Rows[i]["bfi_id"].ToString();
                     string type = dt.Rows[i]["bfi_type"].ToString();
@@ -1059,22 +1181,41 @@ namespace BRH_Plubic.CHK
 
             string cpid = "";
             string DuplicateNextDay = "";
-            sql = "select * from bookingslot where bs_id='" + slot + "' ";
+
+            //sql = "select * from bookingslot where bs_id='" + slot + "' ";
+            //dt = new DataTable();
+            //dt = cl_Sql.select(sql);
+
             dt = new DataTable();
-            dt = cl_Sql.select(sql);
+            dt = ViewState["bookingslot"] as DataTable;
+
             if (dt.Rows.Count > 0)
             {
-                if(dt.Rows[0]["bs_duplicatenextday"].ToString() == "yes") // Can Book Duplicate Next Day
+                if (dt.Rows[0]["bs_duplicatenextday"].ToString() == "yes") // Can Book Duplicate Next Day
                 {
-                    DuplicateNextDay = "and br_datetime = convert('" + bookDate + "', datetime) ";
+                    //DuplicateNextDay = "and br_datetime = convert('" + bookDate + "', datetime) ";
+
+                    string br_datetime = DateTime.Parse(bookDate).ToString("yyyy-MM-dd HH:mm:ss");
+                    DuplicateNextDay = " and br_datetime = '" + br_datetime + "' ";
                 }
                 cpid = dt.Rows[0]["bs_cpid"].ToString();
             }
 
-            sql = "select * from company_employee where ce_active='yes' and ce_cp_id='" + cpid + "' and ce_empid='" + empid + "' ";
+            //sql = "select * from company_employee where ce_active='yes' and ce_cp_id='" + cpid + "' and ce_empid='" + empid + "' ";
+            //dt = new DataTable();
+            //dt = cl_Sql.select(sql);
+
             dt = new DataTable();
-            dt = cl_Sql.select(sql);
-            if (dt.Rows.Count > 0)
+            dt = ViewState["company_employee"] as DataTable;
+            int RowCount = 0;
+            try
+            {
+                dt = dt.Select("ce_empid='" + empid + "'").CopyToDataTable();
+                RowCount = dt.Rows.Count;
+            }
+            catch { }
+
+            if (RowCount > 0)
             {
                 string fullname = dt.Rows[0]["ce_name_th"].ToString();
                 string ce_age = dt.Rows[0]["ce_age"].ToString();
@@ -1092,10 +1233,21 @@ namespace BRH_Plubic.CHK
                 }
                 string program = dt.Rows[0]["ce_program"].ToString();
 
-                sql = "select * from bookingdetail where bd_bfiid=0 and bd_brid in (select br_id from bookingrecord where br_active='yes' and br_bsid='" + slot + "' " + DuplicateNextDay + ") and bd_value='" + empid + "'; ";
+                //sql = "select * from bookingdetail where bd_bfiid=0 and bd_brid in (select br_id from bookingrecord where br_active='yes' and br_bsid='" + slot + "' " + DuplicateNextDay + ") and bd_value='" + empid + "'; ";
+                //dt = new DataTable();
+                //dt = cl_Sql.select(sql);
+
                 dt = new DataTable();
-                dt = cl_Sql.select(sql);
-                if (dt.Rows.Count > 0)
+                dt = ViewState["bookingdetail_bfiid0"] as DataTable;
+                RowCount = 0;
+                try
+                {
+                    dt = dt.Select("bd_value='" + empid + "'" + DuplicateNextDay).CopyToDataTable();
+                    RowCount = dt.Rows.Count;
+                }
+                catch { }
+
+                if (RowCount > 0)
                 {
                     txtSync_empid.Value = empid;
                     result = "ท่านได้ทำการจองไว้แล้ว ไม่สามารถทำซ้ำได้ !!";
@@ -1149,9 +1301,9 @@ namespace BRH_Plubic.CHK
         {
             Boolean bl = false;
 
-            if (DuplicateNextDay == "yes") 
-            { 
-                DuplicateNextDay = "and br_datetime = convert('" + bookDate + "', datetime) "; 
+            if (DuplicateNextDay == "yes")
+            {
+                DuplicateNextDay = "and br_datetime = convert('" + bookDate + "', datetime) ";
             }
             else
             {
@@ -1173,9 +1325,13 @@ namespace BRH_Plubic.CHK
         {
             Boolean bl = false;
 
-            sql = "select bs_predate, bs_limittime from bookingslot where bs_id = '" + slot + "'; ";
+            //sql = "select bs_predate, bs_limittime from bookingslot where bs_id = '" + slot + "'; ";
+            //dt = new DataTable();
+            //dt = cl_Sql.select(sql);
+
             dt = new DataTable();
-            dt = cl_Sql.select(sql);
+            dt = ViewState["bookingslot"] as DataTable;
+
             if (dt.Rows.Count > 0)
             {
                 int preDate = int.Parse(dt.Rows[0]["bs_predate"].ToString());
@@ -1205,6 +1361,8 @@ namespace BRH_Plubic.CHK
 
             string slot = Request.QueryString["slot"].ToString();
             string key = Request.QueryString["key"].ToString();
+
+            DataLoad(slot, key);
 
             string syncName = "รหัสพนักงาน";
 
@@ -1253,10 +1411,14 @@ namespace BRH_Plubic.CHK
 
                         string bookDateTime = DateTime.Parse(bookDate + " " + bookTime).ToString("yyyy-MM-dd HH:mm:ss");
 
-                        sql = "select * from bookingforminput " +
-                            "where bfi_bfid in (select bs_bfid from bookingslot where bs_id = '" + slot + "') order by bfi_index ";
+                        //sql = "select * from bookingforminput " +
+                        //    "where bfi_bfid in (select bs_bfid from bookingslot where bs_id = '" + slot + "') order by bfi_index ";
+                        //dt = new DataTable();
+                        //dt = cl_Sql.select(sql);
+
                         dt = new DataTable();
-                        dt = cl_Sql.select(sql);
+                        dt = ViewState["bookingforminput"] as DataTable;
+
                         if (dt.Rows.Count > 0)
                         {
                             string scCRTL = "";
@@ -1319,9 +1481,14 @@ namespace BRH_Plubic.CHK
                             string Limitfull = "";
 
                             string splitUnit = "";
-                            sql = "select * from bookingslot where bs_id = '" + slot + "' and bs_key = '" + key + "' ";
+
+                            //sql = "select * from bookingslot where bs_id = '" + slot + "' and bs_key = '" + key + "' ";
+                            //dt = new DataTable();
+                            //dt = cl_Sql.select(sql);
+
                             dt = new DataTable();
-                            dt = cl_Sql.select(sql);
+                            dt = ViewState["bookingslot"] as DataTable;
+
                             if (dt.Rows.Count > 0)
                             {
                                 splitUnit = dt.Rows[0]["bs_splittimeunit"].ToString();
@@ -1383,9 +1550,13 @@ namespace BRH_Plubic.CHK
                                 string sqlSync = "";
                                 string saveStaus = "no";
 
-                                sql = "select bs_duplicatenextday, bs_sync, bs_syncname from bookingslot where bs_id = '" + slot + "'";
+                                //sql = "select bs_duplicatenextday, bs_sync, bs_syncname from bookingslot where bs_id = '" + slot + "'";
+                                //dt = new DataTable();
+                                //dt = cl_Sql.select(sql);
+
                                 dt = new DataTable();
-                                dt = cl_Sql.select(sql);
+                                dt = ViewState["bookingslot"] as DataTable;
+
                                 if (dt.Rows.Count > 0)
                                 {
                                     string duplicatenextday = dt.Rows[0]["bs_duplicatenextday"].ToString();

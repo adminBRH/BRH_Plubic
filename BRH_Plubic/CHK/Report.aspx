@@ -23,7 +23,7 @@
 
     <asp:ScriptManager ID="ScriptManager_Master" runat="server"></asp:ScriptManager>
 
-    <asp:UpdateProgress ID="prgLoadingStatus" runat="server" DynamicLayout="true">
+    <asp:UpdateProgress ID="prgLoadingStatus" runat="server" AssociatedUpdatePanelID="UpdatePanel_list" DynamicLayout="true">
         <ProgressTemplate>
             <div id="overlay" class="col-12 mx-auto my-auto text-center">
                 <asp:Image ID="imgWaitIcon" runat="server" ImageAlign="AbsMiddle" ImageUrl="~/images/BRHrayongLoading.gif" />
@@ -60,7 +60,14 @@
     </div>
 
     <section id="sec_list" data-spy="sec_list" data-target="#sec_list"></section> 
-    <div id="div_list" class="card boxShadow col-lg-11 col-sm-12 mx-auto mt-5">
+    <asp:UpdatePanel ID="UpdatePanel_export" runat="server">
+        <ContentTemplate>
+            <div class="col-10 mx-auto mt-5 text-right">
+                <button id="btnExport" class="btn btn-outline-success" onclick="ExportFiles()" onmouseout="fn_overlay()" runat="server">Export <i class="ti-files"></i></button>
+            </div>
+        </ContentTemplate>
+    </asp:UpdatePanel>
+    <div id="div_list" class="card boxShadow col-lg-11 col-sm-12 mx-auto">
         <asp:UpdatePanel ID="UpdatePanel_list" runat="server">
             <ContentTemplate>
                 <div class="col-12 mx-auto text-right">
@@ -126,9 +133,6 @@
                         </div>
                         <div class="card boxShadow col-10 mx-auto"></div>
                     </div>
-                    <div class="col-12 mx-auto text-right">
-                        <button id="btnExport" class="btn btn-outline-success" onclick="ExportFiles()">Export <i class="ti-files"></i></button>
-                    </div>
                     <asp:ListView ID="LV_Report" runat="server">
                         <LayoutTemplate>
                             <div id="itemPlaceholder" runat="server">
@@ -191,7 +195,12 @@
 
 <script>
     function ExportFiles() {
+        document.getElementById('overlay').setAttribute('hidden','hidden');
         __doPostBack('<%= btn_Export.UniqueID %>', '');
+    }
+
+    function fn_overlay() {
+        document.getElementById('overlay').removeAttribute('hidden');
     }
 
     function fn_bookid(id) {
