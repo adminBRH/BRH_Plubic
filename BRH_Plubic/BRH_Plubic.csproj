@@ -310,6 +310,7 @@
     <Content Include="AssetControl\Pickup.aspx" />
     <Content Include="AssetControl\RepairList.aspx" />
     <Content Include="AssetControl\Transfer.aspx" />
+    <Content Include="AssetControl\TransferList.aspx" />
     <Content Include="assets\css\fullcalendar.css" />
     <Content Include="assets\css\fullcalendar.print.css" />
     <Content Include="assets\js\fullcalendar.js" />
@@ -1272,6 +1273,13 @@
     </Compile>
     <Compile Include="AssetControl\Transfer.aspx.designer.cs">
       <DependentUpon>Transfer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AssetControl\TransferList.aspx.cs">
+      <DependentUpon>TransferList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssetControl\TransferList.aspx.designer.cs">
+      <DependentUpon>TransferList.aspx</DependentUpon>
     </Compile>
     <Compile Include="BookVaccinate.aspx.cs">
       <DependentUpon>BookVaccinate.aspx</DependentUpon>

@@ -53,7 +53,7 @@ namespace BRH_Plubic.NovelCorona
                     txt_docno.Value = "";
 
                     string name = txt_name.Value.ToString().Trim();
-                    Report("","no", name);
+                    Report("","print", name);
 
                     txt_docno.Attributes.Add("hidden","hidden");
                     rd_docno.Checked = false;

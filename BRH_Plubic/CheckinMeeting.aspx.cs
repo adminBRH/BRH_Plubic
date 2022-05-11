@@ -84,6 +84,9 @@ namespace BRH_Plubic
         {
             Boolean bl = false;
 
+            string alert = "";
+            string txtEmp = "";
+
             room = Request.QueryString["room"];
             slot = Request.QueryString["slot"];
 
@@ -104,6 +107,8 @@ namespace BRH_Plubic
                 {
                     string timest = dt.Rows[0]["cms_timestart"].ToString();
                     string timeend = dt.Rows[0]["cms_timeend"].ToString();
+
+                    string overTime = dt.Rows[0]["cms_overtime"].ToString();
 
                     string time_now = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
@@ -135,45 +140,69 @@ namespace BRH_Plubic
                     int DateEnd_M = DateEnd.Minute;
                     int DateEnd_HM = (DateEnd_H * 60) + DateEnd_M;
 
+                    string next = "no";
+
                     if (DateStart.Date == DateNow.Date && DateStart_HM_adjust <= DateNow_HM)
                     {
                         if (DateNow_HM <= DateEnd_HM)
                         {
-                            if (Insert(empid))
-                            {
-                                lbl_alert.Text = DateTime.Now.ToString();
-                                lbl_alert.ForeColor = System.Drawing.Color.Green;
-                                bl = true;
-                                Response.Redirect("CheckinMeeting.aspx?slot=" + slot + "&room=" + room);
-                            }
-                            else
-                            {
-                                txt_empid.Value = "";
-                                lbl_alert.Text = "ไม่สามารถบันทึกเข้าระบบได้ !!";
-                                lbl_alert.ForeColor = System.Drawing.Color.Red;
-                            }
+                            next = "yes";
                         }
                         else
                         {
-                            txt_empid.Value = "";
-                            lbl_alert.Text = "เกินเวลาเช็คชื่อแล้ว !!";
-                            lbl_alert.ForeColor = System.Drawing.Color.Red;
+                            if (overTime == "yes")
+                            {
+                                next = "yes";
+                            }
+                            else
+                            {
+                                alert = "เลยเวลาเช็คชื่อแล้ว !!";
+                            }
                         }
                     }
                     else
                     {
-                        txt_empid.Value = "";
-                        lbl_alert.Text = "ยังไม่ถึงเวลาเช็คชื่อ !!";
-                        lbl_alert.ForeColor = System.Drawing.Color.Red;
+                        if (DateStart.Date > DateNow.Date)
+                        {
+                            alert = "ยังไม่ถึงเวลาเช็คชื่อ !!";
+                        }
+                        else
+                        {
+                            if (overTime == "yes")
+                            {
+                                next = "yes";
+                            }
+                            else
+                            {
+                                alert = "เลยเวลาเช็คชื่อแล้ว !!";
+                            }
+                        }
+                    }
+
+                    if (next == "yes")
+                    {
+                        if (Insert(empid))
+                        {
+                            lbl_alert.Text = DateTime.Now.ToString();
+                            lbl_alert.ForeColor = System.Drawing.Color.Green;
+                            bl = true;
+                            Response.Redirect("CheckinMeeting.aspx?slot=" + slot + "&room=" + room);
+                        }
+                        else
+                        {
+                            alert = "ไม่สามารถบันทึกเข้าระบบได้ !!";
+                        }
                     }
                 }
             }
             else
             {
-                txt_empid.Value = "";
-                lbl_alert.Text = "ไม่มีรหัสพนักงานนี้ในระบบ !!";
-                lbl_alert.ForeColor = System.Drawing.Color.Red;
+                alert = "ไม่มีรหัสพนักงานนี้ในระบบ !!";
             }
+
+            txt_empid.Value = txtEmp;
+            lbl_alert.Text = alert;
+            lbl_alert.ForeColor = System.Drawing.Color.Red;
 
             return bl;
         }
@@ -208,6 +237,38 @@ namespace BRH_Plubic
             return bl;
         }
 
+        private Boolean CheckName(string empid,string fname, string lname)
+        {
+            Boolean bl = true;
+
+            sql = "select emp_id from employee " +
+                "\nwhere emp_id = '" + empid + "' " +
+                "\nor (emp_fname like '%" + fname + "%' and emp_lname like '%" + lname + "%') " +
+                "\nor (emp_fname_th like '%" + fname + "%' and emp_lname_th like '%" + lname + "%') ";
+            dt = new DataTable();
+            dt = cl_Sql.select(sql);
+            if (dt.Rows.Count > 0)
+            {
+                bl = false;
+            }
+            else
+            {
+                string fullName = fname + " " + lname;
+                sql = "select drs_id from doctors " +
+                    "\nwhere drs_id = '" + empid + "' " +
+                    "\nor drs_fullname like '%" + fullName + "%' " +
+                    "\nor drs_fullname_eg like '%" + fullName + "%' ";
+                dt = new DataTable();
+                dt = cl_Sql.select(sql);
+                if (dt.Rows.Count > 0)
+                {
+                    bl = false;
+                }
+            }
+
+            return bl;
+        }
+
         protected void btn_add_ServerClick(object sender, EventArgs e)
         {
             string emp = txtH_empid.Value.ToString().Trim();
@@ -217,36 +278,45 @@ namespace BRH_Plubic
             room = Request.QueryString["room"];
             slot = Request.QueryString["slot"];
 
-            string key = cl_Sql.GenerateKey(9);
-
-            sql = "INSERT INTO checkinmeeting " +
-                    "(cm_empid, cm_indate, cm_room, cm_outdate, cm_slotid) " +
-                    "\nVALUES('" + key + "', '" + DateNow + "', '" + room + "', NULL, '" + slot + "'); ";
-            if (cl_Sql.Modify(sql))
+            if (CheckName(emp, fname, lname))
             {
-                sql = "select cm_id from checkinmeeting where cm_empid='" + key + "'; ";
-                dt = new DataTable();
-                dt = cl_Sql.select(sql);
-                if (dt.Rows.Count > 0)
-                {
-                    string cm_id = dt.Rows[0]["cm_id"].ToString();
+                string key = cl_Sql.GenerateKey(9);
 
-                    sql = "INSERT INTO checkinmeetingoutsider " +
-                        "(cmo_empid, cmo_fname, cmo_lname, cmo_post, cm_id) " +
-                        "\nVALUES('" + emp + "', '" + fname + "', '" + lname + "', '" + post + "', " + cm_id + "); " +
-                        "\nUpdate checkinmeeting set cm_empid='' where cm_empid='" + key + "'; ";
-                    if (cl_Sql.Modify(sql))
+                sql = "INSERT INTO checkinmeeting " +
+                        "(cm_empid, cm_indate, cm_room, cm_outdate, cm_slotid) " +
+                        "\nVALUES('" + key + "', '" + DateNow + "', '" + room + "', NULL, '" + slot + "'); ";
+                if (cl_Sql.Modify(sql))
+                {
+                    sql = "select cm_id from checkinmeeting where cm_empid='" + key + "'; ";
+                    dt = new DataTable();
+                    dt = cl_Sql.select(sql);
+                    if (dt.Rows.Count > 0)
                     {
-                        txt_empid.Value = "";
-                        Response.Redirect("CheckinMeeting.aspx?slot=" + slot + "'&room=" + room);
-                    }
-                    else
-                    {
-                        txt_empid.Value = "";
-                        lbl_alert.Text = "ไม่สามารถบันทึกเข้าระบบได้ !!";
-                        lbl_alert.ForeColor = System.Drawing.Color.Red;
+                        string cm_id = dt.Rows[0]["cm_id"].ToString();
+
+                        sql = "INSERT INTO checkinmeetingoutsider " +
+                            "(cmo_empid, cmo_fname, cmo_lname, cmo_post, cm_id) " +
+                            "\nVALUES('" + emp + "', '" + fname + "', '" + lname + "', '" + post + "', " + cm_id + "); " +
+                            "\nUpdate checkinmeeting set cm_empid='' where cm_empid='" + key + "'; ";
+                        if (cl_Sql.Modify(sql))
+                        {
+                            txt_empid.Value = "";
+                            Response.Redirect("CheckinMeeting.aspx?slot=" + slot + "'&room=" + room);
+                        }
+                        else
+                        {
+                            txt_empid.Value = "";
+                            lbl_alert.Text = "ไม่สามารถบันทึกเข้าระบบได้ !!";
+                            lbl_alert.ForeColor = System.Drawing.Color.Red;
+                        }
                     }
                 }
+            }
+            else
+            {
+                txt_empid.Value = "";
+                lbl_alert.Text = "ชื่อของคุณมีในระบบอยู่แล้ว จึงไม่สามารถทำการ ADD ได้ !!";
+                lbl_alert.ForeColor = System.Drawing.Color.Red;
             }
         }
 

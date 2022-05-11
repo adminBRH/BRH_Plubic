@@ -11,71 +11,35 @@ namespace BRH_Plubic.AssetControl
 {
 
 
-    public partial class Transfer
+    public partial class TransferList
     {
 
         /// <summary>
-        /// lbl_transferby control.
+        /// ScriptManagerTransferList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_transferby;
+        protected global::System.Web.UI.ScriptManager ScriptManagerTransferList;
 
         /// <summary>
-        /// dd_department control.
+        /// prgLoadingStatus control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList dd_department;
+        protected global::System.Web.UI.UpdateProgress prgLoadingStatus;
 
         /// <summary>
-        /// dd_departmentTo control.
+        /// LV_Transfer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList dd_departmentTo;
-
-        /// <summary>
-        /// LV_from control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ListView LV_from;
-
-        /// <summary>
-        /// lbl_to control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_to;
-
-        /// <summary>
-        /// lbl_box1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_box1;
-
-        /// <summary>
-        /// lbl_box2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_box2;
+        protected global::System.Web.UI.WebControls.ListView LV_Transfer;
 
         /// <summary>
         /// txtH_id control.
@@ -87,48 +51,102 @@ namespace BRH_Plubic.AssetControl
         protected global::System.Web.UI.HtmlControls.HtmlInputText txtH_id;
 
         /// <summary>
-        /// btn_submit control.
+        /// txtH_details control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton btn_submit;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtH_details;
 
         /// <summary>
-        /// txt_email control.
+        /// txtH_action control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_email;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtH_action;
 
         /// <summary>
-        /// Button1 control.
+        /// txt_remark control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton Button1;
+        protected global::System.Web.UI.HtmlControls.HtmlTextArea txt_remark;
 
         /// <summary>
-        /// div_submit control.
+        /// btn_reject control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_submit;
+        protected global::System.Web.UI.HtmlControls.HtmlButton btn_reject;
 
         /// <summary>
-        /// lbl_script control.
+        /// btn_approve control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_script;
+        protected global::System.Web.UI.HtmlControls.HtmlButton btn_approve;
+
+        /// <summary>
+        /// UpdatePanelModalDetailss control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanelModalDetailss;
+
+        /// <summary>
+        /// div_detais_id control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_detais_id;
+
+        /// <summary>
+        /// div_details_list control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_details_list;
+
+        /// <summary>
+        /// lbl_details_list control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_details_list;
+
+        /// <summary>
+        /// div_details_btn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_details_btn;
+
+        /// <summary>
+        /// btn_details control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton btn_details;
     }
 }

@@ -475,11 +475,11 @@ namespace BRH_Plubic.CounterCheckin
                                       "\n<h3>สังกัดแผนก " + deptName + "</h3><br />" +
                                       "\n<table width=\"100%\">" +
                                       "\n<tr>" +
-                                      "\n<td width=\"20%\"><a href='http://brh.seedoctor.asia/CounterCheckin/Default?id=" + cc_id + "&br=" + br +"&eval=1'><img src=\"http://brh.seedoctor.asia/CounterCheckin/images/eval_1.png\" width=\"64\" />แย่มาก</a></td>" +
-                                      "\n<td width=\"20%\"><a href='http://brh.seedoctor.asia/CounterCheckin/Default?id=" + cc_id + "&br=" + br + "&eval=2'><img src=\"http://brh.seedoctor.asia/CounterCheckin/images/eval_2.png\" width=\"64\" />แย่</a></td>" +
-                                      "\n<td width=\"20%\"><a href='http://brh.seedoctor.asia/CounterCheckin/Default?id=" + cc_id + "&br=" + br + "&eval=3'><img src=\"http://brh.seedoctor.asia/CounterCheckin/images/eval_3.png\" width=\"64\" />ปานกลาง</a></td>" +
-                                      "\n<td width=\"20%\"><a href='http://brh.seedoctor.asia/CounterCheckin/Default?id=" + cc_id + "&br=" + br + "&eval=4'><img src=\"http://brh.seedoctor.asia/CounterCheckin/images/eval_4.png\" width=\"64\" />ดี</a></td>" +
-                                      "\n<td width=\"20%\"><a href='http://brh.seedoctor.asia/CounterCheckin/Default?id=" + cc_id + "&br=" + br + "&eval=5'><img src=\"http://brh.seedoctor.asia/CounterCheckin/images/eval_5.png\" width=\"64\" />ดีมาก</a></td>" +
+                                      "\n<td width=\"20%\"><a href='http://brh.apply-apps.com/CounterCheckin/Default?id=" + cc_id + "&br=" + br +"&eval=1'><img src=\"http://brh.apply-apps.com/CounterCheckin/images/eval_1.png\" width=\"64\" />แย่มาก</a></td>" +
+                                      "\n<td width=\"20%\"><a href='http://brh.apply-apps.com/CounterCheckin/Default?id=" + cc_id + "&br=" + br + "&eval=2'><img src=\"http://brh.apply-apps.com/CounterCheckin/images/eval_2.png\" width=\"64\" />แย่</a></td>" +
+                                      "\n<td width=\"20%\"><a href='http://brh.apply-apps.com/CounterCheckin/Default?id=" + cc_id + "&br=" + br + "&eval=3'><img src=\"http://brh.apply-apps.com/CounterCheckin/images/eval_3.png\" width=\"64\" />ปานกลาง</a></td>" +
+                                      "\n<td width=\"20%\"><a href='http://brh.apply-apps.com/CounterCheckin/Default?id=" + cc_id + "&br=" + br + "&eval=4'><img src=\"http://brh.apply-apps.com/CounterCheckin/images/eval_4.png\" width=\"64\" />ดี</a></td>" +
+                                      "\n<td width=\"20%\"><a href='http://brh.apply-apps.com/CounterCheckin/Default?id=" + cc_id + "&br=" + br + "&eval=5'><img src=\"http://brh.apply-apps.com/CounterCheckin/images/eval_5.png\" width=\"64\" />ดีมาก</a></td>" +
                                       "\n</tr>" +
                                       "\n</table>" +
                                       "\n<br /><br />" +

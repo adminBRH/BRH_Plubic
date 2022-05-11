@@ -3,7 +3,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 <style>
-	#div1 {
+	/*#div1 {
 	  width: 350px;
 	  height: 350px;
 	  padding: 10px;
@@ -14,13 +14,16 @@
 	  height: 350px;
 	  padding: 10px;
 	  border: 1px solid #aaaaaa;
-	}
-	.com {
+	}*/
+	.comFrom {
 		background-color: beige; 
 		cursor: move; 
-		height: 43px;
+		height: 68px;
 		border: solid;
 		border-radius: 20px;
+	}
+	.comTo {
+		height: 68px;
 	}
 	.sizeImg {
 		width: 49px;
@@ -100,7 +103,7 @@
 
 <div class="row col-12 mx-auto">
     <div class="alert alert-primary col-12 mx-auto text-center h3">
-        Transfer
+        Transfer by <asp:Label ID="lbl_transferby" Text="" runat="server"></asp:Label>
     </div>
     <div class="row col-6 mx-auto">
         <div class="alert alert-warning col-12 mx-auto h3">
@@ -109,52 +112,105 @@
 				<asp:ListItem Text="" Value=""></asp:ListItem>
 			</asp:DropDownList>
         </div>
-        <div id="div1" class="row col-12 mx-auto bg-dark">
-			<div id="divFrom_1" class="col-5 mx-auto my-1 bg-secondary" ondrop="drop1(event)" onmouseover="divName('divFrom_1')">&nbsp;
-				<div id="com1" class="col-12 mx-auto my-1 com" draggable="true" ondragstart="drag(event)" ondragend="dragEnd(event)" onmouseover="txtImg('คอมห้องหมอ 1')">
-					<img src="../AssetControl/images/logo/PC.png" class="sizeImg" style="cursor: pointer">
-					คอมห้องหมอ 1
-				</div>
-			</div>
-			<div id="divFrom_2" class="col-5 mx-auto my-1 bg-secondary" ondrop="drop1(event)" onmouseover="divName('divFrom_2')">&nbsp;
-				<div id="com2" class="col-12 mx-auto my-1 com" draggable="true" ondragstart="drag(event)" onmouseover="txtImg('คอมห้องยา')">
-					<img src="../AssetControl/images/logo/PC.png" class="sizeImg" style="cursor: pointer">
-					คอมห้องยา
-				</div>
-			</div>
-			<div id="divFrom_3" class="col-5 mx-auto my-1 bg-secondary" ondrop="drop1(event)" onmouseover="divName('divFrom_3')">&nbsp;
-				<div id="com3" class="col-12 mx-auto my-1 com" draggable="true" ondragstart="drag(event)" onmouseover="txtImg('คอมลงทะเบียน 1')">
-					<img src="../AssetControl/images/logo/PC.png" class="sizeImg" style="cursor: pointer">
-					คอมลงทะเบียน 1
-				</div>
-			</div>
-			<div id="divFrom_4" class="col-5 mx-auto my-1 bg-secondary" ondrop="drop1(event)" onmouseover="divName('divFrom_4')">&nbsp;
-				<div id="com4" class="col-12 mx-auto my-1 com" draggable="true" ondragstart="drag(event)" onmouseover="txtImg('คอมลงทะเบียน 2')">
-					<img src="../AssetControl/images/logo/PC.png" class="sizeImg" style="cursor: pointer">
-					คอมลงทะเบียน 2
-				</div>
-			</div>
-        </div>
     </div>
     <div class="row col-6 mx-auto">
         <div class="alert alert-danger col-12 mx-auto h3">
             To: 
-			<asp:DropDownList ID="dd_departmentTo" CssClass="dropdownStyle" runat="server">
+			<asp:DropDownList ID="dd_departmentTo" CssClass="dropdownStyle" OnSelectedIndexChanged="dd_departmentTo_SelectedIndexChanged" AutoPostBack="true" runat="server">
 			</asp:DropDownList>
         </div>
-        <div id="div2" class="row col-12 mx-auto bg-dark">
-			<div id="divTo_1" class="col-5 mx-auto my-1 bg-secondary" ondrop="drop2(event)" onmouseover="divName('divTo_1')" ondragover="allowDrop(event)">&nbsp;</div>
-			<div id="divTo_2" class="col-5 mx-auto my-1 bg-secondary" ondrop="drop2(event)" onmouseover="divName('divTo_2')" ondragover="allowDrop(event)">&nbsp;</div>
-			<div id="divTo_3" class="col-5 mx-auto my-1 bg-secondary" ondrop="drop2(event)" onmouseover="divName('divTo_3')" ondragover="allowDrop(event)">&nbsp;</div>
-			<div id="divTo_4" class="col-5 mx-auto my-1 bg-secondary" ondrop="drop2(event)" onmouseover="divName('divTo_4')" ondragover="allowDrop(event)">&nbsp;</div>
-        </div>
     </div>
+	<div class="row col-6 mx-auto">
+		<div id="div1" class="row col-12 mx-auto my-2 bg-dark">
+			<asp:ListView ID="LV_from" runat="server">
+				<LayoutTemplate>
+					<div id="itemPlaceholder" runat="server"></div>
+				</LayoutTemplate>
+				<ItemTemplate>
+					<div id="divFrom_<%# Eval("asd_id") %>" class="col-5 mx-auto my-1 bg-secondary" ondrop="drop1(event)" onmouseover="divName('divFrom_<%# Eval("asd_id") %>')">
+						<div id="com_<%# Eval("asd_id") %>" class="col-12 mx-auto my-1 comFrom" draggable="true" ondragstart="drag(event)" ondragend="dragEnd(event)" onmouseover="txtImg('<%# Eval("asd_id") %>')">
+							<img src="images/<%# Eval("ast_logo") %>" class="sizeImg" style="cursor: pointer">
+							<%# Eval("asd_displayname") %><br />
+							SN: <%# Eval("asd_sn") %>
+						</div>
+					</div>
+				</ItemTemplate>
+			</asp:ListView>
+        </div>
+	</div>
+	<div class="row col-6 mx-auto">
+		<div id="div2" class="row col-12 mx-auto  my-2 bg-dark">
+			<asp:Label ID="lbl_to" Text="" runat="server" Visible="false"></asp:Label>
+        </div>
+	</div>
 	<div hidden="hidden">
 		<input type="text" id="txt_img" value="" disabled><br />
-		from: <asp:Label ID="lbl_box1" Text="คอมห้องหมอ 1,คอมห้องยา,คอมลงทะเบียน 1,คอมลงทะเบียน 2" runat="server"></asp:Label><br />
+		from: <asp:Label ID="lbl_box1" Text="" runat="server"></asp:Label><br />
 		to: <asp:Label ID="lbl_box2" Text="" runat="server"></asp:Label><br />
+		get: <input id="txtH_id" value="" runat="server" /><br />
 		<input type="text" id="txt_div" value="" disabled>
 	</div>
+
+	<script>
+		function fn_getid() {
+			var to = document.getElementById('<%= lbl_box2.ClientID %>');
+			var get = document.getElementById('<%= txtH_id.ClientID %>');
+			get.value = to.innerHTML;
+        }
+    </script>
+	
+<!-- Modal -->
+<div class="modal fade" id="modalConfirm" tabindex="-1" role="dialog" aria-labelledby="modalConfirmTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-warning">
+        <h5 class="modal-title" id="modalConfirmTitle">Confirm</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+		  คุณต้องการเคลื่อนย้ายอุปกรณ์ดังรายการที่กำหนด ใช่หรือไม่ ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal"> No </button>
+        <button id="btn_submit" class="btn btn-warning" onserverclick="btn_submit_ServerClick" runat="server"> Yes </button>
+      </div>
+    </div>
+  </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalEmail" tabindex="-1" role="dialog" aria-labelledby="modalEmailTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-warning">
+        <h5 class="modal-title" id="modalEmailTitle"> Your Email ?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+		  <div class="alert-primary">
+			เนื่องจากคุณยังไม่มีข้อมูล Email ภายในระบบ กรุณาระบุ email ของคุณ ก่อนทำการบันทึก !!
+		  </div>
+		  <div class="col-10 mx-auto">
+			  <input id="txt_email" class="form-control" value="" placeholder="กรุณาระบุ email ของคุณ" runat="server" />
+		  </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal"> Cancel </button>
+        <button id="Button1" class="btn btn-warning" onserverclick="btn_submit_ServerClick" runat="server"> Save and Submit </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+	<div id="div_submit" class="col-12 mx-auto text-center alert-primary" runat="server" visible="false">
+		<a id="btn_confirm" class="btn btn-warning" style="cursor: pointer; font-size: x-large;" data-toggle="modal" data-target="#modalConfirm" onclick="fn_getid()"> SUBMIT </a>
+	</div>
+</div>
+
+<asp:Label ID="lbl_script" Text="" runat="server"></asp:Label>
 
 </asp:Content>

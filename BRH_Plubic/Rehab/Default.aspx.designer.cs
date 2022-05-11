@@ -51,6 +51,24 @@ namespace BRH_Plubic.Rehab
         protected global::System.Web.UI.WebControls.CheckBox cb_adult;
 
         /// <summary>
+        /// lbl_alert control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_alert;
+
+        /// <summary>
+        /// lbl_test control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_test;
+
+        /// <summary>
         /// lbl_slot control.
         /// </summary>
         /// <remarks>

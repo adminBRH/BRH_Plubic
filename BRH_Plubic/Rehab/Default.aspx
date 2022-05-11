@@ -30,13 +30,15 @@
     </div>
     <!-- ================================================== Slot ================================================== -->
     <div class="col-12 mx-auto my-5">
+        <asp:Label ID="lbl_alert" Text="" runat="server"></asp:Label>
+        <asp:Label ID="lbl_test" Text="" runat="server"></asp:Label>
         <asp:Label ID="lbl_slot" CssClass="col-12 mx-auto text-center" Text="" runat="server"></asp:Label>
     </div>
     <!-- ================================================== Slot ================================================== -->
 
 <!-- Modal Calendar -->
 <div class="modal fade" id="modalCalendar" tabindex="-1" role="dialog" aria-labelledby="modalCalendarTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="modalCalendarTitle">Calendar <asp:Label ID="Label1" Text="" runat="server"></asp:Label></h5>
@@ -45,7 +47,7 @@
         </button>
       </div>
       <div class="modal-body">
-          <asp:Calendar CssClass="mx-auto" ID="CLD_book" runat="server" OnDayRender="CLD_book_DayRender" OnSelectionChanged="CLD_book_SelectionChanged" BackColor="White" BorderColor="White" BorderWidth="1px" Font-Names="Verdana" Font-Size="9pt" ForeColor="Black" Height="250px" NextPrevFormat="ShortMonth" Width="350px">
+          <asp:Calendar CssClass="mx-auto" ID="CLD_book" runat="server" OnDayRender="CLD_book_DayRender" OnSelectionChanged="CLD_book_SelectionChanged" BackColor="White" BorderColor="White" BorderWidth="1px" Font-Names="Verdana" ForeColor="Black" Height="550px" NextPrevFormat="ShortMonth" Width="850px">
                 <DayHeaderStyle Font-Bold="True" Font-Size="8pt"></DayHeaderStyle>
                 <NextPrevStyle VerticalAlign="Bottom" Font-Bold="True" Font-Size="8pt" ForeColor="#333333"></NextPrevStyle>
                 <OtherMonthDayStyle ForeColor="#999999"></OtherMonthDayStyle>

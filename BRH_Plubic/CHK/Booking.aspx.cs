@@ -43,6 +43,7 @@ namespace BRH_Plubic.CHK
                 {
                     DataState(slot, key);
                     DataLoad(slot, key);
+                    DataHybrid(slot, key);
                 }
 
                 if (Session["status"] == null)
@@ -71,6 +72,17 @@ namespace BRH_Plubic.CHK
                             {
                                 AlertSubmit(slot);
                             }
+
+                            string empid = txtSync_empid.Value.ToString().Trim();
+                            if (empid != "")
+                            {
+                                string bookDate = txtH_bookdate.Value.ToString();
+                                string bookTime = txtH_booktime.Value.ToString();
+                                string bookDateTime = DateTime.Parse(bookDate + " " + bookTime).ToString("yyyy-MM-dd HH:mm:ss");
+
+                                callSync(slot, empid, bookDateTime);
+                            }
+
                         }
                     }
                     else
@@ -118,6 +130,14 @@ namespace BRH_Plubic.CHK
             //Session["dt_bookingrecord"] = dt;
             ViewState["bookingrecord"] = dt;
 
+            sql = "select convert(br_datetime,date) as 'br_date', count(br_id) as 'br_count' " +
+                "\nfrom bookingrecord where br_active='yes' and br_bsid='" + id + "' " +
+                "\ngroup by convert(br_datetime,date) ";
+            dt = new DataTable();
+            dt = cl_Sql.select(sql);
+            //Session["dt_bookingrecordCount"] = dt;
+            ViewState["bookingrecordCount"] = dt;
+
             sql = "select ifnull(sum(if(convert(bd.bd_value,decimal(11,0)) <= bs.bs_age_lessequal,1,0)),0) as 'balanceLess' " +
                 "\n,ifnull(sum(if (convert(bd.bd_value, decimal(11,0)) >= bs.bs_age_moreequal,1,0)),0) as 'balanceMore' " +
                 "\nfrom bookingrecord as br " +
@@ -137,10 +157,34 @@ namespace BRH_Plubic.CHK
             dt = cl_Sql.select(sql);
             //Session["dt_bookingRecordSlot"] = dt;
             ViewState["bookingRecordSlot"] = dt;
+        }
 
-            sql = "select * from bookingdetail where bd_bfiid=0 and bd_brid in (select br_id from bookingrecord where br_active='yes' and br_bsid='" + id + "'); ";
-            dt = new DataTable();
-            dt = cl_Sql.select(sql);
+        private void DataHybrid(string id, string key)
+        {
+            string DuplicateNextDay = "";
+
+            string bookDate = txtH_bookdate.Value.ToString();
+            if (bookDate != "")
+            {
+                dt = new DataTable();
+                dt = ViewState["bookingslot"] as DataTable;
+                if (dt.Rows.Count > 0)
+                {
+                    if (dt.Rows[0]["bs_duplicatenextday"].ToString() == "yes") // Can Book Duplicate Next Day
+                    {
+                        DuplicateNextDay = "and br_datetime = convert('" + bookDate + "', datetime) ";
+                    }
+                }
+
+                sql = "select * from bookingdetail where bd_bfiid=0 and bd_brid in (select br_id from bookingrecord where br_active='yes' and br_bsid='" + id + "' " + DuplicateNextDay + "); ";
+                dt = new DataTable();
+                dt = cl_Sql.select(sql);
+            }
+            else
+            {
+                dt = new DataTable();
+                dt = null;
+            }
             //Session["dt_bookingdetail_bfiid0"] = dt;
             ViewState["bookingdetail_bfiid0"] = dt;
         }
@@ -634,7 +678,7 @@ namespace BRH_Plubic.CHK
                 string bookDate = cld_booking.SelectedDate.ToString("yyyy-MM-dd");
                 string bookTime = txtH_booktime.Value.ToString();
                 string bookDateTime = DateTime.Parse(bookDate + " " + bookTime).ToString("yyyy-MM-dd HH:mm:ss");
-                callSync(slot, empid, bookDateTime);
+                //callSync(slot, empid, bookDateTime);
                 if (splittime != "0")
                 {
                     TimeSlot(txtH_bookTimeStart.Value, txtH_bookTimeEnd.Value, splittime, splittimeUnit, breakSt, breakEn, maxqty, startAfterBreak, CloseTime);
@@ -1058,19 +1102,31 @@ namespace BRH_Plubic.CHK
         {
             Boolean bl = false;
 
-            sql = "select count(br_id) as 'br_count' " +
-                "\nfrom bookingrecord where br_active='yes' and br_bsid='" + bsid + "' ";
+            //sql = "select count(br_id) as 'br_count' " +
+            //    "\nfrom bookingrecord where br_active='yes' and br_bsid='" + bsid + "' ";
+            string where = "";
             if (limit == 0)
             {
-                sql += "and convert(br_datetime, date) = convert('" + datetime + "', date) ";
+                where = "br_date = '" + DateTime.Parse(datetime).ToString("yyyy-MM-dd") + "'";
             }
             else
             {
-                sql += "and br_datetime = '" + datetime + "' ";
+                where = "br_datetime = '" + datetime + "'";
             }
+
             DataTable dtRC = new DataTable();
-            dtRC = cl_Sql.select(sql);
-            if (dtRC.Rows.Count > 0)
+            //dtRC = cl_Sql.select(sql);
+
+            int RowCount = 0;
+            dtRC = ViewState["bookingrecordCount"] as DataTable;
+            try
+            {
+                dtRC = dtRC.Select(where).CopyToDataTable();
+                RowCount = dtRC.Rows.Count;
+            }
+            catch { }
+
+            if (RowCount > 0)
             {
                 int CNT = int.Parse(dtRC.Rows[0]["br_count"].ToString());
 
@@ -1177,6 +1233,10 @@ namespace BRH_Plubic.CHK
 
         protected string empSync(string slot, string empid, string bookDate)
         {
+            string key = Request.QueryString["key"].ToString();
+
+            DataHybrid(slot, key);
+
             string result = "";
 
             string cpid = "";
@@ -1194,7 +1254,6 @@ namespace BRH_Plubic.CHK
                 if (dt.Rows[0]["bs_duplicatenextday"].ToString() == "yes") // Can Book Duplicate Next Day
                 {
                     //DuplicateNextDay = "and br_datetime = convert('" + bookDate + "', datetime) ";
-
                     string br_datetime = DateTime.Parse(bookDate).ToString("yyyy-MM-dd HH:mm:ss");
                     DuplicateNextDay = " and br_datetime = '" + br_datetime + "' ";
                 }
@@ -1236,13 +1295,14 @@ namespace BRH_Plubic.CHK
                 //sql = "select * from bookingdetail where bd_bfiid=0 and bd_brid in (select br_id from bookingrecord where br_active='yes' and br_bsid='" + slot + "' " + DuplicateNextDay + ") and bd_value='" + empid + "'; ";
                 //dt = new DataTable();
                 //dt = cl_Sql.select(sql);
+                //RowCount = dt.Rows.Count;
 
                 dt = new DataTable();
                 dt = ViewState["bookingdetail_bfiid0"] as DataTable;
                 RowCount = 0;
                 try
                 {
-                    dt = dt.Select("bd_value='" + empid + "'" + DuplicateNextDay).CopyToDataTable();
+                    dt = dt.Select("bd_value='" + empid + "'").CopyToDataTable();
                     RowCount = dt.Rows.Count;
                 }
                 catch { }
@@ -1301,19 +1361,32 @@ namespace BRH_Plubic.CHK
         {
             Boolean bl = false;
 
-            if (DuplicateNextDay == "yes")
-            {
-                DuplicateNextDay = "and br_datetime = convert('" + bookDate + "', datetime) ";
-            }
-            else
-            {
-                DuplicateNextDay = "";
-            }
+            //if (DuplicateNextDay == "yes")
+            //{
+            //    //DuplicateNextDay = " and br_datetime = convert('" + bookDate + "', datetime) ";
+            //    string br_datetime = DateTime.Parse(bookDate).ToString("yyyy-MM-dd HH:mm:ss");
+            //    DuplicateNextDay = " and br_datetime = '" + br_datetime + "' ";
+            //}
+            //else
+            //{
+            //    DuplicateNextDay = "";
+            //}
 
-            sql = "select * from bookingdetail where bd_bfiid=0 and bd_brid in (select br_id from bookingrecord where br_active='yes' and br_bsid='" + slot + "' " + DuplicateNextDay + ") and bd_value='" + empid + "'; ";
+            //sql = "select * from bookingdetail where bd_bfiid=0 and bd_brid in (select br_id from bookingrecord where br_active='yes' and br_bsid='" + slot + "' " + DuplicateNextDay + ") and bd_value='" + empid + "'; ";
+            //dt = new DataTable();
+            //dt = cl_Sql.select(sql);
+
             dt = new DataTable();
-            dt = cl_Sql.select(sql);
-            if (dt.Rows.Count > 0)
+            dt = ViewState["bookingdetail_bfiid0"] as DataTable;
+            int RowCount = 0;
+            try
+            {
+                dt = dt.Select("bd_value = '" + empid + "'").CopyToDataTable();
+                RowCount = dt.Rows.Count;
+            }
+            catch { }
+
+            if (RowCount > 0)
             {
                 bl = true;
             }
@@ -1363,6 +1436,7 @@ namespace BRH_Plubic.CHK
             string key = Request.QueryString["key"].ToString();
 
             DataLoad(slot, key);
+            DataHybrid(slot, key);
 
             string syncName = "รหัสพนักงาน";
 

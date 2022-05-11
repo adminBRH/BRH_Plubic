@@ -21,7 +21,7 @@ namespace BRH_Plubic.GoodDoctor
         {
             if (Request.QueryString["location"] == null)
             {
-                string scModal = "fn_AlertModal('Warning','URL ไม่ถูกต้อง !!','../Marketing',2000);";
+                string scModal = "fn_AlertModal('Warning','URL ไม่ถูกต้อง !!','../Default',2000);";
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "cllAlertModal", scModal, true);
             }
             else

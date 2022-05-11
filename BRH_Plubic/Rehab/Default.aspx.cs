@@ -8,6 +8,13 @@ using System.Web.UI.WebControls;
 using System.Data;
 using System.Text;
 using MySql.Data.MySqlClient;
+using Nexmo.Api.Voice.EventWebhooks;
+using System.Web.UI.HtmlControls;
+using BRH_Plubic.Service;
+
+using System.Threading;
+using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace BRH_Plubic.Rehab
 {
@@ -15,6 +22,7 @@ namespace BRH_Plubic.Rehab
     {
         string sql = "";
         DataTable dt;
+        DataTable dtRB;
         SQLclass cl_Sql = new SQLclass();
 
         protected void Page_Load(object sender, EventArgs e)
@@ -22,39 +30,34 @@ namespace BRH_Plubic.Rehab
             if (!IsPostBack)
             {
                 CLD_book.SelectedDate = DateTime.Now.Date;
+            }
+
+            DataState();
+
+            if (!IsPostBack)
+            {
                 DateTime date = DateTime.Parse(CLD_book.SelectedDate.ToString());
                 TableDashboard("no", date);
-
-                //SetDOB();
                 ToolList();
             }
         }
 
-        //public void SetDOB()
-        //{
-        //    for (int i = 0; i <= 30; i++)
-        //    {
-        //        string val = (i + 1).ToString();
-        //        dd_DOB_date.Items.Insert(i, new ListItem(val, val));
-        //    }
+        private void DataState()
+        {
+            DateTime date = DateTime.Parse(CLD_book.SelectedDate.ToString());
+            string Dates = date.ToString("yyyy-MM-dd");
 
-        //    for (int i = 0; i <= 11; i++)
-        //    {
-        //        int val = (i + 1);
-        //        string month = MonthThai(val);
-        //        dd_DOB_month.Items.Insert(i, new ListItem(month, val.ToString()));
-        //    }
+            sql = "select * from rehab_book where rhb_active='yes' " +
+                "\nand rhb_rhdid in (select rhd_id from rehab_taskdates where rhd_date = convert('" + Dates + "', date) ) ";
+            dtRB = new DataTable();
+            dtRB = cl_Sql.select(sql);
+            ViewState["rehab_book"] = dtRB;
 
-        //    int StartYear = DateTime.Now.Year + 543;
-        //    int EndYear = StartYear - 120;
-        //    int j = 0;
-        //    while (StartYear >= EndYear)
-        //    {
-        //        dd_DOB_year.Items.Insert(j, new ListItem(StartYear.ToString(), StartYear.ToString()));
-        //        j++;
-        //        StartYear--;
-        //    }
-        //}
+            sql = "select * from rehab_taskdates where rhd_active='yes'; ";
+            dtRB = new DataTable();
+            dtRB = cl_Sql.select(sql);
+            ViewState["rehab_taskdates"] = dtRB;
+        }
 
         public string MonthThai(int NumMonth)
         {
@@ -80,14 +83,6 @@ namespace BRH_Plubic.Rehab
             return month;
         }
 
-        protected DataTable rehabTaskdate(string date)
-        {
-            DataTable dtRH = new DataTable();
-            sql = "select * from rehab_taskdates where rhd_active='yes' and rhd_date=convert('" + date + "',date);";
-            dtRH = cl_Sql.select(sql);
-            return dtRH;
-        }
-
         protected void CLD_book_DayRender(object sender, DayRenderEventArgs e)
         {
             string date = e.Day.Date.ToString();
@@ -100,12 +95,17 @@ namespace BRH_Plubic.Rehab
                 //dt = new DataTable();
                 //dt = cl_Sql.select(sql);
 
-                if (dt == null)
+                dt = new DataTable();
+                dt = ViewState["rehab_taskdates"] as DataTable;
+                int numRow = 0;
+                try
                 {
-                    dt = new DataTable();
-                    dt = rehabTaskdate(date);
+                    dt = dt.Select("rhd_date = '" + date + "'").CopyToDataTable();
+                    numRow = dt.Rows.Count;
                 }
-                if (dt.Rows.Count > 0)
+                catch { }
+
+                if (numRow > 0)
                 {
                     e.Day.IsSelectable = true;
                 }
@@ -193,6 +193,12 @@ namespace BRH_Plubic.Rehab
                 }
                 int w = 100 / i;
                 html = html.Replace("@W", w.ToString());
+
+
+                //sql = "select * from rehab_book where rhb_active='yes' and rhb_rhdid='" + rhd + "' ";
+                //dtRB = new DataTable();
+                //dtRB = cl_Sql.select(sql);
+                //ViewState["rehab_book"] = dtRB;
 
                 while (timeSt <= timeEn)
                 {
@@ -305,6 +311,49 @@ namespace BRH_Plubic.Rehab
             {
                 bl = true;
             }
+
+            //string st = Sttime.ToString("yyyy-MM-dd HH:mm:ss");
+            //string et = Entime.ToString("yyyy-MM-dd HH:mm:ss");
+
+            //int numRow = 0;
+            //dtRB = new DataTable();
+            //dtRB = ViewState["rehab_book"] as DataTable;
+
+            //int num = dtRB.Rows.Count;
+
+            //var filtered = dtRB.AsEnumerable()
+            //    .Where(r => r.Field<int>("rhb_rhsid").Equals(rhs)
+            //            && r.Field<DateTime>("rhb_timest").Equals(st)
+            //            && r.Field<DateTime>("rhb_timeen").Equals(et));
+            //try
+            //{
+            //    num = filtered.Count();
+            //    if (num > 0)
+            //    {
+            //        string rowFil = num.ToString();
+            //    }
+
+            //    string where = "rhb_rhsid = '" + rhs + "'"; 
+            //    where += " and rhb_timest <= '" + st + "'";
+            //    where += " and rhb_timeen >= '" + et + "'";
+
+            //    lbl_test.Text = where;
+
+            //    dtRB.Select(where).CopyToDataTable();
+            //    numRow = dtRB.Rows.Count;
+
+            //    lbl_alert.Text = "";
+            //}
+            //catch
+            //{
+            //    lbl_alert.Text = "Error: LockSlot !!";
+            //    lbl_alert.ForeColor = System.Drawing.Color.Red;
+            //}
+
+            //if (numRow > 0)
+            //{
+            //    bl = true;
+            //}
 
             return bl;
         }
