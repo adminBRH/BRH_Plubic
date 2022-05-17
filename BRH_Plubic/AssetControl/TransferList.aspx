@@ -32,6 +32,14 @@
     </asp:UpdateProgress>
 
     <div class="row col-12 mx-auto">
+        <div class="col-6 mx-auto text-center">
+            <asp:DropDownList ID="DD_date" CssClass="btn btn-outline-info" OnSelectedIndexChanged="DD_date_SelectedIndexChanged" AutoPostBack="true" runat="server">
+                <asp:ListItem Text="" Value=""></asp:ListItem>
+            </asp:DropDownList>
+        </div>
+        <div class="col-6 mx-auto text-center">
+
+        </div>
         <asp:ListView ID="LV_Transfer" runat="server">
             <LayoutTemplate>
                 <div class="col-12 mx-auto alert-primary text-center h3">
@@ -68,7 +76,7 @@
                                 To : <%# Eval("deptTo") %>
                             </div>
                             <div class="row col-5 mx-auto alert-info">
-                                <div class="col-11 mx-auto">
+                                <div class="col-10 mx-auto">
                                     <div class="col-12 mx-auto">
                                         ผู้อนุมัติ : 
                                         <%# Eval("from_hod_name_th") %> 
@@ -77,12 +85,12 @@
                                         <%# Eval("ast_from_hod_remark") %>
                                     </div>
                                 </div>
-                                <div class="col-1 mx-auto my-auto">
+                                <div class="col-2 mx-auto my-auto">
                                     <script>fn_status('<%# Eval("ast_id") %>','<%# Eval("ast_from_action") %>', 'from');</script>
                                 </div>
                             </div>
                             <div class="row col-5 mx-auto alert-info">
-                                <div class="col-11 mx-auto">
+                                <div class="col-10 mx-auto">
                                     <div class="col-12 mx-auto">
                                         ผู้อนุมัติ : 
                                         <%# Eval("to_hod_name_th") %>
@@ -91,7 +99,7 @@
                                         <%# Eval("ast_to_hod_remark") %>
                                     </div>
                                 </div>
-                                <div class="col-1 mx-auto my-auto">
+                                <div class="col-2 mx-auto my-auto">
                                     <script>fn_status('<%# Eval("ast_id") %>','<%# Eval("ast_to_action") %>', 'to');</script>
                                 </div>
                             </div>

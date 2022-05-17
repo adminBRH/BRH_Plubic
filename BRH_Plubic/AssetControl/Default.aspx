@@ -5,7 +5,7 @@
 
 <style>
     .boxMain {
-        position: absolute;
+        /*position: absolute;*/
         padding: 25px;
         margin: auto;
     }
@@ -39,7 +39,7 @@
 
     <link rel="stylesheet" href="css/PostCard.css">
     
-    <div class="row col-12 mx-auto boxMain" style="margin-top: 10%;">
+    <div class="row col-12 mx-auto boxMain">
         <div class="card col-sm-10 col-lg-5 mx-auto my-3 buttonMain" onclick="alert('ยังไม่เปิดให้ใช้งาน !!');">
             <div class="text-center my-auto my-auto buttonIcon">
                 <i class="fa fa-hospital-o icon"></i>
@@ -67,6 +67,20 @@
             </div>
             <p class="h3">Asset details.</p>
             <p class="h5">รายละเอียดทรัพย์สิน</p>
+        </div>
+        <div class="card col-sm-10 col-lg-5 mx-auto my-3 buttonMain" onclick="fn_link('Transfer')">
+            <div class="text-center my-auto my-auto buttonIcon">
+                <i class="fa fa-braille icon"></i>
+            </div>
+            <p class="h3">Transfer.</p>
+            <p class="h5">โอนย้ายทรัพย์สิน</p>
+        </div>
+        <div class="card col-sm-10 col-lg-5 mx-auto my-3 buttonMain" onclick="fn_link('TransferList')">
+            <div class="text-center my-auto my-auto buttonIcon">
+                <i class="fa fa-list-ol icon"></i>
+            </div>
+            <p class="h3">Transfer list.</p>
+            <p class="h5">รายการโอนย้ายทรัพย์สิน</p>
         </div>
     </div>
 

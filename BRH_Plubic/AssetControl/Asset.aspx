@@ -171,8 +171,11 @@
 </script>
         <!-- ======================================================= Detail ======================================================= -->
         <div id="div_detail" class="row col-12 mx-auto my-5" runat="server" >
-            <div class="row col-5 mx-auto text-left">
-                <div class="col-6 mx-auto">
+            <div class="row col-3 mx-auto text-left">
+                <div class="col-12 mx-auto">
+                    Show
+                </div>
+                <div class="col-12 mx-auto">
                     <asp:DropDownList ID="dd_limit" CssClass="btn btn-dark" OnSelectedIndexChanged="dd_limit_SelectedIndexChanged" AutoPostBack="true" runat="server">
                         <asp:ListItem Text="10 item" Value="10"></asp:ListItem>
                         <asp:ListItem Text="20 item" Value="20"></asp:ListItem>
@@ -182,8 +185,18 @@
                     </asp:DropDownList>
                 </div>
             </div>
-            <div class="col-7 mx-auto my-auto text-left" style="color: coral">
+            <div class="col-6 mx-auto my-auto text-center" style="color: coral">
                 <asp:Label ID="lbl_search_alert" Text="" runat="server"></asp:Label>
+            </div>
+            <div class="row col-3 mx-auto text-right">
+                <div class="col-12 mx-auto">
+                    Status
+                </div>
+                <div class="col-12 mx-auto">
+                    <asp:DropDownList ID="DD_status" CssClass="btn btn-dark" OnSelectedIndexChanged="DD_status_SelectedIndexChanged" AutoPostBack="true" runat="server">
+                        <asp:ListItem Text="" Value=""></asp:ListItem>
+                    </asp:DropDownList>
+                </div>
             </div>
             <div class="col-12 mx-auto">
                 <asp:ListView ID="LV_Asset" runat="server">
@@ -201,6 +214,7 @@
                             <div class="PostCard">
                                 <div class="PostCard-time">
                                     Update: <%# Eval("asd_timeago") %>
+                                    <i class="fa fa-2x fa-microchip" data-toggle="modal" data-target="#modal_Log" onclick="fn_log('<%# Eval("asd_sn") %>','<%# Eval("asd_displayname") %>','<%# Eval("asd_id") %>')" style="cursor: pointer;"></i>
                                 </div>
                                 <div class="PostCard-logo text-center">
                                     <img src="images/<%# Eval("ast_logo") %>" class="PostCard-logo-img" data-toggle="tooltip" data-placement="top" title="<%# Eval("ast_name") %>" />
@@ -249,6 +263,10 @@
                                     <i id="i_ar_<%# Eval("asd_id") %>" data-toggle="modal" data-target="#modal_repair" title="แจ้งซ่อม" style="cursor: pointer;" onclick="fn_repair('<%# Eval("asd_displayname") %>','<%# Eval("ast_name") %>','<%# Eval("ds_desc") %>','<%# Eval("asd_sn") %>','<%# Eval("asr_status") %>','<%# Eval("asr_id") %>')"></i>
                                 </div>
                                 <script>
+                                    var btnRepair = document.getElementById('i_ar_<%# Eval("asd_id") %>');
+                                    if (<%# Eval("asd_status") %> != '1') {
+                                        btnRepair.setAttribute('hidden','hidden')
+                                    }
                                     fn_RepairIcon('<%# Eval("asr_status") %>', '<%# Eval("asd_id") %>');
                                 </script>
                                 <div class="PostCard-footer">
@@ -276,7 +294,9 @@
                                         '<%# Eval("asd_gls_barcode") %>',
                                         '<%# Eval("asd_nhealth_barcode") %>',
                                         '<%# Eval("asd_mac") %>',
-                                        '<%# Eval("asd_ip") %>'
+                                        '<%# Eval("asd_ip") %>',
+                                        '<%# Eval("asd_status") %>',
+                                        '<%# Eval("ass_name") %>'
                                         )"
                                         data-toggle="modal" data-target="#modalEdit"
                                         style="cursor: pointer;">
@@ -543,6 +563,14 @@
                         <span class="badge badge-info fontBadge" style="margin-top: 0;">Other Description</span>
                         <textarea id="txt_edit_desc" rows="3" class="form-control" runat="server" />
                     </div>
+                    <div class="col-12 mx-auto my-2">
+                        <span class="badge badge-info fontBadge">Status</span>
+                        <asp:DropDownList ID="dd_edit_status" runat="server">
+                            <asp:ListItem Text="IN USE" Value="1"></asp:ListItem>
+                            <asp:ListItem Text="MISSING" Value="2"></asp:ListItem>
+                        </asp:DropDownList>
+                        <label id="lbl_show_status"></label>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -554,8 +582,96 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="modal_Log" tabindex="-1" role="dialog" aria-labelledby="modal_LogTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal_LogTitle">Select Log Category</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <label id="lbl_log_sn"></label>
+          <asp:DropDownList ID="dd_log" CssClass="form-control" runat="server">
+              <asp:ListItem Text="Please selecr LOG" Value="" Selected="True"></asp:ListItem>
+              <asp:ListItem Text="Log Transfer" Value="transfer"></asp:ListItem>
+              <asp:ListItem Text="Log Repair" Value="repair"></asp:ListItem>
+              <asp:ListItem Text="Log Edit data" Value="edit"></asp:ListItem>
+          </asp:DropDownList>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button id="btn_generate_log" type="button" class="btn btn-warning" onserverclick="btn_generate_log_ServerClick" runat="server">Generate LOG</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modal_Log_Transfer" tabindex="-1" role="dialog" aria-labelledby="modal_Log_TransferTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal_Log_TransferTitle">Transfer LOG</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <asp:ListView ID="LV_log_transfer" runat="server">
+              <LayoutTemplate>
+                  <div class="row col-12 mx-auto">
+                      <div class="col-1 mx-auto text-center">Doc</div>
+                      <div class="col-3 mx-auto text-center">Request</div>
+                      <div class="col-4 mx-auto text-center">Transfer From</div>
+                      <div class="col-4 mx-auto text-center">Transfer To</div>
+                  </div>
+                  <div id="itemPlaceholder" runat="server"></div>
+              </LayoutTemplate>
+              <ItemTemplate>
+                  <div class="card col-12 mx-auto my-2">
+                      <div class="row col-12 mx-auto">
+                          <div class="col-1 mx-auto">
+                              <%# Eval("ast_id") %>
+                          </div>
+                          <div class="col-3 mx-auto">
+                              <%# Eval("ast_from_date", "{0:dd/MM/yyyy HH:mm:ss}") %><br />
+                              <%# Eval("ast_from_user") %>
+                          </div>
+                          <div class="col-4 mx-auto">
+                              <%# Eval("ast_from_dept") %><br />
+                              <%# Eval("ast_from_hod") %><br />
+                              <%# Eval("ast_from_action") %><br /> 
+                              <%# Eval("ast_from_action_date", "{0:dd/MM/yyyy HH:mm:ss}") %>
+                          </div>
+                          <div class="col-4 mx-auto">
+                              <%# Eval("ast_to_dept") %><br />
+                              <%# Eval("ast_to_hod") %><br />
+                              <%# Eval("ast_to_action") %><br /> 
+                              <%# Eval("ast_to_action_date", "{0:dd/MM/yyyy HH:mm:ss}") %>
+                          </div>
+                      </div>
+                  </div>
+              </ItemTemplate>
+          </asp:ListView>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div hidden="hidden">
+    <input id="txtH_log_asdid" value="" runat="server" />
+</div>
 <script>
-    function fn_setDataEdit(index ,id, loname, lo, type, display, comname, sn, asr, gls, nhealth, mac, ip) {
+    function fn_log(sn, name, asdid) {
+        var lbl = document.getElementById('lbl_log_sn');
+        lbl.innerHTML = 'Log of <br />SN:' + sn + '<br />' + name;
+        document.getElementById('<%= txtH_log_asdid.ClientID %>').value = asdid;
+    }
+
+    function fn_setDataEdit(index ,id, loname, lo, type, display, comname, sn, asr, gls, nhealth, mac, ip, status, statusname) {
         var asdID = document.getElementById('<%= txtH_asdID.ClientID %>');
         var txtLocationName = document.getElementById('<%= txt_edit_location_name.ClientID %>');
         var txtLocation = document.getElementById('<%= txt_edit_location.ClientID %>');
@@ -569,6 +685,7 @@
         var txtMac = document.getElementById('<%= txt_edit_mac.ClientID %>');
         var txtIP = document.getElementById('<%= txt_edit_ip.ClientID %>');
         var txtDesc = document.getElementById('<%= txt_edit_desc.ClientID %>');
+        var DDStatus = document.getElementById('<%= dd_edit_status.ClientID %>');
         asdID.value = id;
         txtLocationName.value = loname;
         txtLocation.value = lo;
@@ -582,6 +699,13 @@
         txtMac.value = mac;
         txtIP.value = ip;
         txtDesc.value = document.getElementById('txt_desc_' + index).value;
+        DDStatus.value = status;
+        if (parseInt(status) <= 2) {
+            DDStatus.removeAttribute('hidden');
+        } else {
+            DDStatus.setAttribute('hidden', 'hidden');
+            document.getElementById('lbl_show_status').innerHTML = statusname;
+        }
     }
 </script>
 

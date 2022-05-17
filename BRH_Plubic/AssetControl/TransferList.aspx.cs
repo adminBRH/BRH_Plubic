@@ -28,31 +28,56 @@ namespace BRH_Plubic.AssetControl
             {
                 if (!IsPostBack)
                 {
+                    string astid = "";
+                    if (Request.QueryString["id"] != null)
+                    {
+                        astid = Request.QueryString["id"].ToString();
+                    }
                     string user = Session["userid"].ToString();
+                    string date = "";
                     string fromDept = "";
                     string toDept = "";
                     string fromAction = "";
                     string ToAction = "";
-                    ListTransfer(user, fromDept, toDept, fromAction, ToAction);
+                    ListTransfer(astid, user, date, fromDept, toDept, fromAction, ToAction);
+
+                    DateDropDown();
                 }
             }
         }
 
         protected void Search()
         {
+            string astid = "";
+            if (Request.QueryString["id"] != null)
+            {
+                astid = Request.QueryString["id"].ToString();
+            }
             string user = Session["userid"].ToString();
+            string date = DD_date.SelectedValue.ToString();
             string fromDept = "";
             string toDept = "";
             string fromAction = "";
             string ToAction = "";
-            ListTransfer(user, fromDept, toDept, fromAction, ToAction);
+            ListTransfer(astid, user, date, fromDept, toDept, fromAction, ToAction);
         }
 
-        protected void ListTransfer(string user,string fromDept, string toDept,string fromAction, string ToAction)
+        protected void ListTransfer(string astid,string user, string date,string fromDept, string toDept,string fromAction, string ToAction)
         {
             if (Session["status"].ToString() == "admin")
             {
                 user = "";
+            }
+
+            string WhereAstID = "";
+            if (astid != "")
+            {
+                WhereAstID = "and ast_id = '" + astid + "'";
+            }
+
+            if (date != "")
+            {
+                date = DateTime.Parse(date).ToString("yyyy-MM-dd");
             }
 
             sql = "SELECT ast.*, emp.emp_pname_th, ifnull(emp.emp_fname_th,'IT') as 'emp_fname_th', ifnull(emp.emp_lname_th,'Clinic') as 'emp_lname_th', " +
@@ -65,7 +90,8 @@ namespace BRH_Plubic.AssetControl
                 "\nleft join employee as emp3 on emp3.emp_id COLLATE utf8_general_ci = ast.ast_to_hod " +
                 "\nleft join department as dfrom on dfrom.deptid COLLATE utf8_general_ci = ast.ast_from_dept " +
                 "\nleft join department as dto on dto.deptid COLLATE utf8_general_ci = ast.ast_to_dept " +
-                "\nwhere ast_active = 'yes' and ast_from_dept like '%" + fromDept + "%' and ast_to_dept like '%" + toDept + "%' " +
+                "\nwhere ast_active = 'yes' " + WhereAstID + " and convert(ast_from_date, date) like '%" + date + "%' " +
+                "\nand ast_from_dept like '%" + fromDept + "%' and ast_to_dept like '%" + toDept + "%' " +
                 "\nand ast_from_action like '%" + fromAction + "%' and ast_to_action like '%" + ToAction + "%' " +
                 "\nand (ast_from_user like '%" + user + "%' or ast_from_hod like '%" + user + "%' or ast_to_hod like '%" + user + "%') " +
                 "\norder by ast_id";
@@ -76,6 +102,23 @@ namespace BRH_Plubic.AssetControl
 
             LV_Transfer.DataSource = dt;
             LV_Transfer.DataBind();
+        }
+
+        protected void DateDropDown()
+        {
+            sql = "select distinct convert(ast_from_date, date) as 'ast_from_date' from asset_transfer where ast_active = 'yes'; ";
+            dt = new DataTable();
+            dt = cl_Sql.select(sql);
+            if (dt.Rows.Count > 0)
+            {
+
+            }
+            DD_date.DataSource = dt;
+            DD_date.DataTextField = "ast_from_date";
+            DD_date.DataTextFormatString  = " {0:yyyy-MM-dd} ";
+            DD_date.DataValueField = "ast_from_date";
+            DD_date.DataBind();
+            DD_date.Items.Insert(0, new ListItem("ทั้งหมด", ""));
         }
 
         protected void btn_details_ServerClick(object sender, EventArgs e)
@@ -133,24 +176,18 @@ namespace BRH_Plubic.AssetControl
             return bl;
         }
 
-        protected void ClearReserve()
+        protected void ClearReserve(string detailID)
         {
-            string idArray = txtH_details.Value.ToString().Trim();
-            sql = "update asset_details set asd_transfer_dept = null where asd_id in (" + idArray + ");";
+            // Status 1 = In Use
+            sql = "update asset_details set asd_status = '1', asd_transfer_dept = null where asd_id in (" + detailID + ");";
             cl_Sql.Modify(sql);
         }
         
-        protected void UseReserve(string detailsID)
+        protected void UseReserve(string detailsID, string dept)
         {
-            sql = "select * from asset_details where asd_id in (" + detailsID + "); ";
-            dt = new DataTable();
-            dt = cl_Sql.select(sql);
-            if (dt.Rows.Count > 0)
-            {
-                string dept = dt.Rows[0]["asd_transfer_dept"].ToString();
-                sql = "update asset_details set asd_transfer_dept = null, asd_dept = '" + dept + "' where asd_id in (" + detailsID + ");";
-                cl_Sql.Modify(sql);
-            }
+            // Status 1 = In Use
+            sql = "update asset_details set asd_status = '1', asd_transfer_dept = null, asd_dept = '" + dept + "' where asd_id in (" + detailsID + ");";
+            cl_Sql.Modify(sql);
         }
 
         protected void btn_reject_ServerClick(object sender, EventArgs e)
@@ -194,6 +231,8 @@ namespace BRH_Plubic.AssetControl
                     dt = cl_Sql.select(sql);
                     if (dt.Rows.Count > 0)
                     {
+                        string detailID = dt.Rows[0]["ast_asdid_array"].ToString();
+
                         sql = "select * from employee where emp_id = '" + dt.Rows[0]["ast_from_user"].ToString() + "'; ";
                         dt = new DataTable();
                         dt = cl_Sql.select(sql);
@@ -209,11 +248,12 @@ namespace BRH_Plubic.AssetControl
                                 Search();
                             }
                         }
+
+                        ClearReserve(detailID);
                     }
+
                     Search();
                 }
-
-                ClearReserve();
 
                 scModal = "$('Modal_WaitLoad').modal('hide');";
             }
@@ -294,6 +334,7 @@ namespace BRH_Plubic.AssetControl
                         if (dt.Rows.Count > 0)
                         {
                             string detailID = dt.Rows[0]["ast_asdid_array"].ToString();
+                            string dept = dt.Rows[0]["ast_to_dept"].ToString();
 
                             sql = "select * from employee where emp_id = '" + dt.Rows[0]["ast_from_user"].ToString() + "'; ";
                             dt = new DataTable();
@@ -310,7 +351,7 @@ namespace BRH_Plubic.AssetControl
                                     Search();
                                 }
                             }
-                            UseReserve(detailID);
+                            UseReserve(detailID, dept);
                         }
                     }
                 }
@@ -323,6 +364,11 @@ namespace BRH_Plubic.AssetControl
                 scModal = "$('Modal_WaitLoad').modal('hide'); fn_AlertModal('Warning','คุณไม่มีสิทธิ์กระทำการในส่วนนี้ !!','',0);";
             }
             Page.ClientScript.RegisterStartupScript(this.GetType(), "cllAlertModal", scModal, true);
+        }
+
+        protected void DD_date_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Search();
         }
     }
 }

@@ -19,7 +19,7 @@ public class ClassEmail
         smtpClient.EnableSsl = true;
         MailMessage mail = new MailMessage();
 
-        //mailTo = "brh.hito@bdms.co.th"; // for TEST
+        mailTo = "brh.hito@bdms.co.th"; // for TEST
 
         //Setting From , To and CC
         mail.From = new MailAddress("info@brh.co.th", "BRH Automail service");

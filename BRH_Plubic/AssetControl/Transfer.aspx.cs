@@ -181,50 +181,58 @@ namespace BRH_Plubic.AssetControl
                 string deptFrom = dd_department.SelectedValue.ToString();
                 string deptTo = dd_departmentTo.SelectedValue.ToString();
 
-                sql = "insert into asset_transfer(ast_asdid_array,ast_from_user,ast_from_user_remark,ast_from_dept,ast_from_hod,ast_to_dept) " +
-                    "\nvalue('" + idArray + "','" + user + "','" + remark + "','" + deptFrom + "','itclinic','" + deptTo + "'); ";
-                if (cl_Sql.Modify(sql))
+                if (idArray == "")
                 {
-                    sql = "update asset_details set asd_transfer_dept = '" + deptTo + "' where asd_id in ("+ idArray +"); ";
+                    scModal = "fn_AlertModal('Info','Please Drag & Drop Asset !!','',0);";
+                }
+                else
+                {
+                    sql = "insert into asset_transfer(ast_asdid_array,ast_from_user,ast_from_user_remark,ast_from_dept,ast_from_hod,ast_to_dept) " +
+                        "\nvalue('" + idArray + "','" + user + "','" + remark + "','" + deptFrom + "','itclinic','" + deptTo + "'); ";
                     if (cl_Sql.Modify(sql))
                     {
-                        sql = "select max(ast_id) as 'ast_id' from asset_transfer " +
-                            "\nwhere convert(ast_from_date, date)=CURRENT_DATE and ast_asdid_array='" + idArray + "' ";
-                        dt = new DataTable();
-                        dt = cl_Sql.select(sql);
-                        if (dt.Rows.Count > 0)
+                        // Status 4 = Moving
+                        sql = "update asset_details set asd_status = '4', asd_transfer_dept = '" + deptTo + "' where asd_id in (" + idArray + "); ";
+                        if (cl_Sql.Modify(sql))
                         {
-                            string astID = dt.Rows[0]["ast_id"].ToString();
-
-                            sql = "select * from department where deptid='" + deptFrom + "'; ";
+                            sql = "select max(ast_id) as 'ast_id' from asset_transfer " +
+                                "\nwhere convert(ast_from_date, date)=CURRENT_DATE and ast_asdid_array='" + idArray + "' ";
                             dt = new DataTable();
                             dt = cl_Sql.select(sql);
                             if (dt.Rows.Count > 0)
                             {
-                                string emailHod1 = dt.Rows[0]["email_hod1"].ToString();
-                                string linkApprove = Request.RawUrl + "/transferApprove?id=" + astID;
-                                string html = "";
+                                string astID = dt.Rows[0]["ast_id"].ToString();
 
-                                scModal = "fn_AlertModal('Success','Success !!','../AssetControl/Transfer',2500);";
+                                sql = "select * from department where deptid='" + deptFrom + "'; ";
+                                dt = new DataTable();
+                                dt = cl_Sql.select(sql);
+                                if (dt.Rows.Count > 0)
+                                {
+                                    string emailHod1 = dt.Rows[0]["email_hod1"].ToString();
+                                    string linkApprove = Request.RawUrl + "/transferApprove?id=" + astID;
+                                    string html = "";
+
+                                    scModal = "fn_AlertModal('Success','Success !!','../AssetControl/Transfer',2500);";
+                                }
+                                else
+                                {
+                                    scModal = "fn_AlertModal('Info','No this department !!','',0);";
+                                }
                             }
                             else
                             {
-                                scModal = "fn_AlertModal('Info','No this department !!','',0);";
+                                scModal = "fn_AlertModal('Warning','Find not found document number !!','',0);";
                             }
                         }
                         else
                         {
-                            scModal = "fn_AlertModal('Warning','Find not found document number !!','',0);";
+                            scModal = "fn_AlertModal('Warning','Unable to reserve assets !!','',0);";
                         }
                     }
                     else
                     {
-                        scModal = "fn_AlertModal('Warning','Unable to reserve assets !!','',0);";
+                        scModal = "fn_AlertModal('Warning','Can't insert data !!','',0);";
                     }
-                }
-                else
-                {
-                    scModal = "fn_AlertModal('Warning','Can't insert data !!','',0);";
                 }
             }
             else

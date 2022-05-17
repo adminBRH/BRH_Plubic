@@ -312,6 +312,15 @@ namespace BRH_Plubic.AssetControl
         protected global::System.Web.UI.WebControls.Label lbl_search_alert;
 
         /// <summary>
+        /// DD_status control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DD_status;
+
+        /// <summary>
         /// LV_Asset control.
         /// </summary>
         /// <remarks>
@@ -663,6 +672,15 @@ namespace BRH_Plubic.AssetControl
         protected global::System.Web.UI.HtmlControls.HtmlTextArea txt_edit_desc;
 
         /// <summary>
+        /// dd_edit_status control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList dd_edit_status;
+
+        /// <summary>
         /// btn_edit control.
         /// </summary>
         /// <remarks>
@@ -670,5 +688,41 @@ namespace BRH_Plubic.AssetControl
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlButton btn_edit;
+
+        /// <summary>
+        /// dd_log control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList dd_log;
+
+        /// <summary>
+        /// btn_generate_log control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton btn_generate_log;
+
+        /// <summary>
+        /// LV_log_transfer control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListView LV_log_transfer;
+
+        /// <summary>
+        /// txtH_log_asdid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtH_log_asdid;
     }
 }
