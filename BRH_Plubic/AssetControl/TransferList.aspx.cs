@@ -70,9 +70,13 @@ namespace BRH_Plubic.AssetControl
             }
 
             string WhereAstID = "";
-            if (astid != "")
+            if (astid == ""){
+                DD_date.Visible = true;
+            }
+            else
             {
                 WhereAstID = "and ast_id = '" + astid + "'";
+                DD_date.Visible = false;
             }
 
             if (date != "")
@@ -205,6 +209,7 @@ namespace BRH_Plubic.AssetControl
                 {
                     sql = "update asset_transfer set ast_from_hod_remark = '" + remark + "' " +
                         "\n,ast_from_action = 'reject', ast_from_action_date = CURRENT_TIMESTAMP " +
+                        "\n,ast_to_action = '' " +
                         "\nwhere ast_id = '" + id + "'; ";
                     if (cl_Sql.Modify(sql))
                     {
@@ -238,11 +243,13 @@ namespace BRH_Plubic.AssetControl
                         dt = cl_Sql.select(sql);
                         if (dt.Rows.Count > 0)
                         {
+                            string iconReject = "<span id=\"❌\">❌</span>";
+
                             string mailTo = dt.Rows[0]["emp_email"].ToString();
                             string subject = "รายการโอนย้ายทรัพย์สินของคุณ เอกสารเลขที่ " + id;
-                            string body = "<br /><b>ไม่ได้รับการอนุมัติโอนย้ายทรัพย์สิน</b>" +
-                                "<br />Link: <a href=\"" + Request.UserHostAddress + Request.Path + "?id=" + id + "\"> " + Request.UserHostAddress + Request.Path + "?id=" + id + " </a>" +
-                                "<br /><br /><br />อีเมลฉบับนี้เป็นอีเมลอัตโนมัติ ไม่สามารถตอบกลับได้";
+                            string body = "<br /><b> " + iconReject + " ไม่ได้รับการอนุมัติโอนย้ายทรัพย์สิน</b>" +
+                                "<br />Link: <a href=\"" + cl_Sql.host() + "AssetControl/TransferList?id=" + id + "\">Go to Transfer list.</a>" +
+                                "<br /><br /><br />อีเมลฉบับนี้เป็นอีเมลอัตโนมัติ ไม่สามารถตอบกลับได้<br />";
                             if (cl_email.Send(mailTo, subject, body))
                             {
                                 Search();
@@ -273,6 +280,9 @@ namespace BRH_Plubic.AssetControl
                 string id = txtH_id.Value.ToString();
                 string remark = txt_remark.Value.ToString().Trim();
 
+                string iconAlert = "<span id=\"🔔\">🔔</span>";
+                string iconApprove = "<span id=\"✔️\">✔️</span>";
+
                 if (action == "from")
                 {
                     sql = "select * from asset_transfer where ast_id = '" + id + "'; ";
@@ -281,6 +291,7 @@ namespace BRH_Plubic.AssetControl
                     if (dt.Rows.Count > 0)
                     {
                         string userRequest = dt.Rows[0]["ast_from_user"].ToString();
+                        string fromStatus = dt.Rows[0]["ast_from_action"].ToString();
                         string deptTO = dt.Rows[0]["ast_to_dept"].ToString();
 
                         sql = "select * from department where deptid = '" + deptTO + "'; ";
@@ -291,31 +302,51 @@ namespace BRH_Plubic.AssetControl
                             string hod1 = dt.Rows[0]["depthod1"].ToString();
                             string mailTo = dt.Rows[0]["email_hod1"].ToString();
 
+                            string details = "";
+
                             sql = "update asset_transfer set ast_from_hod_remark = '" + remark + "' " +
-                                "\n,ast_from_action = 'approve', ast_from_action_date = CURRENT_TIMESTAMP " +
-                                "\n,ast_to_hod = '" + hod1 + "', ast_to_action = 'transfer' " +
-                                "\nwhere ast_id = '" + id + "'; ";
+                                    "\n,ast_from_action_date = CURRENT_TIMESTAMP ";
+                            if (fromStatus == "acknowledge")
+                            {
+                                sql += "\n,ast_from_action = 'approve' ";
+                                details = iconAlert + " เจ้าหน้าที่ IT Clinic รับทราบแล้ว รอการตรวจสอบและอนุมัติในลำดับต่อไป";
+                            }
+                            else if (fromStatus == "approve")
+                            {
+                                sql += "\n,ast_from_action = 'finish', ast_to_hod = '" + hod1 + "', ast_to_action = 'receive' ";
+                                details = iconApprove + " ได้รับการอนุมัติโอนย้ายทรัพย์สิน จากเจ้าหน้าที่ IT Clinic แล้ว";
+                            }
+                            else
+                            { }
+                            sql += "\nwhere ast_id = '" + id + "'; ";
+
                             if (cl_Sql.Modify(sql))
                             {
-                                string subject = "รายการโอนย้ายทรัพย์สิน เอกสารเลขที่ " + id;
-                                string body = "<br /><b>มีคำร้องขอ รออนุมัติการโอนย้ายทรัพย์สิน</b>" +
-                                    "<br />Link: <a href=\"" + Request.UserHostAddress + Request.Path + "?id=" + id + "\"> " + Request.UserHostAddress + Request.Path + "?id=" + id + " </a>" +
-                                    "<br /><br /><br />อีเมลฉบับนี้เป็นอีเมลอัตโนมัติ ไม่สามารถตอบกลับได้";
-                                if (cl_email.Send(mailTo, subject, body))
+                                string subject = "";
+                                string body = "";
+
+                                if (fromStatus == "approve")
                                 {
-                                    sql = "select * from employee where emp_id = '" + userRequest + "'; ";
-                                    dt = new DataTable();
-                                    dt = cl_Sql.select(sql);
-                                    if (dt.Rows.Count > 0)
-                                    {
-                                        mailTo = dt.Rows[0]["emp_email"].ToString();
-                                        subject = "รายการโอนย้ายทรัพย์สินของคุณ เอกสารเลขที่ " + id;
-                                        body = "<br /><b>ได้รับการอนุมัติโอนย้ายทรัพย์สิน จากเจ้าหน้าที่ IT Clinic แล้ว</b>" +
-                                            "<br />Link: <a href=\"" + Request.UserHostAddress + Request.Path + "?id=" + id + "\"> " + Request.UserHostAddress + Request.Path + "?id=" + id + " </a>" +
-                                            "<br /><br /><br />อีเมลฉบับนี้เป็นอีเมลอัตโนมัติ ไม่สามารถตอบกลับได้";
-                                        cl_email.Send(mailTo, subject, body);
-                                    }
+                                    subject = "รายการโอนย้ายทรัพย์สิน เอกสารเลขที่ " + id;
+                                    body = "<br /><b>" + iconAlert + " มีคำร้องขอ รออนุมัติการโอนย้ายทรัพย์สิน</b>" +
+                                        "<br />Link: <a href=\"" + cl_Sql.host() + "AssetControl/TransferList?id=" + id + "\">Go to Transfer list.</a>" +
+                                        "<br /><br /><br />อีเมลฉบับนี้เป็นอีเมลอัตโนมัติ ไม่สามารถตอบกลับได้<br />";
+                                    cl_email.Send(mailTo, subject, body);
                                 }
+
+                                sql = "select * from employee where emp_id = '" + userRequest + "'; ";
+                                dt = new DataTable();
+                                dt = cl_Sql.select(sql);
+                                if (dt.Rows.Count > 0)
+                                {
+                                    mailTo = dt.Rows[0]["emp_email"].ToString();
+                                    subject = "รายการโอนย้ายทรัพย์สินของคุณ เอกสารเลขที่ " + id;
+                                    body = "<br /><b>" + details + "</b>" +
+                                        "<br />Link: <a href=\"" + cl_Sql.host() + "AssetControl/TransferList?id=" + id + "\">Go to Transfer list.</a>" +
+                                        "<br /><br /><br />อีเมลฉบับนี้เป็นอีเมลอัตโนมัติ ไม่สามารถตอบกลับได้<br />";
+                                    cl_email.Send(mailTo, subject, body);
+                                }
+
                                 Search();
                             }
                         }
@@ -324,7 +355,7 @@ namespace BRH_Plubic.AssetControl
                 else if (action == "to")
                 {
                     sql = "update asset_transfer set ast_to_hod_remark = '" + remark + "' " +
-                        "\n,ast_to_action = 'approve', ast_to_action_date = CURRENT_TIMESTAMP " +
+                        "\n,ast_to_action = 'finish', ast_to_action_date = CURRENT_TIMESTAMP " +
                         "\nwhere ast_id = '" + id + "'; ";
                     if (cl_Sql.Modify(sql))
                     {
@@ -344,8 +375,8 @@ namespace BRH_Plubic.AssetControl
                                 string mailTo = dt.Rows[0]["emp_email"].ToString();
                                 string subject = "รายการโอนย้ายทรัพย์สินของคุณ เอกสารเลขที่ " + id;
                                 string body = "<br /><b>ได้รับการอนุมัติโอนย้ายเข้าแผนกปลายทาง เรียบร้อยแล้ว</b>" +
-                                    "<br />Link: <a href=\"" + Request.UserHostAddress + Request.Path + "?id=" + id + "\"> " + Request.UserHostAddress + Request.Path + "?id=" + id + " </a>" +
-                                    "<br /><br /><br />อีเมลฉบับนี้เป็นอีเมลอัตโนมัติ ไม่สามารถตอบกลับได้";
+                                    "<br />Link: <a href=\"" + cl_Sql.host() + "AssetControl/TransferList?id=" + id + "\">Go to Transfer list.</a>" +
+                                    "<br /><br /><br />อีเมลฉบับนี้เป็นอีเมลอัตโนมัติ ไม่สามารถตอบกลับได้<br />";
                                 if (cl_email.Send(mailTo, subject, body))
                                 {
                                     Search();

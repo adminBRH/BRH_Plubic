@@ -428,4 +428,9 @@ public class SQLclass
 
         return bl;
     } 
+
+    public string host()
+    {
+        return "http://" + HttpContext.Current.Request.Url.Host + "/";
+    }
 }

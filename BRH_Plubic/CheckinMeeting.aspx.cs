@@ -38,8 +38,11 @@ namespace BRH_Plubic
             }
             else
             {
-                select_room();
-                Grid1("desc");
+                if (!IsPostBack)
+                {
+                    select_room();
+                    Grid1("desc");
+                }
             }
         }
 
@@ -78,6 +81,8 @@ namespace BRH_Plubic
         protected void btn_submit_Click(object sender, EventArgs e)
         {
             CheckEmp();
+            txt_empid.Value = "";
+            Grid1("desc");
         }
 
         public Boolean CheckEmp()
@@ -86,6 +91,8 @@ namespace BRH_Plubic
 
             string alert = "";
             string txtEmp = "";
+
+            lbl_alert.ForeColor = System.Drawing.Color.Red;
 
             room = Request.QueryString["room"];
             slot = Request.QueryString["slot"];
@@ -181,12 +188,19 @@ namespace BRH_Plubic
 
                     if (next == "yes")
                     {
-                        if (Insert(empid))
+                        string insertResult = Insert(empid);
+                        if (insertResult == "Success")
                         {
-                            lbl_alert.Text = DateTime.Now.ToString();
+                            alert = "Success " + DateTime.Now.ToString();
                             lbl_alert.ForeColor = System.Drawing.Color.Green;
                             bl = true;
-                            Response.Redirect("CheckinMeeting.aspx?slot=" + slot + "&room=" + room);
+                            //Response.Redirect("CheckinMeeting.aspx?slot=" + slot + "&room=" + room);
+                        }
+                        else if (insertResult == "Duplicate")
+                        {
+                            alert = "คุณทำการเช็คชื่อไปแล้ว !!";
+                            lbl_alert.ForeColor = System.Drawing.Color.Green;
+                            bl = true;
                         }
                         else
                         {
@@ -202,14 +216,13 @@ namespace BRH_Plubic
 
             txt_empid.Value = txtEmp;
             lbl_alert.Text = alert;
-            lbl_alert.ForeColor = System.Drawing.Color.Red;
 
             return bl;
         }
 
-        public Boolean Insert(string emp)
+        public string Insert(string emp)
         {
-            Boolean bl = false;
+            string result = "";
 
             room = Request.QueryString["room"];
             slot = Request.QueryString["slot"];
@@ -220,7 +233,7 @@ namespace BRH_Plubic
             dt = cl_Sql.select(sql);
             if (dt.Rows.Count > 0)
             {
-                bl = true;
+                result = "Duplicate";
             }
             else
             {
@@ -230,11 +243,12 @@ namespace BRH_Plubic
                 if (cl_Sql.Modify(sql))
                 {
                     sql = "";
-                    bl = true;
+                    lbl_alert.Text = "";
+                    result = "Success";
                 }
             }
 
-            return bl;
+            return result;
         }
 
         private Boolean CheckName(string empid,string fname, string lname)
@@ -318,6 +332,7 @@ namespace BRH_Plubic
                 lbl_alert.Text = "ชื่อของคุณมีในระบบอยู่แล้ว จึงไม่สามารถทำการ ADD ได้ !!";
                 lbl_alert.ForeColor = System.Drawing.Color.Red;
             }
+            Grid1("desc");
         }
 
         public Boolean Grid1(string sort)

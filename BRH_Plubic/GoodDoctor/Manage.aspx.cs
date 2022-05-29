@@ -449,33 +449,43 @@ namespace BRH_Plubic.GoodDoctor
 
             string useradd = Session["userid"].ToString();
 
-            sql = "insert into doctor(dr_forename,dr_surname,dr_englishname,dr_doctorid,dr_username,dr_password,dr_createby,dr_createdate) " +
-                "\nvalues('" + fname + "','" + lname + "','" + name_eg + "','" + drid + "','" + druser + "',md5('" + druser + "'),'" + useradd + "',current_timestamp()); ";
-            if (cl_Sql.Modify(sql))
+            sql = "select * from doctor where dr_active = 'yes' and right(dr_doctorid,5) = '" + drid + "'; ";
+            dt = new DataTable();
+            dt = cl_Sql.select(sql);
+            if (dt.Rows.Count > 0)
             {
-                sql = "select max(dr_id) as dr_id from doctor where dr_username = '" + druser + "' ";
-                dt = new DataTable();
-                dt = cl_Sql.select(sql);
-                if (dt.Rows.Count > 0 )
+                scModal = "fn_AlertModal('Info','หมายเลข ว. นี้ มีในระบบอยู่แล้ว ไม่สามารถบันทึกเพิ่มได้ !!','',0);";
+            }
+            else
+            {
+                sql = "insert into doctor(dr_forename,dr_surname,dr_englishname,dr_doctorid,dr_username,dr_password,dr_createby,dr_createdate) " +
+                    "\nvalues('" + fname + "','" + lname + "','" + name_eg + "','" + drid + "','" + druser + "',md5('" + druser + "'),'" + useradd + "',current_timestamp()); ";
+                if (cl_Sql.Modify(sql))
                 {
-                    sql = "insert into doctor_schedule(ds_dlid,ds_drid,ds_editby) values('" + deptid + "','" + dt.Rows[0]["dr_id"].ToString() +"','" + useradd + "'); ";
-                    if (cl_Sql.Modify(sql))
+                    sql = "select max(dr_id) as dr_id from doctor where dr_username = '" + druser + "' ";
+                    dt = new DataTable();
+                    dt = cl_Sql.select(sql);
+                    if (dt.Rows.Count > 0)
                     {
-                        scModal = "fn_AlertModal('Success','Success !!','Manage.aspx?dept=" + deptid + "',2000);";
+                        sql = "insert into doctor_schedule(ds_dlid,ds_drid,ds_editby) values('" + deptid + "','" + dt.Rows[0]["dr_id"].ToString() + "','" + useradd + "'); ";
+                        if (cl_Sql.Modify(sql))
+                        {
+                            scModal = "fn_AlertModal('Success','Success !!','Manage.aspx?dept=" + deptid + "',2000);";
+                        }
+                        else
+                        {
+                            scModal = "fn_AlertModal('Warning','Error 1 : บันทึกข้อมูลเข้าสู่ระบบแล้ว แต่ไม่สามารถเพิ่มตารางเวรอัตโนมัติได้ !!','',0);";
+                        }
                     }
                     else
                     {
-                        scModal = "fn_AlertModal('Info','Error 1 : บันทึกข้อมูลเข้าสู่ระบบแล้ว แต่ไม่สามารถเพิ่มตารางเวรอัตโนมัติได้ !!','',0);";
+                        scModal = "fn_AlertModal('Warning','Error 2 : บันทึกข้อมูลเข้าสู่ระบบแล้ว แต่ไม่สามารถเพิ่มตารางเวรอัตโนมัติได้ !!','',0);";
                     }
                 }
                 else
                 {
-                    scModal = "fn_AlertModal('Info','Error 2 : บันทึกข้อมูลเข้าสู่ระบบแล้ว แต่ไม่สามารถเพิ่มตารางเวรอัตโนมัติได้ !!','',0);";
+                    scModal = "fn_AlertModal('Warning','ไม่สามารถบันทึกได้กรุณาติดต่อผู้ดูแลระบบ !!','',0);";
                 }
-            }
-            else
-            {
-                scModal = "fn_AlertModal('Warning','ไม่สามารถบันทึกได้กรุณาติดต่อผู้ดูแลระบบ !!','',0);";
             }
 
             Page.ClientScript.RegisterStartupScript(this.GetType(), "cllAlertModal", scModal, true);

@@ -206,8 +206,15 @@
   </div>
 </div>
 
-	<div id="div_submit" class="col-12 mx-auto text-center alert-primary" runat="server" visible="false">
-		<a id="btn_confirm" class="btn btn-warning" style="cursor: pointer; font-size: x-large;" data-toggle="modal" data-target="#modalConfirm" onclick="fn_getid()"> SUBMIT </a>
+	<div id="div_submit" class="row col-12 mx-auto text-center alert-primary" runat="server" visible="false">
+		<div class="col-12 mx-auto my-2">
+			<div class="col-6 mx-auto">
+				<textarea id="txt_remark" class="form-control" rows="5" placeholder="หมายเหตุ" runat="server"></textarea>
+			</div>
+		</div>
+		<div class="col-12 mx-auto my-3">
+			<a id="btn_confirm" class="btn btn-warning" style="cursor: pointer; font-size: x-large;" data-toggle="modal" data-target="#modalConfirm" onclick="fn_getid()"> SUBMIT </a>
+		</div>
 	</div>
 </div>
 

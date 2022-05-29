@@ -16,6 +16,7 @@ namespace BRH_Plubic.AssetControl
         string sql = "";
         DataTable dt;
         SQLclass cl_Sql = new SQLclass();
+        ClassEmail cl_email = new ClassEmail();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -177,7 +178,7 @@ namespace BRH_Plubic.AssetControl
             {
                 string idArray = txtH_id.Value.ToString().Trim();
                 string user = Session["userid"].ToString();
-                string remark = "";
+                string remark = txt_remark.Value.ToString().Trim();
                 string deptFrom = dd_department.SelectedValue.ToString();
                 string deptTo = dd_departmentTo.SelectedValue.ToString();
 
@@ -195,6 +196,8 @@ namespace BRH_Plubic.AssetControl
                         sql = "update asset_details set asd_status = '4', asd_transfer_dept = '" + deptTo + "' where asd_id in (" + idArray + "); ";
                         if (cl_Sql.Modify(sql))
                         {
+                            string iconAlert = "<span id=\"🔔\">🔔</span>";
+
                             sql = "select max(ast_id) as 'ast_id' from asset_transfer " +
                                 "\nwhere convert(ast_from_date, date)=CURRENT_DATE and ast_asdid_array='" + idArray + "' ";
                             dt = new DataTable();
@@ -203,21 +206,33 @@ namespace BRH_Plubic.AssetControl
                             {
                                 string astID = dt.Rows[0]["ast_id"].ToString();
 
-                                sql = "select * from department where deptid='" + deptFrom + "'; ";
-                                dt = new DataTable();
-                                dt = cl_Sql.select(sql);
-                                if (dt.Rows.Count > 0)
-                                {
-                                    string emailHod1 = dt.Rows[0]["email_hod1"].ToString();
-                                    string linkApprove = Request.RawUrl + "/transferApprove?id=" + astID;
-                                    string html = "";
+                                //sql = "select * from department where deptid='" + deptFrom + "'; ";
+                                //dt = new DataTable();
+                                //dt = cl_Sql.select(sql);
+                                //if (dt.Rows.Count > 0)
+                                //{
+                                //    string emailTo = dt.Rows[0]["email_hod1"].ToString();
+                                //    string subject = "มีรายการโอนย้ายทรัพย์สินถูกสร้างขึ้นใหม่ เอกสารเลขที่ " + astID;
+                                //    string body = "<br /><b> " + iconAlert + " กรุณาเข้าระบบเพื่อทำการรับทราบการโอนย้ายทรัพย์สิน</b>" +
+                                //        "<br />Link: <a href=\"" + cl_Sql.host() + "AssetControl/TransferList?id=" + astID + "\">Go to Transfer list.</a>" +
+                                //        "<br /><br /><br />อีเมลฉบับนี้เป็นอีเมลอัตโนมัติ ไม่สามารถตอบกลับได้";
+                                //    cl_email.Send(emailTo, subject, body);
 
-                                    scModal = "fn_AlertModal('Success','Success !!','../AssetControl/Transfer',2500);";
-                                }
-                                else
-                                {
-                                    scModal = "fn_AlertModal('Info','No this department !!','',0);";
-                                }
+                                //    scModal = "fn_AlertModal('Success','Success !!','../AssetControl/Transfer',2500);";
+                                //}
+                                //else
+                                //{
+                                //    scModal = "fn_AlertModal('Info','No this department !!','',0);";
+                                //}
+
+                                string emailTo = "brh.coo@brh.co.th"; // To IT Clinic
+                                string subject = "มีรายการโอนย้ายทรัพย์สินถูกสร้างขึ้นใหม่ เอกสารเลขที่ " + astID;
+                                string body = "<br /><b> " + iconAlert + " กรุณาเข้าระบบเพื่อทำการรับทราบการโอนย้ายทรัพย์สิน</b>" +
+                                    "<br />Link: <a href=\"" + cl_Sql.host() + "AssetControl/TransferList?id=" + astID + "\">Go to Transfer list.</a>" +
+                                    "<br /><br /><br />อีเมลฉบับนี้เป็นอีเมลอัตโนมัติ ไม่สามารถตอบกลับได้";
+                                cl_email.Send(emailTo, subject, body);
+
+                                scModal = "fn_AlertModal('Success','Success !!','../AssetControl/Transfer',2500);";
                             }
                             else
                             {

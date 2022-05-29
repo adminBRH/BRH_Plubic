@@ -37,7 +37,7 @@ namespace BRH_Plubic.GoodDoctor
                 "\nFROM doctor_rating as drr " +
                 "\nLEFT JOIN doctor_location as dl on dl.dl_id = drr.drr_dlid " +
                 "\nLEFT JOIN doctor as dr on dr.dr_id = drr.drr_drid " +
-                "\nWHERE drr.drr_active = 'yes' and dl.dl_active = 'yes' ";
+                "\nWHERE drr.drr_active = 'yes' and dl.dl_active = 'yes' and dr.dr_active = 'yes' ";
             dt = new DataTable();
             dt = cl_Sql.select(sql);
             if (dt.Rows.Count > 0)

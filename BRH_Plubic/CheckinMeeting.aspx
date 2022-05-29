@@ -33,18 +33,10 @@
             </div>
             <div class="card card-body">
                 <div class="row col-12 input-group">
-                    <input type="text" id="txt_empid" autofocus="autofocus" onblur="fn_tabSubmit()" class="col-9 form-control" placeholder="รหัสพนักงาน" runat="server" />
-                    <asp:Button ID="btn_submit" CssClass="col-3 btn btn-light" Text="Check In" runat="server" />
+                    <input type="text" id="txt_empid" autofocus="autofocus" onkeydown="fn_tabSubmit()" class="col-9 form-control" placeholder="รหัสพนักงาน" runat="server" />
+                    <asp:Button ID="btn_submit" CssClass="col-3 btn btn-light" OnClick="btn_submit_Click" Text="Check In" runat="server" />
                     <asp:Label ID="lbl_alert" CssClass="col-12" Font-Size="Larger" Text="" runat="server"></asp:Label>
                     <button id="btnH_submit" hidden="hidden" runat="server" onserverclick="btn_submit_Click"></button> 
-                    <script>
-                        function fn_tabSubmit() {
-                            var txt = document.getElementById('<%= txt_empid.ClientID %>');
-                            if (txt.value != '') {
-                                __doPostBack('<%= btnH_submit.UniqueID %>', '');
-                            }
-                        }
-                    </script>
                 </div>
             </div>
         </div>
@@ -58,6 +50,15 @@
                 <div class="col-1"><button id="btn_add" class="btn btn-light" onserverclick="btn_add_ServerClick" runat="server">submit</button></div>
             </div>
             <script>
+                function fn_tabSubmit() {
+                    if (event.keyCode == 9 || event.keyCode == 13) { // For Scanner Tab or Enter
+                        var txt = document.getElementById('<%= txt_empid.ClientID %>');
+                        if (txt.value != '') {
+                            document.getElementById('<%= btn_submit.ClientID %>').click();
+                        }
+                    }
+                }
+
                 function ShowAdd() {
                     var box = document.getElementById('div_add');
                     box.hidden = false;

@@ -8,15 +8,15 @@
     <script>    
         function fn_status(id, status, ft) {
             var html = '';
-            if (status == 'transfer') {
-                html = '<a class="btn btn-outline-primary" onclick="fn_action(\'' + ft + '\',\'' + id + '\')" style="cursor: pointer;"> Action </a>';
+            if (status == 'acknowledge' || status == 'approve' || status == 'receive') {
+                html = '<a class="btn btn-outline-warning" onclick="fn_action(\'' + ft + '\',\'' + id + '\',\'' + status + '\')" style="cursor: pointer;"> ' + status + ' </a>';
             } else {
-                if (status == 'approve') {
+                if (status == 'finish') {
                     html = '<a class="btn btn-success" style="color: #FFFFFF;"> ' + status + ' </a>';
                 } else if (status == 'reject') {
                     html = '<a class="btn btn-danger" style="color: #FFFFFF;"> ' + status + ' </a>';
                 } else {
-                    html = '<a class="btn btn-outline-warning"> ' + status + ' </a>';
+                    html = '';
                 }
             }
             document.write(html);
@@ -66,7 +66,7 @@
                             </div>
                         </div>
                         <div class="col-1 mx-auto my-auto text-center">
-                            <a class="btn btn-outline-secondary" onclick="fn_details('<%# Eval("ast_id") %>','<%# Eval("ast_asdid_array") %>')" style="cursor: pointer;"> Details </a>
+                            <a class="btn btn-outline-info" onclick="fn_details('<%# Eval("ast_id") %>','<%# Eval("ast_asdid_array") %>')" style="cursor: pointer;"> Details </a>
                         </div>
                         <div class="row col-7 mx-auto">
                             <div class="col-5 mx-auto alert-dark">
@@ -119,7 +119,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header bg-warning">
-        <h5 class="modal-title" id="modalActionTitle">Action for <label id="lbl_action_name"></label> no<label class="btn btn-secondary" id="lbl_action_id" style="color: white; font-size: x-large;"></label></h5>
+        <h5 class="modal-title" id="modalActionTitle"><label id="lbl_action_name"></label> document number <label class="btn btn-secondary" id="lbl_action_id" style="color: white; font-size: x-large;"></label></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -174,16 +174,14 @@
                 document.getElementById('lbl_details_id').innerHTML = id;
             }
 
-            function fn_action(modal, id) {
+            function fn_action(modal, id, status) {
                 document.getElementById('<%= txtH_action.ClientID %>').value = modal;
                 var lblActionName = document.getElementById('lbl_action_name');
-                if (modal == 'from') {
-                    lblActionName.innerHTML = 'Transfer';
-                } else if (modal == 'to') {
-                    lblActionName.innerHTML = 'Receive';
-                } else {
-                    lblActionName.innerHTML = '???';
+                var title = status.toUpperCase();
+                if (modal == 'to') {
+                    document.getElementById('<%= btn_reject.ClientID %>').setAttribute('hidden','hidden');
                 }
+                lblActionName.innerHTML = title;
                 fn_setID(id);
                 $('#modalAction').modal('show');
             }
