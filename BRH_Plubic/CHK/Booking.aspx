@@ -58,6 +58,7 @@
                     <div class="row col-11 mx-auto">
                         <!-- ================================= TimeSlot ==================================== -->
                         <asp:Label ID="lbl_TimeSlot" CssClass="row col-12 mx-auto" Text="" runat="server"></asp:Label>
+                        <asp:Label ID="lbl_ManualSlot" CssClass="row col-12 mx-auto" Text="" runat="server"></asp:Label>
                         <!-- =============================================================================== -->
                     </div>
                 </ContentTemplate>
@@ -292,6 +293,7 @@
         }
     }
 </script>
+    <asp:Label ID="lbl_test" Text="" runat="server"></asp:Label>
 
     <asp:UpdatePanel ID="UpdatePanel_script" runat="server">
         <ContentTemplate>

@@ -150,6 +150,15 @@ namespace BRH_Plubic.CHK
         protected global::System.Web.UI.WebControls.Label lbl_TimeSlot;
 
         /// <summary>
+        /// lbl_ManualSlot control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_ManualSlot;
+
+        /// <summary>
         /// UpdatePanel_Sync control.
         /// </summary>
         /// <remarks>
@@ -427,6 +436,15 @@ namespace BRH_Plubic.CHK
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_alertSubmimt;
+
+        /// <summary>
+        /// lbl_test control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_test;
 
         /// <summary>
         /// UpdatePanel_script control.

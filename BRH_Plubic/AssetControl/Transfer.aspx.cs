@@ -50,7 +50,13 @@ namespace BRH_Plubic.AssetControl
                 }
             }
 
-            sql = "select * from department where deptactive='yes' and deptzone is not null " + lockdept + " order by deptname; ";
+            string onlyClinic = "";
+            if (Session["status"].ToString() != "admin")
+            {
+                onlyClinic = "and deptzone is not null ";
+            }
+
+            sql = "select * from department where deptactive='yes' " + onlyClinic + lockdept + " order by deptname; ";
             dt = new DataTable();
             dt = cl_Sql.select(sql);
             if (dt.Rows.Count > 0)
@@ -65,8 +71,14 @@ namespace BRH_Plubic.AssetControl
 
         protected void DepartmentTo(string deptFrom)
         {
+            string onlyClinic = "";
+            if (Session["status"].ToString() != "admin")
+            {
+                onlyClinic = "and deptzone is not null ";
+            }
+
             sql = "select * from department " +
-                "\nwhere deptactive='yes' and deptid like 'BRH%' and deptzone is not null " +
+                "\nwhere deptactive='yes' and deptid like 'BRH%' " + onlyClinic +
                 "\nand deptid <> '" + deptFrom + "' " +
                 "\norder by deptname; ";
             dt = new DataTable();

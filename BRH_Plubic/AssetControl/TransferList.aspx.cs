@@ -340,6 +340,10 @@ namespace BRH_Plubic.AssetControl
                                 if (dt.Rows.Count > 0)
                                 {
                                     mailTo = dt.Rows[0]["emp_email"].ToString();
+                                    if (Session["status"].ToString() == "admin")
+                                    {
+                                        mailTo = "brh.coo@brh.co.th";
+                                    }
                                     subject = "รายการโอนย้ายทรัพย์สินของคุณ เอกสารเลขที่ " + id;
                                     body = "<br /><b>" + details + "</b>" +
                                         "<br />Link: <a href=\"" + cl_Sql.host() + "AssetControl/TransferList?id=" + id + "\">Go to Transfer list.</a>" +
