@@ -334,7 +334,7 @@ namespace BRH_Plubic
                     if (cl_Sql.Modify(sql))
                     {
                         string body = "<h3>Reset Password</h3>";
-                        body = body + "<p>Please click this link >> <a href='brh.seedoctor.asia/default.aspx?status=employee&user=" + empid + "&forgotpassword=" + key + "'>Reset password here.</a><br />For confirm Reset your password.</p>";
+                        body = body + "<p>Please click this link >> <a href='"+  cl_Sql.host() +"default.aspx?status=employee&user=" + empid + "&forgotpassword=" + key + "'>Reset password here.</a><br />For confirm Reset your password.</p>";
                         body = body + "<p>&nbsp;</p>";
                         body = body + "<p>This email is an automatic email.</p>";
                         try

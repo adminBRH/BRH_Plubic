@@ -431,6 +431,7 @@ public class SQLclass
 
     public string host()
     {
-        return "http://" + HttpContext.Current.Request.Url.Host + "/";
+        //return "http://" + HttpContext.Current.Request.Url.Host + "/";
+        return "http://app.bangkokhospitalrayong.com/";
     }
 }

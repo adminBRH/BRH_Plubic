@@ -868,7 +868,7 @@ namespace BRH_Plubic.AssetControl
                             {
                                 RepairID = dt.Rows[0]["asr_id"].ToString();
 
-                                string domain = Request.Url.Host;
+                                string domain = cl_Sql.host();
                                 string Link = "http://" + domain + "/AssetControl/RepairList?id=" + RepairID;
 
                                 string txt = "\nแจ้งซ่อมอุปกรณ์ !!\nRepair ID: " + RepairID + "\nLocation: " + Location + "\nAsset Type: " + Type + "" +

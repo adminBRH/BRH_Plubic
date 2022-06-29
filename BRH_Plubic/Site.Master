@@ -6,7 +6,7 @@
 <head>
     <script>
         function ChangeDomain() {
-            var domainName = 'brh.apply-apps.com';
+            var domainName = 'app.bangkokhospitalrayong.com';
             var domain = window.location.host;
             if (domain != domainName) {
                 var http = window.location.protocol;
@@ -22,7 +22,7 @@
     </script>
 
     <link rel="shortcut icon" href="../images/icon/BRHfavicon.ico" />
-    <title>Bangkok Hospital Rayong</title>
+    <title>Bangkok Hospital Rayong WEB Application</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
 

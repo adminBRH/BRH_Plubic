@@ -500,7 +500,7 @@
                             <div class="col-12 mx-auto my-auto text-center">
                                 <i class="ti-2x ti-link" onclick="CopyLink('<%# Eval("bs_id") %>')" style="cursor: pointer;"></i>
                             </div>
-                            <input type="text" id="txtH_link_<%# Eval("bs_id") %>" hidden="hidden" value="brh.apply-apps.com/CHK/Booking.aspx?key=<%# Eval("bs_key") %>&slot=<%# Eval("bs_id") %>" />
+                            <input type="text" id="txtH_link_<%# Eval("bs_id") %>" hidden="hidden" value="app.bangkokhospitalrayong.com/CHK/Booking.aspx?key=<%# Eval("bs_key") %>&slot=<%# Eval("bs_id") %>" />
                         </div>
                         <div class="col-3 mx-auto my-auto">
                             <div class="row col-12 mx-auto h5">

@@ -636,6 +636,8 @@ namespace BRH_Plubic.CHK
                             }
                             else
                             {
+                                lbl_ManualSlot.Text = "";
+
                                 txtH_bookdate.Value = "";
                                 txtH_booktime.Value = "";
 
