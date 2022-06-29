@@ -22,7 +22,30 @@ namespace BRH_Plubic.MentalHealthClinic
         string id = "";
         protected void Page_Load(object sender, EventArgs e)
         {
+            string m_id = Request.QueryString["id"].ToString();
+            CheckID(m_id);
+        }
 
+        public void CheckID(string m_id)
+        {
+            sql = "select * from mentalhealthrecord where m_id = '" + m_id + "'; ";
+            dt = new DataTable();
+            dt = CL_Sql.select(sql);
+            if (dt.Rows.Count > 0)
+            {
+                int colorID = int.Parse(dt.Rows[0]["color_id"].ToString());
+                if (colorID < 5)
+                {
+                    Response.Redirect("ColorGreen.aspx?id=" + m_id + "");
+                }
+                else
+                {
+                    if (colorID < 8)
+                    {
+                        Response.Redirect("Result_dass21.aspx?id=" + m_id + "");
+                    }
+                }
+            }
         }
 
         public Boolean InsertDataDassResult(string id)
@@ -62,6 +85,7 @@ namespace BRH_Plubic.MentalHealthClinic
             string token = "IcicbalDCvpgEvD4mjHhQW0199PNY9lE7f0lzW5Yh2O";
             string msg = "";
 
+            string empid = txt_empid.Value.ToString().Trim();
             string firstname = txt_fname.Value.ToString().Trim();
             string lasttname = txt_lname.Value.ToString().Trim();
             string phonenumber = txt_phone.Value.ToString().Trim();
@@ -70,11 +94,12 @@ namespace BRH_Plubic.MentalHealthClinic
             string accommodation = dd_accommodation.SelectedValue.ToString();
             string roomNumber = txt_roomnumber.Value.ToString().Trim();
 
+            msg = msg + "\nรหัสพนักงาน: " + empid;
             msg = msg + "\nชื่อ: " + firstname + " " + lasttname;
             msg = msg + "\nTel: " + phonenumber;
             msg = msg + "\nLine: " + lineid;
-            msg = msg + "\nสถานที่พักรักษา: " + accommodation;
-            msg = msg + "\nหมายเลขห้อง: " + roomNumber;
+            //msg = msg + "\nสถานที่พักรักษา: " + accommodation;
+            //msg = msg + "\nหมายเลขห้อง: " + roomNumber;
             msg = msg + "\nLink: http://brh.apply-apps.com/MentalHealthClinic/Default.aspx?id=" + m_id;
 
             try

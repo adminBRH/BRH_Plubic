@@ -19,7 +19,30 @@ namespace BRH_Plubic.MentalHealthClinic
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            string m_id = Request.QueryString["id"].ToString();
+            CheckID(m_id);
+        }
 
+        public void CheckID(string m_id)
+        {
+            sql = "select * from mentalhealthrecord where m_id = '" + m_id + "'; ";
+            dt = new DataTable();
+            dt = CL_Sql.select(sql);
+            if (dt.Rows.Count > 0)
+            {
+                int colorID = int.Parse(dt.Rows[0]["color_id"].ToString());
+                if (colorID > 7)
+                {
+                    Response.Redirect("ColorRedPositive.aspx?id=" + m_id + "");
+                }
+                else
+                {
+                    if (colorID > 4)
+                    {
+                        Response.Redirect("Result_dass21.aspx?id=" + m_id + "");
+                    }
+                }
+            }
         }
 
         public Boolean InsertData(string id)

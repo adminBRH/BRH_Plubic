@@ -14,12 +14,12 @@
                         
                     </div>
                     <div class="card-body col-lg-5 col-sm-9 mx-auto" style="background-color:azure" id="div_yellow" >
-                         <input type="text" class="form-control mt-1" placeholder="ชื่อ" id="txt_fname" onkeyup="checkData()" runat="server"/>
-                         <input type="text" class="form-control mt-1" placeholder="นามสกุล" id="txt_lname" onkeyup="checkData()" runat="server"/>
-                         <input type="text" class="form-control mt-1" placeholder="รหัสพนักงาน" id="txt_empid" onkeyup="checkData()" runat="server" hidden="hidden"/>
-                         <input type="text" class="form-control mt-1" placeholder="เบอร์โทร" id="txt_phone" onkeyup="checkData()" runat="server"/>
-                         <input type="text" class="form-control mt-1" placeholder="LineID" id="txt_line" onkeyup="checkData()" runat="server"/>
-                        <asp:DropDownList ID="dd_accommodation" CssClass="form-control mt1" runat="server">
+                        <input type="text" class="form-control mt-1" placeholder="รหัสพนักงาน" id="txt_empid" runat="server"/>
+                        <input type="text" class="form-control mt-1" placeholder="ชื่อ" id="txt_fname" runat="server"/>
+                        <input type="text" class="form-control mt-1" placeholder="นามสกุล" id="txt_lname" runat="server"/>
+                        <input type="text" class="form-control mt-1" placeholder="เบอร์โทร" id="txt_phone" runat="server"/>
+                        <input type="text" class="form-control mt-1" placeholder="LineID" id="txt_line" runat="server"/>
+                        <asp:DropDownList ID="dd_accommodation" CssClass="form-control mt1" runat="server" Visible="false">
                             <asp:ListItem Text="โปรดเลือก สถานที่พักรักษา" Value=""></asp:ListItem>
                             <asp:ListItem Text="โรงพยาบาลกรุงเทพระยอง" Value="โรงพยาบาลกรุงเทพระยอง"></asp:ListItem>
                             <asp:ListItem Text="Hospitel ในโรงพยาบาลกรุงเทพระยอง" Value="Hospitel ในโรงพยาบาลกรุงเทพระยอง"></asp:ListItem>
@@ -28,22 +28,32 @@
                             <asp:ListItem Text="โรงแรม Cruise" Value="โรงแรม Cruise"></asp:ListItem>
                             <asp:ListItem Text="โรงแรมอักษร" Value="โรงแรมอักษร"></asp:ListItem>
                         </asp:DropDownList>
-                        <input type="text" class="form-control mt-1" placeholder="หมายเลขห้อง" id="txt_roomnumber" onkeyup="checkData()" runat="server"/>
+                        <input type="text" class="form-control mt-1" placeholder="หมายเลขห้อง" id="txt_roomnumber" runat="server" Visible="false"/>
                     </div>  
                     <div class="col-12 mt-3 mx-auto text-center">
-                            <button type="button" class="btn btn-primary" id="btn_submit_result_dass" onserverclick="btn_submit_result_dass_ServerClick" disabled="disabled" runat="server" style="font-size: x-large;">Next</button>
-                        </div>
+                        <a id="btnSubmit" class="btn btn-outline-primary" onclick="checkData()" style="font-size: x-large; cursor:pointer;">Next</a>
+                        <button id="btn_submit_result_dass" onserverclick="btn_submit_result_dass_ServerClick" runat="server" hidden="hidden"></button>
+                    </div>
                 </div>
             </div>
         </div>
     <script>
         function checkData() {
+            var empid = document.getElementById('<%= txt_empid.ClientID %>');
             var fname = document.getElementById('<%= txt_fname.ClientID %>');
             var lname = document.getElementById('<%= txt_lname.ClientID %>');
             var phone = document.getElementById('<%= txt_phone.ClientID %>');
 
             var key = '';
             var btn = document.getElementById('<%= btn_submit_result_dass.ClientID %>');
+
+            if (empid.value == '') {
+                empid.setAttribute('class', 'form-control mt-1 border-danger');
+            }
+            else {
+                empid.setAttribute('class', 'form-control mt-1');
+                key = key + 'e';
+            }
 
             if (fname.value == '') {
                 fname.setAttribute('class', 'form-control mt-1 border-danger');
@@ -69,8 +79,8 @@
                 key = key + 'p';
             }
 
-            if (key == 'flp') {
-                btn.removeAttribute('disabled');
+            if (key == 'eflp') {
+                btn.click();
             }
             else {
                 btn.setAttribute('disabled', 'disabled');

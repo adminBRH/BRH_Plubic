@@ -15,6 +15,15 @@ namespace BRH_Plubic.MentalHealthClinic
     {
 
         /// <summary>
+        /// txt_empid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_empid;
+
+        /// <summary>
         /// txt_fname control.
         /// </summary>
         /// <remarks>
@@ -31,15 +40,6 @@ namespace BRH_Plubic.MentalHealthClinic
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputText txt_lname;
-
-        /// <summary>
-        /// txt_empid control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_empid;
 
         /// <summary>
         /// txt_phone control.

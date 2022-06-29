@@ -44,19 +44,24 @@ namespace BRH_Plubic.MentalHealthClinic
 
             string screen_temp = txtH_Score.Value.ToString();
 
+            string key = CL_Sql.GenerateKey(9);
+
             sql = "INSERT INTO mentalhealthrecord" +
-                  "(fname, lname, color_temp, color_id, p_number, line_id)" + "VALUES('', '', '"+ color +"', '"+ screen_temp +"', NULL, NULL);";
+                  "(fname, lname, color_temp, color_id, p_number, line_id)" + "VALUES('" + key + "', '', '"+ color +"', '"+ screen_temp +"', NULL, NULL);";
 
             if (CL_Sql.Modify(sql))
             {
                 
-                sql = "SELECT MAX(m_id) as 'm_id' FROM mentalhealthrecord;";
-                dt = new DataTable(); //ต้อง new data table ใหม่ทุกครั้งเมื่อรับค่า
+                sql = "SELECT m_id FROM mentalhealthrecord where convert(datetimes,date) = CURRENT_DATE and fname = '" + key + "' ;";
+                dt = new DataTable(); 
                 dt = CL_Sql.select(sql);
 
-                if (dt.Rows.Count > 0) //หาข้อมูลว่ามีบรรทัดนั้นหรือไม่
+                if (dt.Rows.Count > 0)
                 {
-                    result = dt.Rows[0]["m_id"].ToString();                  
+                    result = dt.Rows[0]["m_id"].ToString();
+
+                    sql = "update mentalhealthrecord set fname = '' where m_id = '" + result + "'; ";
+                    CL_Sql.Modify(sql);
                 }
 
             }
