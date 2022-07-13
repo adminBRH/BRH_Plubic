@@ -400,9 +400,9 @@ input[type=radio] {
             </div>
             </div>
         </div>
-                <div class="card-footer col-10 mx-auto text-center" onmouseover="GetScore()" style="background-color:lightcoral">
+                <div class="card-footer col-10 mx-auto text-center bg-danger" onmouseover="GetScore()">
                             <%--<button type="button" class="btn btn-light " id="btn_submit1" onmouseover="GetScore()" onserverclick="btn_submit1_ServerClick" runat="server">Submit</button>--%>
-                    <button id="btn_submit" onserverclick="btn_submit_ServerClick" class="btn btn-light" runat="server">SUBMIT</button>
+                    <button id="btn_submit" onserverclick="btn_submit_ServerClick" class="col-lg-3 col-sm-8 btn btn-light" runat="server">SUBMIT</button>
                 </div>
             <div hidden="hidden">
                 <input type="text" id="txtH_link" value="" runat="server" />

@@ -20,6 +20,8 @@ namespace BRH_Plubic.AssetControl
         DataTable dt;
         SQLclass cl_Sql = new SQLclass();
 
+        AssetControlService cl_Asv = new AssetControlService();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["userid"] != null)
@@ -37,7 +39,7 @@ namespace BRH_Plubic.AssetControl
             }
             else
             {
-                Response.Redirect("../Default.aspx?back=AssetControl/RepairList&login=require");
+                Response.Redirect("../Default.aspx?back=" + Request.RawUrl + "&login=require");
             }
         }
 
@@ -111,6 +113,7 @@ namespace BRH_Plubic.AssetControl
                     {
                         string AcknowledgeTime = "";
                         string status = dt.Rows[0]["asr_status"].ToString();
+
                         if (status == "Notify")
                         {
                             status = "Acknowledge";
@@ -131,14 +134,15 @@ namespace BRH_Plubic.AssetControl
                         {
                             string domain = Request.Url.Host;
                             string Link = "http://" + domain + "/AssetControl/RepairList?id=" + id;
+                            string img = "";
 
                             string txt = "\nRepair ID: " + id + "\nStatus: " + status + "\nโดย: " + userName + "\nLink: " + Link;
-                            Linenotify(txt, "Clinic");
+                            cl_Asv.Linenotify("Clinic", txt, status, img);
 
                             if (status == "Finish")
                             {
                                 txt = "\nRepair ID: " + id + "\nแก้ไขซ่อมแซมเรียบร้อยแล้ว !!\nLink: " + Link;
-                                Linenotify(txt, "IT");
+                                cl_Asv.Linenotify("IT", txt, status, img);
                             }
 
                             Response.Redirect("RepairList");
@@ -155,45 +159,5 @@ namespace BRH_Plubic.AssetControl
                 Response.Write("<script>alert('คุณไม่มีสิทธิ์อนุมัติ !!');</script>");
             }
         }
-
-        public Boolean Linenotify(string txt,string sendTo)
-        {
-            Boolean bl = false;
-
-            string token = "zAnirYUlJsqdbI9ISjXe7wPP0xbje3pAufQKXjs4UQ0";
-            if (sendTo == "Clinic")
-            {
-                token = "KvQLv7ml6usGawbF7ljp5GxZDyxo2LbGzdaVL09E8h6";
-            }
-
-            string msg = txt;
-
-            try
-            {
-                var request = (HttpWebRequest)WebRequest.Create("https://notify-api.line.me/api/notify");
-                var postData = string.Format("message={0}", msg);
-                var data = Encoding.UTF8.GetBytes(postData);
-                request.Method = "POST";
-                request.ContentType = "application/x-www-form-urlencoded";
-                request.ContentLength = data.Length;
-                request.Headers.Add("Authorization", "Bearer " + token);
-
-                using (var stream = request.GetRequestStream())
-                {
-                    stream.Write(data, 0, data.Length);
-                }
-
-                var response = (HttpWebResponse)request.GetResponse();
-                var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
-
-                bl = true;
-            }
-            catch (Exception ex)
-            {
-                bl = false;
-            }
-
-            return bl;
-        }
-    }
+    }   
 }

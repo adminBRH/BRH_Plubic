@@ -35,7 +35,7 @@
                         <input type="text" class="form-control mt-1" placeholder="หมายเลขห้อง" id="txt_roomnumber" runat="server" visible="false"/>
                     </div>  
                     <div class="col-12 mt-3 mx-auto text-center">
-                        <a id="btnSubmit" class="btn btn-outline-primary" onclick="checkData()" style="font-size: x-large; cursor:pointer;">Next</a>
+                        <a id="btnSubmit" class="col-lg-3 col-sm-8 btn btn-outline-primary" onclick="checkData()" style="font-size: x-large; cursor:pointer;">Next</a>
                         <button id="btn_submit" onserverclick="btn_submit_ServerClick" runat="server" hidden="hidden"></button>
                     </div>
                 </div>

@@ -1268,6 +1268,7 @@
     <Compile Include="AssetControl\RepairList.aspx.designer.cs">
       <DependentUpon>RepairList.aspx</DependentUpon>
     </Compile>
+    <Compile Include="AssetControl\Service.cs" />
     <Compile Include="AssetControl\Transfer.aspx.cs">
       <DependentUpon>Transfer.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

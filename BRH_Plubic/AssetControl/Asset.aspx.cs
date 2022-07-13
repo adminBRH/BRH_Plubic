@@ -21,6 +21,8 @@ namespace BRH_Plubic.AssetControl
         DataTable dt;
         SQLclass cl_Sql = new SQLclass();
 
+        AssetControlService cl_Asv = new AssetControlService();
+
         string clearSearch = "<i class=\"fa fa-stop-circle-o fa-2x\" onclick=\"window.location.href='Asset'\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Clear Search !\" style=\"cursor: pointer;\"></i>";
 
         protected void Page_Load(object sender, EventArgs e)
@@ -783,45 +785,6 @@ namespace BRH_Plubic.AssetControl
             ReloadDATA();
         }
 
-        public Boolean Linenotify(string txt, string sendTo)
-        {
-            Boolean bl = false;
-
-            string token = "zAnirYUlJsqdbI9ISjXe7wPP0xbje3pAufQKXjs4UQ0";
-            if (sendTo == "Clinic")
-            {
-                token = "KvQLv7ml6usGawbF7ljp5GxZDyxo2LbGzdaVL09E8h6";
-            }
-            string msg = txt.Replace("&","%26");
-
-            try
-            {
-                var request = (HttpWebRequest)WebRequest.Create("https://notify-api.line.me/api/notify");
-                var postData = string.Format("message={0}", msg);
-                var data = Encoding.UTF8.GetBytes(postData);
-                request.Method = "POST";
-                request.ContentType = "application/x-www-form-urlencoded";
-                request.ContentLength = data.Length;
-                request.Headers.Add("Authorization", "Bearer " + token);
-
-                using (var stream = request.GetRequestStream())
-                {
-                    stream.Write(data, 0, data.Length);
-                }
-
-                var response = (HttpWebResponse)request.GetResponse();
-                var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
-
-                bl = true;
-            }
-            catch (Exception ex)
-            {
-                bl = false;
-            }
-
-            return bl;
-        }
-
         protected void btn_repair_submit_ServerClick(object sender, EventArgs e)
         {
             string username = Session["name"].ToString() + "(" + Session["userid"].ToString() + ")";
@@ -869,15 +832,18 @@ namespace BRH_Plubic.AssetControl
                                 RepairID = dt.Rows[0]["asr_id"].ToString();
 
                                 string domain = cl_Sql.host();
-                                string Link = "http://" + domain + "/AssetControl/RepairList?id=" + RepairID;
+                                string Link = domain + "/AssetControl/RepairList?id=" + RepairID;
+
+                                string status = "Notify";
+                                string img = "";
 
                                 string txt = "\nแจ้งซ่อมอุปกรณ์ !!\nRepair ID: " + RepairID + "\nLocation: " + Location + "\nAsset Type: " + Type + "" +
                                     "\nDisplay Name: " + Display + "\nSN: " + SN + "\nBy: " + username + "\nLink: " + Link;
-                                Linenotify(txt, "IT");
+                                cl_Asv.Linenotify("IT", txt, status, img);
 
                                 txt = "\nหมายเลขการแจ้ง: " + RepairID + "\n" + Location + "\nแจ้งซ่อม " + Type + "(" + Display + ")" +
                                     "\nSN: " + SN + "\nแจ้งโดย: " + username + "\nLink: " + Link;
-                                Linenotify(txt, "Clinic");
+                                cl_Asv.Linenotify("Clinic", txt, status, img);
 
                                 string searchLo = txt_search_location.Value.ToString().Trim();
                                 string searchCo = txt_search_code.Value.ToString().Trim();

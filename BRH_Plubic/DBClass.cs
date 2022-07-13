@@ -16,7 +16,9 @@ using Microsoft.AspNet.SignalR.Infrastructure;
 
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Net;
 using System.Net.NetworkInformation;
+using System.IO;
 
 public class ConnectDB
 {
@@ -435,3 +437,4 @@ public class SQLclass
         return "http://app.bangkokhospitalrayong.com/";
     }
 }
+

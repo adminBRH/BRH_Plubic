@@ -31,7 +31,7 @@
                     </div> 
                     <br />
                     <div class="col-12 mx-auto text-center">
-                        <a id="btnSubmit" class="btn btn-outline-primary" onclick="checkData()" style="font-size: x-large; cursor:pointer;">Next</a>
+                        <a id="btnSubmit" class="col-lg-3 col-sm-8 btn btn-outline-primary" onclick="checkData()" style="font-size: x-large; cursor:pointer;">Next</a>
                         <button id="btn_submit_red" onserverclick="btn_submit_red_ServerClick" runat="server" hidden="hidden"></button>
                     </div>
                 </div>
